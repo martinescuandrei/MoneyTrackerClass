@@ -4,74 +4,53 @@
 #include "Wallet.h"
 #include <iostream>
 
+// constructor of wallet
 Wallet::Wallet(vector<string> params):params_m(params)
 {}
 
-bool WalletExists(string walletName_m) 
-{
-	string walletName = walletName_m;
-	
-    ifstream f(walletName.c_str());
-	bool flag;
-	
-	// return if true wallet exists and false if it doesn't exist
-	if (f.good() == true)
-	{ 
-		flag = true;
-	}
-	else 
-	{
-		flag = false;
-	}
-	f.close();
-	return flag;
-}
 
+// create method
 void Wallet::Create()
-{//CREATE_INITIAL_AMMOUNT_INVALID
-//WRITE_TO_FILE
+{
+	// check if params contain only wallet name, amount will be +00.00
 	if(params_m.size() == 1)
 	{
 		walletName_m = params_m[0];
 		defaultAmount_m = "+00.00";
 	}
+	
+	// check if params contain both wallet name and amount
 	else if(params_m.size() == 2)
 	{
 		walletName_m = params_m[0];
 		defaultAmount_m = params_m[1];
 	}
 	
-	
+	// create object helper of HelperFunc
 	HelperFunc helper(walletName_m, defaultAmount_m);
 	
-	// convert path
-	/* string convertP = helper.ConvertPath(walletName_m);
-	cout << convertP << endl;
-	//return bool if wallet exist
+	// create a flag that is true if wallet exists
+	bool flag = helper.WalletExists(walletName_m);
 
-	
-	//recreate path to initial 
-	string reconvert = helper.ConvertPathToOriginal(convertP);
-	cout << reconvert << endl; */
-	// 
-	bool flag = WalletExists(walletName_m);
 	vector<string> parameters;
 	MessageHandler message;
 	
+	
+	// check if wallet doesn't exist
 	if (flag == false) 
 	{
-		bool flag1 = helper.IsValidNumber();			
+		// create flag that is true the amount is valid
+		bool flag1 = helper.IsValidNumber();	
+
+		// check if amount is valid
 		if (flag1 == true)
 		{	
-			//call function add decimals
-			if (defaultAmount_m == "+00.00") 
+			// if amount is not +00.00, validate amount
+			if (defaultAmount_m != "+00.00") 
 			{	
+				string returnAmount = helper.ValidateAmount();
+				defaultAmount_m = returnAmount;
 			}
-			else {
-			string returnAmount = helper.ValidateAmount();
-			defaultAmount_m = returnAmount;
-			}
-			
 			
 			// creating and opening the file
 			ofstream walletFile(walletName_m.c_str());
@@ -82,75 +61,84 @@ void Wallet::Create()
 				defaultAmount_m = '+' + defaultAmount_m;
 			}
 
-			
-			//checking if the file was created
-			if (!walletFile.good())
+			//check if the file was not created, return error
+			 if (!walletFile.good())
 			{
+				// set error message
 			    message.SetMessage(PATH_DOES_NOT_EXIST);
+				
+				// put the parameters in vector
 				parameters.push_back(walletName_m);
+				
+				// call print function
 				message.Print(parameters); 
-				/* cout << "error" ; */
-				/* PrintError::Print(PATH_DOES_NOT_EXIST,
-								walletName_m,
-								defaultAmount_m);
-				return PATH_DOES_NOT_EXIST; */
+				return;
+				
 			}
 						
-			// writing the initial amount in the wallet file
-			
+			// writing the initial amount in wallet
 			walletFile << defaultAmount_m << " RON";
 			
+			// check if the amount was not written to wallet, return error
 			if (!walletFile.good())
 			{
-				
+				// set error message
 				message.SetMessage(WRITE_TO_FILE);
+				
+				// put the parameters in vector
 				parameters.push_back(walletName_m);
 				parameters.push_back(defaultAmount_m);
 				
+				// call print function
 				message.Print(parameters);
 				
-				/* PrintError::Print(WRITE_TO_FILE,
-								walletName_m,
-								defaultAmount_m);
-				return WRITE_TO_FILE; */
+				return;
 			}
 			
 			// closing the file
 			walletFile << endl;
 			walletFile.close();
 			
+			// print wallet was created
+			
+			// set error message
 			message.SetMessage(CREATE_WALLET_MESSAGE);
+			
+			// put the parameters in vector
 			parameters.push_back(walletName_m);
 			parameters.push_back(defaultAmount_m);
-				
+			
+			// call print function			
 			message.Print(parameters);
-			//printing the wallet created message
-			/* PrintError::Print(CREATE_WALLET_MESSAGE,
-							  walletName_m,
-							  defaultAmount_m); */
-								
-			//return ALL_GOOD;
+			return;
 		}
+		
+		// if amount is not valid, print error
 		else 
 		{
+			// set error message
 			message.SetMessage(CREATE_INITIAL_AMMOUNT_INVALID);
+			
+			// put the parameters in vector
 			parameters.push_back(walletName_m);
 			parameters.push_back(defaultAmount_m);
-				
+			
+			// call print function			
 			message.Print(parameters);
-			//PrintError::Print(CREATE_INITIAL_AMMOUNT_INVALID,
-										//reconvert, stringArgumentNr4);	
 		}
 	}
+	
+	// if wallet exists print error
 	else
 	{
+		// set error message
 		message.SetMessage(WALLET_ALREADY_EXISTS);
+		
+		// put the parameters in vector
 		parameters.push_back(walletName_m);
 	
-				
+		// call print function		
 		message.Print(parameters);
-		//PrintError::Print(WALLET_ALREADY_EXISTS,
-							//reconvert, stringArgumentNr4);
 	}				
 
 }
