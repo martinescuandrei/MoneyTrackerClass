@@ -18,7 +18,9 @@ HEADERS = \
 	main\src\Command.h \
 	main\src\CommandFactory.h \
 	main\src\MessageTypes_E.h \
-	main\src\GetBalance.h
+	main\src\GetBalance.h \
+	main\src\Config.h
+	
 
 #first target, reached when calling make without a target
 moneytracker:
