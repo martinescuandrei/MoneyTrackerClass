@@ -43,14 +43,19 @@ class Balance : public Command
 			GetBalance balance;
 			HelperFunc help;
 			string category = "";
+			vector<string> parameters;
+			MessageHandler message;
 			
 			if ((params_m.size() == 1) || (params_m.size() > 2))
 			{
-				cout<<"error from Andreea: invalid parameters for 'balance'."<<endl;		
+				//set error invalid parameters (parameters = 1 or >2)
+				message.SetMessage(INVALID_PARAMETER);
+				parameters.push_back("balance");
+				message.Print(parameters);
 			}
 			else
 			{	
-				 //check if the parameter "-c" or "--category" is valid 
+				 //check if the parameter "-c" or "--category" is valid or no parameters
 				if ((params_m.size()==0) || ((params_m[0] == "-c") || (params_m[0] == "--category")))
 				{ 
 					//if there are parameters then place the category in a variable
@@ -59,8 +64,9 @@ class Balance : public Command
 						category = params_m[1];
 					}
 					
+					//set default values 
 					string numeconfig = "moneytracker.config";
-					string def = "default_wallet";
+					string default_wallet = "default_wallet";
 					
 					//check if moneytracker.config exists
 					if (help.WalletExists(numeconfig))
@@ -70,7 +76,7 @@ class Balance : public Command
 						string configContent = help.ReturnFileasString(numeconfig);
 						
 						//get the default wallet from moneytracker.config
-						string numefisier = help.GetDefaultWallet(configContent, def);
+						string numefisier = help.GetDefaultWallet(configContent, default_wallet);
 					
 						//check if numele fisierului este configurat in config
 						if (numefisier != "")
@@ -81,8 +87,12 @@ class Balance : public Command
 								//return file as string
 								string content = help.ReturnFileasString(numefisier);
 								
-								//result will be calculated balance returned as string
-								string result = balance.PrintBalance(content,category);
+								//result_aux will be calculated balance returned as string
+								string result_aux = balance.PrintBalance(content,category);
+								
+								//create an object 'help2' to be able to use ValidateAmount
+								HelperFunc help2(numefisier,result_aux);
+								string result = help2.ValidateAmount();
 						
 								//check if category exists
 								bool isCategory = balance.CategoryExists();
@@ -90,35 +100,63 @@ class Balance : public Command
 								//print balance	
 								if ((isCategory) || (params_m.size() == 0))
 								{
-									cout<<"Balance for "<<category<<" in "<<numefisier<<" is "<<result;
+									if (isCategory)
+									{
+										//set message balance succesfuly with category
+										message.SetMessage(BALANCE_CATEGORY);
+										parameters.push_back(category);
+										parameters.push_back(numefisier);
+										parameters.push_back(result);
+										message.Print(parameters);
+									}
+									else
+									{
+										////set message balance succesfuly without category
+										message.SetMessage(BALANCE_ALL_WALLET);
+										parameters.push_back(numefisier);
+										parameters.push_back(result);
+										message.Print(parameters);
+									}
 								}
 								else
 								{
-									cout<<"No transaction with category '"<<category<<"' is registered in "<<numefisier<<endl;
-									//cout<<"Balance for "<<numefisier<<" is "<<result;
+									//set message no category found in my.wallet
+									message.SetMessage(NO_TRANSACTION_WITH_CATEGORY);
+									parameters.push_back(category);
+									parameters.push_back(numefisier);
+									message.Print(parameters);
 								}
 							}				
 							else
 							{
-								//error must be set
-								cout<<"Error: file not found";
+								//set error could not find my.wallet
+								message.SetMessage(COULD_NOT_OPEN_PATH_BALANCE);
+								parameters.push_back(numefisier);
+								message.Print(parameters);
 							}
 						}
 						else
 						{
-							cout<<"error from Andreea: no default wallet in config"<<endl;
+							//set error could not find my.wallet in config file
+							message.SetMessage(NO_OUTPUT_CONFIGURED);
+							parameters.push_back(default_wallet);
+							message.Print(parameters);
 						}
 					}
 					else
 					{
-						cout<<"Error: nu gaseste fisierul config"<<endl;
+						//set error could not find config file
+						message.SetMessage(COULD_NOT_OPEN_CONFIG);
+						message.Print(parameters);
 					}
 					
 				}
 				else
 				{
-					//'-c' or '--category' is not correct
-					cout<<"error from Andreea: invalid parameters for 'balance'."<<endl;
+					//set error invalid parameters (parameters != -c or --category)
+					message.SetMessage(INVALID_PARAMETER);
+					parameters.push_back("balance");
+					message.Print(parameters);
 				}
 			}			
 		};
