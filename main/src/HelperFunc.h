@@ -37,5 +37,8 @@ class HelperFunc
 		
 		//function used to validate amount
 		bool IsValidNumber();
+		
+		//function used to check if a file exists
+		bool WalletExists(string &filename);
 };
 #endif

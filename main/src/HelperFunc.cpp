@@ -282,3 +282,22 @@ string HelperFunc::ValidateAmount()
 	return defaultAmount_m;
 }
 //==============================================================================
+
+bool HelperFunc::WalletExists(string filename) 
+{	
+    ifstream f(filename.c_str());
+	bool flag;
+	
+	// return if true wallet exists and false if it doesn't exist
+	if (f.good() == true)
+	{ 
+		flag = true;
+	}
+	else 
+	{
+		flag = false;
+	}
+	f.close();
+	return flag;
+}
+//==============================================================================
