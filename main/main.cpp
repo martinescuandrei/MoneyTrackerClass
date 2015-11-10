@@ -9,8 +9,6 @@ using namespace std;
 #include "MessageTypes_E.h"
 #include "Wallet.h"
 
-
-
 class Command
 {
 	public:
@@ -22,7 +20,6 @@ class Command
 		 {
 			// cout << "bla bla";
 		 }; 
-
 };
 
 class CreateWallet : public Command
@@ -156,7 +153,7 @@ class Transaction : public Command
 	{
 		params_m = params;
 	};
-	/* bool ValidateIncomeSpendCommands()
+    bool ValidateIncomeSpendCommands()
 	{
 	int k = 0;
 	int pozition = 0;
@@ -350,7 +347,7 @@ class Transaction : public Command
 	}
 	
 return flag;
-} */
+} 
 
 	void execute()
 	{

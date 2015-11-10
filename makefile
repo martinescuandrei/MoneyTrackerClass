@@ -13,18 +13,19 @@ CPP = $(COMPILER) $(CPPFLAGS)
 HEADERS = \
 	main\src\Wallet.h \
 	main\src\Help.h \
-	main\src\Config.h \
 	main\src\HelperFunc.h \
 	main\src\MessageHandler.h \
 	main\src\Command.h \
 	main\src\CommandFactory.h \
-	main\src\MessageTypes_E.h
+	main\src\MessageTypes_E.h \
+	main\src\GetBalance.h
 
 #first target, reached when calling make without a target
 moneytracker:
 # call make in 'main\src' subdir
 	$(MAKE) -C main\src
 	
+	$(MAKE) -C main\tst
 # call make with target 'moneytracker.exe'
 	$(MAKE) moneytracker.exe
 	
@@ -36,6 +37,14 @@ moneytracker.exe: mymain main\src\src.a
 mymain: main\main.cpp $(HEADERS)
 	$(CPP) -o main\main.o -c main\main.cpp $(INCLUDES)
 
+test:
+	$(MAKE) -C main\src
+	$(MAKE) moneytracker.exe
+	$(MAKE) -C main\tst test.exe
+	$(MAKE) test.exe
+	
+test.exe: main\tst\test.exe
+	main\tst\test.exe
 	
 clean:
 	$(MAKE) -C main\src clean
