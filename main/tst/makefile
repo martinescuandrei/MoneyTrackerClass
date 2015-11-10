@@ -34,14 +34,17 @@ TST_OBJECTS=\
 	TestConvertPath.o \
 	TestConvertPathToOriginal.o \
 	TestAddDecimalsToDefaultAmount.o \
-	TestCreateWallet.o
+	TestCreateWallet.o \
+	TestReturnFileasString.o \
+	TestGetBalance.o
 
 SRC_OBJECTS=\
 	$(SRC_DIR)\Wallet.o\
 	$(SRC_DIR)\Help.o\
 	$(SRC_DIR)\HelperFunc.o\
 	$(SRC_DIR)\MessageHandler.o\
-	$(SRC_DIR)\CommandFactory.o
+	$(SRC_DIR)\CommandFactory.o\
+	$(SRC_DIR)\GetBalance.o
 
 all: test.a test.exe
 	
@@ -100,14 +103,12 @@ TestAddDecimalsToDefaultAmount: TestAddDecimalsToDefaultAmount.o
 #	$(CPP) -o TestWalletName.exe TestWalletName.o
 #	..\src\DoCreateWallet.o ..\src\PrintError.o $(GTEST_LIB)
 
-#TestReturnFileasString: TestReturnFileasString.o ..\src\MainFunctions.o $(GTEST_LIB)
-#	$(CPP) -o TestReturnFileasString.exe TestReturnFileasString.o \
-#	..\src\MainFunctions.o $(GTEST_LIB)
+TestReturnFileasString: TestReturnFileasString.o ..\src\HelperFunc.o $(GTEST_LIB)
+	$(CPP) -o TestReturnFileasString.exe TestReturnFileasString.o \
+	..\src\HelperFunc.o $(GTEST_LIB)
 
-#TestGetBalance: TestGetBalance.o ..\src\DoCreateWallet.o 
-#	..\src\PrintError.o $(GTEST_LIB)
-#	$(CPP) -o TestGetBalance.exe TestGetBalance.o ..\src\DoCreateWallet.o 
-#	..\src\PrintError.o $(GTEST_LIB)
+TestGetBalance: TestGetBalance.o ..\src\Wallet.o ..\src\GetBalance.o $(GTEST_LIB)
+	$(CPP) -o TestGetBalance.exe TestGetBalance.o ..\src\Wallet.o ..\src\GetBalance.o$(GTEST_LIB)
 	
 #TestSpecifyCategory: TestSpecifyCategory.o ..\src\MainFunctions.o 
 #	..\src\ReadConfig.o ..\src\PrintError.o $(GTEST_LIB)
@@ -157,11 +158,11 @@ TestAddDecimalsToDefaultAmount.o: TestAddDecimalsToDefaultAmount.cpp $(HEADERS)
 #TestAddLineinWallet.o: TestAddLineinWallet.cpp $(HEADERS)
 #	$(CPP) $(GTEST_INC) -o TestAddLineinWallet.o -c TestAddLineinWallet.cpp
 
-#TestReturnFileasString.o: TestReturnFileasString.cpp $(HEADERS)
-#	$(CPP) $(GTEST_INC) -o TestReturnFileasString.o -c TestReturnFileasString.cpp
+TestReturnFileasString.o: TestReturnFileasString.cpp $(HEADERS)
+	$(CPP) $(GTEST_INC) -o TestReturnFileasString.o -c TestReturnFileasString.cpp
  	
-#TestGetBalance.o: TestGetBalance.cpp $(HEADERS)
-#	$(CPP) $(GTEST_INC) -o TestGetBalance.o -c TestGetBalance.cpp
+TestGetBalance.o: TestGetBalance.cpp $(HEADERS)
+	$(CPP) $(GTEST_INC) -o TestGetBalance.o -c TestGetBalance.cpp
 	
 #TestSpecifyCategory.o: TestSpecifyCategory.cpp $(HEADERS)
 #	$(CPP) $(GTEST_INC) -o TestSpecifyCategory.o -c TestSpecifyCategory.cpp
@@ -204,8 +205,13 @@ clean:
 	$(RM) TestConvertPathToOriginal.exe
 	$(RM) TestAddDecimalsToDefaultAmount.exe
 	$(RM) TestCreateWallet.exe
+	$(RM) TestGetBalance.exe
 	$(RM) my.wallet
 	$(RM) my.wallet1
 	$(RM) newWallet
 	$(RM) yetother
+	$(RM) WalletBalance
+	$(RM) WalletBalancee
+	$(RM) WalletBalanceee
+	$(RM) test.exe
 	
