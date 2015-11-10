@@ -283,7 +283,7 @@ string HelperFunc::ValidateAmount()
 }
 //==============================================================================
 
-bool HelperFunc::WalletExists(string filename) 
+bool HelperFunc::WalletExists(string &filename) 
 {	
     ifstream f(filename.c_str());
 	bool flag;

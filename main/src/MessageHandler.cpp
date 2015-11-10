@@ -4,7 +4,8 @@
 #include "MessageTypes_E.h"
 #include <iostream>
 
-MessageHandler::MessageHandler() : errorType(NO_MESSAGE);
+MessageHandler::MessageHandler() : errorType(NO_MESSAGE)
+{};
 
 MessageTypes_E MessageHandler::SetMessage(MessageTypes_E message)
 {
@@ -25,7 +26,7 @@ bool MessageHandler::IsSet()
 	return isSet;
 }
 
-void MessageHandler::PrintError(vector<string> parameters)
+void MessageHandler::Print(vector<string> parameters)
 {
 	switch (errorType)
 	{
@@ -132,7 +133,7 @@ void MessageHandler::PrintError(vector<string> parameters)
 						<< ".\n";
 		break;
 		case INVALID_COMMAND:
-			std::cout   << "error: invalid command !\n";
+			std::cout   << "error: invalid command !\n"
 						<< endl;
 		break;
 		case BALANCE_CATEGORY:
@@ -165,7 +166,7 @@ void MessageHandler::PrintError(vector<string> parameters)
 			std::cout   << "'" 
 						<< parameters.at(0)
 						<< "'"
-						<< " is not a valid configuration value.\n";
+						<< " is not a valid configuration value.\n"
 						<< endl;
 		break;
 		case INCOME_REGISTERED:
@@ -176,7 +177,7 @@ void MessageHandler::PrintError(vector<string> parameters)
 						<< " RON was registered to " 
 						<< "'"
 						<< parameters.at(2)
-						<< "'.\n"
+						<< "'.\n";
 		break;
 		case SPENDING_REGISTERED:
 			std::cout   << "Spending '" 
@@ -186,7 +187,7 @@ void MessageHandler::PrintError(vector<string> parameters)
 						<< " RON was registered to " 
 						<< "'"
 						<< parameters.at(2)
-						<< "'.\n"
+						<< "'.\n";
 		break;
 		case SET_DEFAULT_WALLET:
 			std::cout   << "'"
@@ -201,6 +202,9 @@ void MessageHandler::PrintError(vector<string> parameters)
 						<< endl;
 		break;
 		case ALL_GOOD:
+			std::cout	<< "";		
+		break;
+		case NO_MESSAGE:
 			std::cout	<< "";		
 		break;
 	}

@@ -1,7 +1,7 @@
 //Author: Andreea
 
-#ifndef MessageTypes_E
-#define MessageTypes_E
+#ifndef MessageTypes_E_H
+#define MessageTypes_E_H
 
 enum MessageTypes_E
 {
@@ -32,3 +32,4 @@ enum MessageTypes_E
 	SET_DEFAULT_WALLET , 
 	NO_OUTPUT_CONFIGURED , 
 };
+#endif

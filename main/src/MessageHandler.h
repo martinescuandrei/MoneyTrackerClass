@@ -1,21 +1,22 @@
 //Author: Andreea
 
-#ifndef PRINTERROR_H
-#define PRINTERROR_H
+#ifndef MESSAGEHANDLER_H
+#define MESSAGEHANDLER_H
 
 #include <string>
-#include "Types.h"
-
+#include "MessageTypes_E.h"
+#include <vector>
+using namespace std;
 class MessageHandler
 {
 	private:
-		MessageHandler_E errorType;
+		MessageTypes_E errorType;
 	public :
 	//printing the desired error message
 	//static void Print(MessageHandler error);
 	MessageHandler();
 	bool IsSet();
-	void SetMessage(MessageTypes_E message);
+	MessageTypes_E SetMessage(MessageTypes_E message);
 	void Print(vector<string> parameters);
 };
 
