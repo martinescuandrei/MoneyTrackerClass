@@ -4,7 +4,6 @@
 
 class Help {
 public:
-	Help();
-	void Commands();
+	static void Commands();
 };
 #endif

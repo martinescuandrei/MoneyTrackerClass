@@ -4,6 +4,11 @@
 #include <string>
 using namespace std;
 #include "HelperFunc.h"
+#include "Help.h"
+#include "MessageHandler.h"
+#include "MessageTypes_E.h"
+#include "Wallet.h"
+
 
 
 class Command
@@ -44,74 +49,99 @@ class CreateWallet : public Command
 
 	void execute()
 	{
-		std:: cout << "Primul element este :";
-		std::cout << params_m[0] << std::endl;
-		std::cout << params_m[1] << std::endl;
-		/* if (params.size() == 0) 
+		 vector<string> parameters;
+		 MessageHandler message; 
+		 if (params_m.size() == 0) 
 		{
-			cout << "Invalid parameters for create command.";
-			Help::Commands();
+			message.SetMessage(CREATE_NAME_MISSING);
+			parameters.push_back("create");
+			message.Print(parameters); 
+			//cout << "Invalid parameters for create command.";
+			//Help::Commands(); 
 		}
-		else if (params_m.size() == 1) 
+	    if (params_m.size() == 1) 
 		{
-			HelpFunctions path;
-			string walletNameConvert = path.ConvertPath(params[0]);
+			HelperFunc path(params_m[0],"+00.00");
+			string walletNameConvert = path.ConvertPath(params_m[0]);
 			
-			Wallet validateWallet(walletNameConvert);
+			//Wallet validateWallet(walletNameConvert,"+00.00");
+			bool flag = path.WalletExists(walletNameConvert);
 			
-			bool flag = validateWallet.WalletExists();
+			string walletName = path.ConvertPathToOriginal(walletNameConvert);
+			//sau folosim params[0]
+			params_m.erase(params_m.begin());
+			params_m.insert(params_m.begin(),walletName);
+			//params_m[0] = walletName;
+		
 			
 			if (flag == false)
 			{
-				//string walletName = path.ConvertPathToOriginal
-				//sau folosim params[0]
-				Wallet newWallet(params[0]); //sau newWallet(walletName);
-				newWallet.CreateWalletFile();
+			
+				//Wallet newWallet(walletName); 
+				Wallet newWallet(params_m); 
+				newWallet.Create();
 			}
 			else 
 			{
+			    message.SetMessage(WALLET_ALREADY_EXISTS);
+				parameters.push_back(params_m[0]);
+				message.Print(parameters); 
 				//PrintError::Print(WALLET_ALREADY_EXISTS, params[0], "+00.00");
 			}
-		else if (params_m.size() == 2)
+		}
+		if (params_m.size() == 2)
 		{
-			HelpFunctions path;
-			string walletNameConvert = path.ConvertPath(params[0]);
+			HelperFunc path(params_m[0],params_m[1]);
+			string walletNameConvert = path.ConvertPath(params_m[0]);
 			
-			Wallet validateWallet(walletNameConvert);
+			//Wallet validateWallet(walletNameConvert,"+00.00");
 			
-			bool flag = validateWallet.WalletExists();
+			bool flag = path.WalletExists(walletNameConvert);
+			
+			string walletName = path.ConvertPathToOriginal(walletNameConvert);
+				//sau folosim params[0]
+			//params_m[0] = walletName;
+			params_m.erase(params_m.begin());
+			params_m.insert(params_m.begin(),walletName);
 			
 			if (flag == false)
 			{
-				HelpFunctions validateNumber(params[1]);
+				HelperFunc validateNumber(params_m[0],params_m[1]);
 				bool flag1 = validateNumber.IsValidNumber();
 				if (flag1 == true)
 				{
 				string validAmount = validateNumber.ValidateAmount();
-				//string walletName = path.ConvertPathToOriginal
-				//sau folosim params[0]
-				Wallet newWallet(params[0], validAmount); //sau newWallet(walletName);
-				newWallet.CreateWalletFile();
+
+				Wallet newWallet(params_m); //sau newWallet(walletName);
+				newWallet.Create();
 				}
 				else 
 				{
-					std::cout << "Invalid parameters for create command.";
-					Help::Commands();
+					message.SetMessage(CREATE_INITIAL_AMMOUNT_INVALID);
+					parameters.push_back(params_m[1]);
+					parameters.push_back(params_m[0]);
+					message.Print(parameters); 
+					//std::cout << "Invalid parameters for create command.";
+					/* Help::Commands(); */
 				}
 			}
 			else 
 			{
+				message.SetMessage(WALLET_ALREADY_EXISTS);
+				parameters.push_back(params_m[0]);
+				message.Print(parameters); 
 				//PrintError::Print(WALLET_ALREADY_EXISTS, params[0], params[1]);
 			}
 		} 
-		else 
+		else if (params_m.size() > 2)
 		{
-			cout << "Invalid parameters for create.";
-			Help::Commands();
-		}*/
-		//ofstream somefile("wallet.txt");
-		cout<<"Am creat un wallet"<<endl;
-	};
+			message.SetMessage(INVALID_PARAMETER);
+			parameters.push_back("create");
+			message.Print(parameters); 
+			//cout << "Invalid parameters for create.";
+			/* Help::Commands(); */
+		}
+	}
 //aici o sa implementez ce face clasa createwallet + errori
 };
 class Transaction : public Command
@@ -340,7 +370,7 @@ return flag;
 					 << endl;
 		} */
 			
-	};
+	}
 		//aici o sa implementez ce face clasa transaction + errori
 		
 };
@@ -387,7 +417,7 @@ int main(int argc, char* argv[])
 		}
 		
 		//daca avem mai mult de 2 argumente salvez in vector ce este dupa comanda.
-		if (argc > 2)
+		if (argc >= 2)
 		{
 			//vector cu tot ce este dupa comanda
 			vector<string> params (&argv[2], &argv[2] +argc -2);

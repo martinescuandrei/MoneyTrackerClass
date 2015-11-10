@@ -2,8 +2,9 @@
 // author Tudor Chibulcutean
 
 #include "Wallet.h"
+#include <iostream>
 
-Wallet::Wallet(vector<string> params)
+Wallet::Wallet(vector<string> params):params_m(params)
 {}
 
 bool WalletExists(string walletName_m) 
@@ -27,31 +28,33 @@ bool WalletExists(string walletName_m)
 }
 
 void Wallet::Create()
-{
-	if(params.size() == 1)
+{//CREATE_INITIAL_AMMOUNT_INVALID
+//WRITE_TO_FILE
+	if(params_m.size() == 1)
 	{
-		walletName_m = params[0];
-		defaultAmount_m == "+00.00";
+		walletName_m = params_m[0];
+		defaultAmount_m = "+00.00";
 	}
-	else if(params.size == 2)
+	else if(params_m.size() == 2)
 	{
-		walletName_m = params[0];
-		defaultAmount_m == params[1];
+		walletName_m = params_m[0];
+		defaultAmount_m = params_m[1];
 	}
 	
 	
 	HelperFunc helper(walletName_m, defaultAmount_m);
 	
 	// convert path
-	string convertP = helper.ConvertPath(walletName_m);
-	
+	/* string convertP = helper.ConvertPath(walletName_m);
+	cout << convertP << endl;
 	//return bool if wallet exist
-	bool flag = WalletExists(walletName_m);
+
 	
 	//recreate path to initial 
 	string reconvert = helper.ConvertPathToOriginal(convertP);
-	
+	cout << reconvert << endl; */
 	// 
+	bool flag = WalletExists(walletName_m);
 	vector<string> parameters;
 	MessageHandler message;
 	
@@ -61,8 +64,14 @@ void Wallet::Create()
 		if (flag1 == true)
 		{	
 			//call function add decimals
+			if (defaultAmount_m == "+00.00") 
+			{	
+			}
+			else {
 			string returnAmount = helper.ValidateAmount();
 			defaultAmount_m = returnAmount;
+			}
+			
 			
 			// creating and opening the file
 			ofstream walletFile(walletName_m.c_str());
@@ -77,11 +86,10 @@ void Wallet::Create()
 			//checking if the file was created
 			if (!walletFile.good())
 			{
-				message.SetMessage(PATH_DOES_NOT_EXIST);
+			    message.SetMessage(PATH_DOES_NOT_EXIST);
 				parameters.push_back(walletName_m);
-				
-				message.Print(parameters);
-				
+				message.Print(parameters); 
+				/* cout << "error" ; */
 				/* PrintError::Print(PATH_DOES_NOT_EXIST,
 								walletName_m,
 								defaultAmount_m);
@@ -89,6 +97,7 @@ void Wallet::Create()
 			}
 						
 			// writing the initial amount in the wallet file
+			
 			walletFile << defaultAmount_m << " RON";
 			
 			if (!walletFile.good())
@@ -150,3 +159,5 @@ void Wallet::Write()
 {
 	
 }
+
+

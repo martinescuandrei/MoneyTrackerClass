@@ -13,7 +13,6 @@ public:
 
 using namespace std;
 
-Help::Help(){};
 
 void Help::Commands()
 {

@@ -4,8 +4,9 @@
 #ifndef WALLET_H
 #define WALLET_H
 #include "HelperFunc.h"
-#include "MessageTypes_E"
-#include "MessageHandler"
+#include "MessageTypes_E.h"
+#include "MessageHandler.h"
+#include <vector>
 
 class Wallet
 {
@@ -15,10 +16,11 @@ class Wallet
 		
 		// the default amount to be added to the wallet
 		string defaultAmount_m;
+		vector<string> params_m;
 	public: 
 		void Create();
 		void Write();
-		Wallet(std::string walletName,  std::string defaultAmount);
+		Wallet(vector<string> params);
 };
 
 
