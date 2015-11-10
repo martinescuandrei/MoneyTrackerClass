@@ -1,3 +1,5 @@
+//Author: Andrei Martinescu, v0.1 Class
+
 #include <iostream>
 #include <iomanip>
 /* #include "C:\learn\MoneyTrackerClass\main\inc\Help.h" */

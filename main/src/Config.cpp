@@ -1,3 +1,5 @@
+//Author: Andrei Martinescu, v0.1 Class
+
 #include "Config.h"
 #include <fstream>
 #include <string>
