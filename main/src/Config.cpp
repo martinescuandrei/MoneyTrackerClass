@@ -9,25 +9,6 @@
 
 /* using namespace std; */
 
-class Config
-{
-
-private:
-	
-	std::string content_m;
-	std::string change_m;
-	std::string default_change_m;
-	
-	public:
-	Config();
-	Config(std::string &change);
-	Config(std::string &content, std::string &default_change, std::string &change);
-	std::string ChangeConfigFile();
-	bool ReWriteConfigFile();
-	std::string ReturnDefaultNoUnderLine(std::string &change);
-	
-};
-
 Config::Config( std::string &change )
 {
 	change_m = change;
@@ -186,7 +167,7 @@ std::string Config::ChangeConfigFile()
 				}
 			}
 			// create string variable for adding changes in config
-			string add = "= " + default_change_m;
+			std::string add = "= " + default_change_m;
 			
 			//erase from default_walet to /n;
 			content_m.erase(pozitionSignEqual,

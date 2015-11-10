@@ -2,23 +2,29 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <string> 
+#include <fstream>
+#include <string>
+#include <algorithm>
+#include <cstdio>
+#include <iostream>
+/* using namespace std; */
+/* #include <string> */
 
 class Config
 {
 
 private:
 	
-	std::string content_m;
-	std::string change_m;
-	std::string default_change_m;
+	string content_m;
+	string change_m;
+	string default_change_m;
 	
 	public:
 	Config();
 	Config(std::string &change);
 	Config(std::string &content, std::string &default_change, std::string &change);
 	std::string ChangeConfigFile();
-	bool ReWriteConfigFile();
+	void ReWriteConfigFile();
 	std::string ReturnDefaultNoUnderLine(std::string &change);
 	
 };
