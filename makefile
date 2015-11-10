@@ -50,3 +50,7 @@ clean:
 	$(MAKE) -C main\src clean
 	$(RM) moneytracker.exe
 	$(RM) main\main.o
+	$(RM) my.wallet
+	$(RM) my.wallet1
+	$(RM) newWallet
+	$(RM) yetother
