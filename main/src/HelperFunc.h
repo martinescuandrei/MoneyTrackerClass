@@ -2,6 +2,9 @@
 #define HELPERFUNC_H
 #include <string>
 #include <fstream>
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
 using namespace std;
 
 class HelperFunc
@@ -14,8 +17,9 @@ class HelperFunc
 		string defaultAmount_m;
 	public:
 		//constructors	
-		HelperFunc();
-		HelperFunc(std::string walletName,  std::string defaultAmount);
+		HelperFunc()
+		{};
+		HelperFunc(string walletName, string defaultAmount);
 		
 		//function for converting path  Ex: C:\learn in C:/learn for validating
 		string ConvertPath(string &givenPath);
@@ -40,5 +44,8 @@ class HelperFunc
 		
 		//function used to check if a file exists
 		bool WalletExists(string &filename);
+		
+		//function used to read from configuration file
+		string GetDefaultWallet(string &contentConfigFile, string &checkVariable);
 };
 #endif

@@ -8,19 +8,122 @@ using namespace std;
 #include "MessageHandler.h"
 #include "MessageTypes_E.h"
 #include "Wallet.h"
+#include "GetBalance.h"
 
 class Command
 {
 	public:
 		 virtual void parseParams(vector<string> params)
 		{};
-		/*  virtual void Vect(vector<string> params)
-		{};  */ 
+ 
 		 virtual void execute()
-		 {
-			// cout << "bla bla";
-		 }; 
+		{}; 
 };
+
+
+class Balance : public Command
+{
+	private:
+		vector<string> params_m;
+	public:
+		//constructors
+		Balance()
+			{}
+		Balance(vector<string> params):params_m(params)
+			{}	
+			
+		void parseParams(vector<string>params)
+		{
+			params_m = params;
+		};
+
+		//execute GetBalance
+		void execute()
+		{
+			GetBalance balance;
+			HelperFunc help;
+			string category = "";
+			
+			if ((params_m.size() == 1) || (params_m.size() > 2))
+			{
+				cout<<"error from Andreea: invalid parameters for 'balance'."<<endl;		
+			}
+			else
+			{	
+				 //check if the parameter "-c" or "--category" is valid 
+				if ((params_m.size()==0) || ((params_m[0] == "-c") || (params_m[0] == "--category")))
+				{ 
+					//if there are parameters then place the category in a variable
+					if (params_m.size() != 0)
+					{
+						category = params_m[1];
+					}
+					
+					string numeconfig = "moneytracker.config";
+					string def = "default_wallet";
+					
+					//check if moneytracker.config exists
+					if (help.WalletExists(numeconfig))
+					{
+						//string numefisier="abc";
+						//get the content of moneytracker.config
+						string configContent = help.ReturnFileasString(numeconfig);
+						
+						//get the default wallet from moneytracker.config
+						string numefisier = help.GetDefaultWallet(configContent, def);
+					
+						//check if numele fisierului este configurat in config
+						if (numefisier != "")
+						{
+							//check if the file is open, else error
+							if (help.WalletExists(numefisier))
+							{
+								//return file as string
+								string content = help.ReturnFileasString(numefisier);
+								
+								//result will be calculated balance returned as string
+								string result = balance.PrintBalance(content,category);
+						
+								//check if category exists
+								bool isCategory = balance.CategoryExists();
+						
+								//print balance	
+								if ((isCategory) || (params_m.size() == 0))
+								{
+									cout<<"Balance for "<<category<<" in "<<numefisier<<" is "<<result;
+								}
+								else
+								{
+									cout<<"No transaction with category '"<<category<<"' is registered in "<<numefisier<<endl;
+									//cout<<"Balance for "<<numefisier<<" is "<<result;
+								}
+							}				
+							else
+							{
+								//error must be set
+								cout<<"Error: file not found";
+							}
+						}
+						else
+						{
+							cout<<"error from Andreea: no default wallet in config"<<endl;
+						}
+					}
+					else
+					{
+						cout<<"Error: nu gaseste fisierul config"<<endl;
+					}
+					
+				}
+				else
+				{
+					//'-c' or '--category' is not correct
+					cout<<"error from Andreea: invalid parameters for 'balance'."<<endl;
+				}
+			}			
+		};
+};
+
 
 class CreateWallet : public Command
 {
@@ -34,15 +137,6 @@ class CreateWallet : public Command
 	{
 		params_m = params;
 	};
-	
-	/* void Vect(vector<string> params)
-	{
-	    params_m = params;
-		for (vector<string>::const_iterator iter = params_m.begin();
-					iter != params_m.end(); ++iter)
-		cout << *iter << endl;  
-		
-	}; */
 
 	void execute()
 	{
@@ -390,6 +484,11 @@ class Factory
 					{
 						ptrCmd = new Transaction();
 			
+					}
+					
+				if (command == "balance")
+					{
+						ptrCmd = new Balance();
 					}
 				return ptrCmd;
 			}
