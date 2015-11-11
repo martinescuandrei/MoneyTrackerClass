@@ -65,33 +65,34 @@ class Balance : public Command
 					}
 					
 					//set default values 
-					string numeconfig = "moneytracker.config";
+					string configname= "moneytracker.config";
 					string default_wallet = "default_wallet";
 					
 					//check if moneytracker.config exists
-					if (help.WalletExists(numeconfig))
+					if (help.WalletExists(configname))
 					{
-						//string numefisier="abc";
 						//get the content of moneytracker.config
-						string configContent = help.ReturnFileasString(numeconfig);
+						string configContent = help.ReturnFileasString(configname);
 						
 						//get the default wallet from moneytracker.config
-						string numefisier = help.GetDefaultWallet(configContent, default_wallet);
+						string filename= help.GetDefaultWallet(configContent, default_wallet);
 					
-						//check if numele fisierului este configurat in config
-						if (numefisier != "")
+						//check if wallet name is configured in moneytracker.config
+						if ((filename != "NoDefaultWalletFound") && 
+							(filename != "NoWalletNameFound") && 
+							(filename != "EmptyConfig"))
 						{
 							//check if the file is open, else error
-							if (help.WalletExists(numefisier))
+							if (help.WalletExists(filename))
 							{
 								//return file as string
-								string content = help.ReturnFileasString(numefisier);
+								string content = help.ReturnFileasString(filename);
 								
 								//result_aux will be calculated balance returned as string
 								string result_aux = balance.PrintBalance(content,category);
 								
 								//create an object 'help2' to be able to use ValidateAmount
-								HelperFunc help2(numefisier,result_aux);
+								HelperFunc help2(filename,result_aux);
 								string result = help2.ValidateAmount();
 						
 								//check if category exists
@@ -105,7 +106,7 @@ class Balance : public Command
 										//set message balance succesfuly with category
 										message.SetMessage(BALANCE_CATEGORY);
 										parameters.push_back(category);
-										parameters.push_back(numefisier);
+										parameters.push_back(filename);
 										parameters.push_back(result);
 										message.Print(parameters);
 									}
@@ -113,7 +114,7 @@ class Balance : public Command
 									{
 										////set message balance succesfuly without category
 										message.SetMessage(BALANCE_ALL_WALLET);
-										parameters.push_back(numefisier);
+										parameters.push_back(filename);
 										parameters.push_back(result);
 										message.Print(parameters);
 									}
@@ -123,7 +124,7 @@ class Balance : public Command
 									//set message no category found in my.wallet
 									message.SetMessage(NO_TRANSACTION_WITH_CATEGORY);
 									parameters.push_back(category);
-									parameters.push_back(numefisier);
+									parameters.push_back(filename);
 									message.Print(parameters);
 								}
 							}				
@@ -131,15 +132,14 @@ class Balance : public Command
 							{
 								//set error could not find my.wallet
 								message.SetMessage(COULD_NOT_OPEN_PATH_BALANCE);
-								parameters.push_back(numefisier);
+								parameters.push_back(filename);
 								message.Print(parameters);
 							}
 						}
 						else
 						{
 							//set error could not find my.wallet in config file
-							message.SetMessage(NO_OUTPUT_CONFIGURED);
-							parameters.push_back(default_wallet);
+							message.SetMessage(NO_DEFAULT_WALLET);
 							message.Print(parameters);
 						}
 					}
