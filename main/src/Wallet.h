@@ -19,7 +19,10 @@ class Wallet
 		vector<string> params_m;
 	public: 
 		void Create();
-		void Write();
+		void Write(string amount, 
+				   string transaction, 
+				   string category,
+				   string wallet);
 		Wallet(vector<string> params);
 };
 
