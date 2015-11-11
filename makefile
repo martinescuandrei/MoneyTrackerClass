@@ -19,7 +19,11 @@ HEADERS = \
 	main\src\CommandFactory.h \
 	main\src\MessageTypes_E.h \
 	main\src\GetBalance.h \
-	main\src\Config.h
+	main\src\Config.h \
+	main\src\CreateWallet.h \
+	main\src\Command.h \
+	main\src\ChangeConfig.h \
+	main\src\Balance.h
 	
 
 #first target, reached when calling make without a target

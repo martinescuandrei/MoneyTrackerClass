@@ -26,7 +26,14 @@ HEADERS = \
 	$(SRC_DIR)\HelperFunc.h \
 	$(SRC_DIR)\MessageHandler.h \
 	$(SRC_DIR)\CommandFactory.h \
-	$(SRC_DIR)\MessageTypes_E.h
+	$(SRC_DIR)\MessageTypes_E.h \
+	$(SRC_DIR)\CreateWallet.h \
+	$(SRC_DIR)\Command.h \
+	$(SRC_DIR)\Config.h \
+	$(SRC_DIR)\ChangeConfig.h \
+	$(SRC_DIR)\GetBalance.h \
+	$(SRC_DIR)\Balance.h \
+	
 
 TST_OBJECTS=\
 	TestRemoveStartingZeroes.o \
@@ -44,7 +51,11 @@ SRC_OBJECTS=\
 	$(SRC_DIR)\HelperFunc.o\
 	$(SRC_DIR)\MessageHandler.o\
 	$(SRC_DIR)\CommandFactory.o\
-	$(SRC_DIR)\GetBalance.o
+	$(SRC_DIR)\GetBalance.o\
+	$(SRC_DIR)\Config.o\
+	$(SRC_DIR)\ChangeConfig.o \
+	$(SRC_DIR)\Command.o \
+	$(SRC_DIR)\Balance.o
 
 all: test.a test.exe
 	
@@ -177,23 +188,37 @@ TestGetBalance.o: TestGetBalance.cpp $(HEADERS)
 #	$(CPP) $(GTEST_INC) -o TestChangeDefWallet.o -c TestChangeDefWallet.cpp
 #..\main.o:
 #	..\$(MAKE) -c ..\main.o	
+
 	
-..\src\DoCreateWallet.o:
+..\src\Wallet.o:
 	$(MAKE) -C ..\src\Wallet.o
 
-..\src\ValidateCreate.o:
+..\src\Help.o:
 	$(MAKE) -c ..\src\Help.o
 	
-..\src\PrintError.o:
+..\src\HelperFunc.o:
 	$(MAKE) -c ..\src\HelperFunc.o
 
-..\src\MainFunctions.o:
+..\src\MessageHandler.o:
 	$(MAKE) -c ..\src\MessageHandler.o
 
-..\src\ReadConfig.o:
+..\src\CommandFactory.o:
 	$(MAKE) -c ..\src\CommandFactory.o
 
+..\src\GetBalance.o:
+	$(MAKE) -c ..\src\GetBalance.o
 
+..\src\Config.o:
+	$(MAKE) -c ..\src\Config.o
+
+..\src\ChangeConfig.o:
+	$(MAKE) -c ..\src\ChangeConfig.o
+	
+..\src\Command.o:
+	$(MAKE) -c ..\src\Command.o
+
+..\src\Balance.o:
+	$(MAKE) -c ..\src\Balance.o
 	
 clean:
 	$(RM) test.a
@@ -205,6 +230,7 @@ clean:
 	$(RM) TestConvertPathToOriginal.exe
 	$(RM) TestAddDecimalsToDefaultAmount.exe
 	$(RM) TestCreateWallet.exe
+	$(RM) TestReturnFileasString.exe
 	$(RM) TestGetBalance.exe
 	$(RM) my.wallet
 	$(RM) my.wallet1

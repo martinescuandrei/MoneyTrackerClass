@@ -3,11 +3,11 @@
 #include "Config.h"
 #include <fstream>
 #include <string>
-/* #include <iostream> */
+#include <iostream> 
 #include <algorithm>
 #include <cstdio>
 
-/* using namespace std; */
+ using namespace std;
 
 Config::Config( std::string &change )
 {
@@ -30,16 +30,18 @@ bool Config::ReWriteConfigFile()
 	ofs.open("moneytracker.config");
 	bool openn = ofs.is_open();
 	ofs.open("moneytracker.config", std::ofstream::out | std::ofstream::trunc);
-	
+	ofs.close();
+	//cout << content_m <<endl;
 	// add new content to config file
+	ofs.open("moneytracker.config");
 	ofs << content_m;
 	
 	//Print::
 	
-/* 	cout << "'"
+ 	cout << "'"
 		 << default_change_m
 		 << "'"
-		 << " was configured as default.\n"; */
+		 << " was configured as default.\n"; 
 	ofs.close();
 	
 	return openn;
@@ -85,6 +87,7 @@ std::string Config::ChangeConfigFile()
 	if (content_m.find(change_m) == std::string::npos)
 	{ 	
 		// if not found
+		//Config print;
 		std::string output = ReturnDefaultNoUnderLine(change_m);
 		/* std::cout << "error: no " 
 		          << output 
@@ -179,6 +182,7 @@ std::string Config::ChangeConfigFile()
 		else 
 		{
 			// print message for no parameter found 
+			//Config print;
 			std::string output = ReturnDefaultNoUnderLine(change_m);
 			/* std::cout << "error: no " 
 			          << output 

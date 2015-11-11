@@ -19,8 +19,9 @@ private:
 	Config(std::string &content, std::string &default_change, std::string &change);
 	std::string ChangeConfigFile();
 	bool ReWriteConfigFile();
-	std::string ReturnDefaultNoUnderLine(std::string &change);
+	//std::string ReturnDefaultNoUnderLine(std::string &change);
 	
 };
+std::string ReturnDefaultNoUnderLine(std::string &change);
 
 #endif

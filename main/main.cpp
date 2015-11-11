@@ -9,270 +9,13 @@ using namespace std;
 #include "MessageTypes_E.h"
 #include "Wallet.h"
 #include "GetBalance.h"
-
-class Command
-{
-	public:
-		 virtual void parseParams(vector<string> params)
-		{};
- 
-		 virtual void execute()
-		{}; 
-};
+#include "Config.h"
+#include "CreateWallet.h"
+#include "Command.h"
+#include "ChangeConfig.h"
+#include "Balance.h"
 
 
-class Balance : public Command
-{
-	private:
-		vector<string> params_m;
-	public:
-		//constructors
-		Balance()
-			{}
-		Balance(vector<string> params):params_m(params)
-			{}	
-			
-		void parseParams(vector<string>params)
-		{
-			params_m = params;
-		};
-
-		//execute GetBalance
-		void execute()
-		{
-			GetBalance balance;
-			HelperFunc help;
-			string category = "";
-			vector<string> parameters;
-			MessageHandler message;
-			
-			if ((params_m.size() == 1) || (params_m.size() > 2))
-			{
-				//set error invalid parameters (parameters = 1 or >2)
-				message.SetMessage(INVALID_PARAMETER);
-				parameters.push_back("balance");
-				message.Print(parameters);
-			}
-			else
-			{	
-				 //check if the parameter "-c" or "--category" is valid or no parameters
-				if ((params_m.size()==0) || ((params_m[0] == "-c") || (params_m[0] == "--category")))
-				{ 
-					//if there are parameters then place the category in a variable
-					if (params_m.size() != 0)
-					{
-						category = params_m[1];
-					}
-					
-					//set default values 
-					string numeconfig = "moneytracker.config";
-					string default_wallet = "default_wallet";
-					
-					//check if moneytracker.config exists
-					if (help.WalletExists(numeconfig))
-					{
-						//string numefisier="abc";
-						//get the content of moneytracker.config
-						string configContent = help.ReturnFileasString(numeconfig);
-						
-						//get the default wallet from moneytracker.config
-						string numefisier = help.GetDefaultWallet(configContent, default_wallet);
-					
-						//check if numele fisierului este configurat in config
-						if (numefisier != "")
-						{
-							//check if the file is open, else error
-							if (help.WalletExists(numefisier))
-							{
-								//return file as string
-								string content = help.ReturnFileasString(numefisier);
-								
-								//result_aux will be calculated balance returned as string
-								string result_aux = balance.PrintBalance(content,category);
-								
-								//create an object 'help2' to be able to use ValidateAmount
-								HelperFunc help2(numefisier,result_aux);
-								string result = help2.ValidateAmount();
-						
-								//check if category exists
-								bool isCategory = balance.CategoryExists();
-						
-								//print balance	
-								if ((isCategory) || (params_m.size() == 0))
-								{
-									if (isCategory)
-									{
-										//set message balance succesfuly with category
-										message.SetMessage(BALANCE_CATEGORY);
-										parameters.push_back(category);
-										parameters.push_back(numefisier);
-										parameters.push_back(result);
-										message.Print(parameters);
-									}
-									else
-									{
-										////set message balance succesfuly without category
-										message.SetMessage(BALANCE_ALL_WALLET);
-										parameters.push_back(numefisier);
-										parameters.push_back(result);
-										message.Print(parameters);
-									}
-								}
-								else
-								{
-									//set message no category found in my.wallet
-									message.SetMessage(NO_TRANSACTION_WITH_CATEGORY);
-									parameters.push_back(category);
-									parameters.push_back(numefisier);
-									message.Print(parameters);
-								}
-							}				
-							else
-							{
-								//set error could not find my.wallet
-								message.SetMessage(COULD_NOT_OPEN_PATH_BALANCE);
-								parameters.push_back(numefisier);
-								message.Print(parameters);
-							}
-						}
-						else
-						{
-							//set error could not find my.wallet in config file
-							message.SetMessage(NO_OUTPUT_CONFIGURED);
-							parameters.push_back(default_wallet);
-							message.Print(parameters);
-						}
-					}
-					else
-					{
-						//set error could not find config file
-						message.SetMessage(COULD_NOT_OPEN_CONFIG);
-						message.Print(parameters);
-					}
-					
-				}
-				else
-				{
-					//set error invalid parameters (parameters != -c or --category)
-					message.SetMessage(INVALID_PARAMETER);
-					parameters.push_back("balance");
-					message.Print(parameters);
-				}
-			}			
-		};
-};
-
-
-class CreateWallet : public Command
-{
-	public:
-	vector<string> params_m;
-	CreateWallet()
-	{} 
-	CreateWallet(vector<string> params):params_m(params)
-	{}
-	void parseParams(vector<string> params)
-	{
-		params_m = params;
-	};
-
-	void execute()
-	{
-		 vector<string> parameters;
-		 MessageHandler message; 
-		 if (params_m.size() == 0) 
-		{
-			message.SetMessage(CREATE_NAME_MISSING);
-			parameters.push_back("create");
-			message.Print(parameters); 
-			//cout << "Invalid parameters for create command.";
-			//Help::Commands(); 
-		}
-	    if (params_m.size() == 1) 
-		{
-			HelperFunc path(params_m[0],"+00.00");
-			string walletNameConvert = path.ConvertPath(params_m[0]);
-			
-			//Wallet validateWallet(walletNameConvert,"+00.00");
-			bool flag = path.WalletExists(walletNameConvert);
-			
-			string walletName = path.ConvertPathToOriginal(walletNameConvert);
-			//sau folosim params[0]
-			params_m.erase(params_m.begin());
-			params_m.insert(params_m.begin(),walletName);
-			//params_m[0] = walletName;
-		
-			
-			if (flag == false)
-			{
-			
-				//Wallet newWallet(walletName); 
-				Wallet newWallet(params_m); 
-				newWallet.Create();
-			}
-			else 
-			{
-			    message.SetMessage(WALLET_ALREADY_EXISTS);
-				parameters.push_back(params_m[0]);
-				message.Print(parameters); 
-				//PrintError::Print(WALLET_ALREADY_EXISTS, params[0], "+00.00");
-			}
-		}
-		if (params_m.size() == 2)
-		{
-			HelperFunc path(params_m[0],params_m[1]);
-			string walletNameConvert = path.ConvertPath(params_m[0]);
-			
-			//Wallet validateWallet(walletNameConvert,"+00.00");
-			
-			bool flag = path.WalletExists(walletNameConvert);
-			
-			string walletName = path.ConvertPathToOriginal(walletNameConvert);
-				//sau folosim params[0]
-			//params_m[0] = walletName;
-			params_m.erase(params_m.begin());
-			params_m.insert(params_m.begin(),walletName);
-			
-			if (flag == false)
-			{
-				HelperFunc validateNumber(params_m[0],params_m[1]);
-				bool flag1 = validateNumber.IsValidNumber();
-				if (flag1 == true)
-				{
-				string validAmount = validateNumber.ValidateAmount();
-
-				Wallet newWallet(params_m); //sau newWallet(walletName);
-				newWallet.Create();
-				}
-				else 
-				{
-					message.SetMessage(CREATE_INITIAL_AMMOUNT_INVALID);
-					parameters.push_back(params_m[1]);
-					parameters.push_back(params_m[0]);
-					message.Print(parameters); 
-					//std::cout << "Invalid parameters for create command.";
-					/* Help::Commands(); */
-				}
-			}
-			else 
-			{
-				message.SetMessage(WALLET_ALREADY_EXISTS);
-				parameters.push_back(params_m[0]);
-				message.Print(parameters); 
-				//PrintError::Print(WALLET_ALREADY_EXISTS, params[0], params[1]);
-			}
-		} 
-		else if (params_m.size() > 2)
-		{
-			message.SetMessage(INVALID_PARAMETER);
-			parameters.push_back("create");
-			message.Print(parameters); 
-			//cout << "Invalid parameters for create.";
-			/* Help::Commands(); */
-		}
-	}
-//aici o sa implementez ce face clasa createwallet + errori
-};
 class Transaction : public Command
 {
 	public:
@@ -504,6 +247,203 @@ return flag;
 		
 };
 
+/* class ChangeConfig : public Command 
+{	public:
+	vector<string> params_m;
+	ChangeConfig()
+	{} 
+	ChangeConfig(vector<string> params):params_m(params)
+	{}
+	void parseParams(vector<string> params)
+	{
+		params_m = params;
+	};
+
+	void execute()
+	{
+		// creating string with name of config
+		std::string configString = "moneytracker.config";
+		// obtain the content of config
+		HelperFunc configRead("moneytracker.config","+00.00");
+		std::string printConfig = configRead.ReturnFileasString(configString);
+		std::string content;
+		bool flag1 = true;
+		bool flag2 = true;
+		bool flag3 = true;
+		bool flag4 = true;
+		bool flag5 = true;
+		int pozition = 0;
+		size_t l=0;
+		//create a string array with  2 pozitions
+		std::string * arguments = new string[2];
+		// if only 2 arguments (moneytracker config) print config
+		if (params_m.size() == 0) 
+		{
+			cout << printConfig;
+		}
+		// else validate the commands
+		else if (params_m.size() > 0)
+		{
+			// check case we have 3 parameters and one is == , print error
+			for (int i =0; i<(int)params_m.size(); i++)
+			{
+				
+				if (params_m[i] == "==")
+				{
+					//cout << params_m[i] << endl;
+					cout << "error: invalid parameters for 'config'."<<endl;
+					flag1 = false;
+					break;
+				}
+			}
+			
+			//check if we don't have 4 arguments and one has = at the end
+			std::string stringCheck = params_m[0];
+			if ((stringCheck[stringCheck.length()-1]== '=')&&(params_m.size() != 2))
+			{
+				//cout << stringCheck;
+					cout << "error: invalid parameters for 'config'."<<endl;
+					flag2 = false;
+				
+			}
+			//check if one parameter has == at the end 
+			std::string stringCheckk = params_m[0];
+			if ((stringCheck[stringCheck.length()-1]== '=')
+				&&(stringCheck[stringCheck.length()-2]== '='))
+			{
+				//cout << stringCheckk;
+					cout << "error: invalid parameters for 'config'."<<endl;
+					flag3 = false;
+				
+			}
+
+			// validate case
+			if (((params_m.size() == 1) || (params_m.size() == 2) || (params_m.size() == 3))&&(flag1==true)
+				&&(flag2==true)&&(flag3==true))
+			{
+				//obtain a string with all parameters
+				for (int i =0; i<(int)params_m.size(); i++)
+				{
+					content = content + params_m[i];
+				}
+				//cout << content <<endl;
+				//check for = sign
+				for (size_t i=0; i<content.length(); i++)
+				{
+					if (content[i] == '=') 
+					{
+						pozition = i;
+						break;
+					}
+				}
+				//check if we don't have sign =
+				for (size_t i=0; i<content.length(); i++)
+				{
+					if (content[i] != '=') 
+					{
+						l++;
+					}
+				}
+				//print error if we don't have sign =
+				if ((l == content.length())&&(flag1==true)&&
+				(flag2==true)&&(flag3==true))
+				{
+					cout << "error: invalid parameters for 'config'."<<endl;
+					flag4 = false;
+				}
+				// obtain first parameter and second
+				arguments[0] = content.substr(0,pozition);
+				arguments[1] = content.substr(pozition+1,
+				content.length()-pozition-1);
+			}
+			// print error if we don't have enough arguments
+			else if ((flag1==true)&&(flag2==true)&&(flag3==true)&&(flag4==true))
+			{
+				std::cout <<"error: invalid parameters for 'config'." <<endl;
+				flag5 = false;
+			}
+			// check for validating the arguments
+			for (int i =0; i<2; i++)
+			{
+				
+				 std:: string checkIfCorect = arguments[0];
+				if ((arguments[i].find("default_wallet") != std::string::npos)||
+				(arguments[i].find("default_currency") != std::string::npos)||
+				(arguments[i].find("default_income_category") != std::string::npos)||
+				(arguments[i].find("default_spending_category") != std::string::npos)||
+				(arguments[i].find("currencies") != std::string::npos)||
+				(arguments[i].find("rate_EUR_RON") != std::string::npos)||
+				(arguments[i].find("rate_RON_EUR") != std::string::npos)||
+				(arguments[i].find("rate_USD_RON") != std::string::npos)||
+				(arguments[i].find("rate_EUR_USD") != std::string::npos))
+					{
+						// check if first parameter is correct
+						if ((checkIfCorect == "default_wallet")||
+							(checkIfCorect == "default_currency")||
+							(checkIfCorect == "default_income_category")||
+							(checkIfCorect == "default_spending_category")||
+							(checkIfCorect == "currencies")||
+							(checkIfCorect == "rate_EUR_RON")||
+							(checkIfCorect == "rate_RON_EUR")||
+							(checkIfCorect == "rate_USD_RON")||
+							(checkIfCorect == "rate_EUR_USD"))
+							{
+
+								std:: string changeValue = arguments[1];
+								//check if second parameter is null
+								if ((changeValue == "")&&(flag1==true)
+									&&(flag2==true)&&(flag3==true)&&
+								(flag4==true)&&(flag5==true))
+								{
+									cout << "error: invalid parameters for 'config'."
+									<< endl;
+									break;
+								}
+								// else change config
+								else
+								{
+									// cout << printConfig << endl;
+									//cout << changeValue << endl;
+									//cout << checkIfCorect << endl; *
+								Config changeConfig(printConfig, changeValue, 
+								checkIfCorect);
+								std::string newConfig = changeConfig.ChangeConfigFile();
+								//cout << newConfig << endl;
+								Config reWrite(newConfig,changeValue,checkIfCorect);
+								reWrite.ReWriteConfigFile(); 
+								break;
+								}
+							}
+						// else if first parameter is not correct print error
+						else 
+						{
+							if ((flag1==true)&&(flag2==true)&&(flag3==true)
+								&&(flag4==true)&&(flag5==true))
+							{
+							cout << "'" 
+								 << checkIfCorect
+								 << "'"
+								 << " is not a valid configuration value.\n";
+								 break;
+							}
+						}   
+					}
+					//else we don't found a match for first parameter in config
+					//print error
+					else if ((flag1==true)&&(flag2==true)&&(flag3==true)
+						&&(flag4==true)&&(flag5==true))
+					{
+						cout << "'" 
+							 << checkIfCorect
+							 << "'"
+							 << " is not a valid configuration value.\n";
+						break;
+					}
+			}
+		}
+	}
+}; */
+
 class Factory
 {
 		Command* ptrCmd;
@@ -528,6 +468,11 @@ class Factory
 					{
 						ptrCmd = new Balance();
 					}
+					
+				if (command == "config")
+					{
+						ptrCmd = new ChangeConfig();
+					}  
 				return ptrCmd;
 			}
 };
