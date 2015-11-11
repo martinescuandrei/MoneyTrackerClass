@@ -33,6 +33,8 @@ HEADERS = \
 	$(SRC_DIR)\ChangeConfig.h \
 	$(SRC_DIR)\GetBalance.h \
 	$(SRC_DIR)\Balance.h \
+	$(SRC_DIR)\Transaction.h \
+	$(SRC_DIR)\Factory.h
 	
 
 TST_OBJECTS=\
@@ -55,7 +57,10 @@ SRC_OBJECTS=\
 	$(SRC_DIR)\Config.o\
 	$(SRC_DIR)\ChangeConfig.o \
 	$(SRC_DIR)\Command.o \
-	$(SRC_DIR)\Balance.o
+	$(SRC_DIR)\Balance.o \
+	$(SRC_DIR)\Transaction.o \
+	$(SRC_DIR)\Factory.o \
+	$(SRC_DIR)\CreateWallet.o
 
 all: test.a test.exe
 	
@@ -189,7 +194,10 @@ TestGetBalance.o: TestGetBalance.cpp $(HEADERS)
 #..\main.o:
 #	..\$(MAKE) -c ..\main.o	
 
-	
+
+..\src\CreateWallet.o:
+	$(MAKE) -C ..\src\CreateWallet.o
+
 ..\src\Wallet.o:
 	$(MAKE) -C ..\src\Wallet.o
 
@@ -219,6 +227,12 @@ TestGetBalance.o: TestGetBalance.cpp $(HEADERS)
 
 ..\src\Balance.o:
 	$(MAKE) -c ..\src\Balance.o
+	
+..\src\Transaction.o:
+	$(MAKE) -c ..\src\Transaction.o
+
+..\src\Factory.o:
+	$(MAKE) -c ..\src\Factory.o
 	
 clean:
 	$(RM) test.a

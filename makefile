@@ -23,7 +23,9 @@ HEADERS = \
 	main\src\CreateWallet.h \
 	main\src\Command.h \
 	main\src\ChangeConfig.h \
-	main\src\Balance.h
+	main\src\Balance.h \
+	main\src\Transaction.h \
+	main\src\Factory.h
 	
 
 #first target, reached when calling make without a target

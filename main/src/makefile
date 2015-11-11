@@ -23,7 +23,9 @@ HEADERS = \
 	CreateWallet.h \
 	Command.h \
 	ChangeConfig.h \
-	Balance.h
+	Balance.h \
+	Transaction.h \
+	Factory.h
 
 SRC_OBJECTS=\
 	Wallet.o\
@@ -36,7 +38,9 @@ SRC_OBJECTS=\
 	CreateWallet.o \
 	Command.o \
 	ChangeConfig.o \
-	Balance.o
+	Balance.o \
+	Transaction.o \
+	Factory.o
 	
 SRC_CPP=\
 	Wallet.cpp\
@@ -49,7 +53,9 @@ SRC_CPP=\
 	CreateWallet.cpp \
 	Command.cpp \
 	ChangeConfig.cpp \
-	Balance.cpp
+	Balance.cpp \
+	Transaction.cpp \
+	Factory.cpp
 
 src.a: $(SRC_OBJECTS)
 	$(AR) src.a $(SRC_OBJECTS) 
@@ -86,6 +92,13 @@ ChangeConfig.o:ChangeConfig.cpp $(HEADERS)
 
 Balance.o:Balance.cpp $(HEADERS)
 	$(CPP) -o Balance.o -c Balance.cpp
+	
+Transaction.o:Transaction.cpp $(HEADERS)
+	$(CPP) -o Transaction.o -c Transaction.cpp
+
+Factory.o:Factory.cpp $(HEADERS)
+	$(CPP) -o Factory.o -c Factory.cpp
+
 clean:
 	$(RM) src.a
 	$(RM) $(SRC_OBJECTS)
