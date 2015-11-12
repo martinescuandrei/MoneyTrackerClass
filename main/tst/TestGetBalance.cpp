@@ -76,70 +76,72 @@ TEST(TestGetBalance, PosAmountBalance)
 }
 //=============================================================================
 
-/* TEST(TestGetBalance, IncomeAmountBalance)
+ TEST(TestGetBalance, IncomeAmountBalance)
 {
 	GetBalance balance;
 	
 	vector<string> params;
-	params.push_back("main\\tst\\WalletBalance");
+	params.push_back("main\\tst\\WalletB");
 	params.push_back("+200.55");
+	/* Wallet *wallet = new Wallet(params);
+	wallet->Create(); */
+	
 	Wallet wallet(params);
 	wallet.Create();
 	
- 	// Create Wallet just with initial amount
-	DoCreateWallet wallet("main\\tst\\WalletBalance","+200.55");
-	wallet.CreateWalletFile(); 
-	
-	//add income
 	std::string amountt = "+100";
 	std::string choise = "income";
 	std::string category1 = "salary";
-	std::string wallet5 = "";
-	DoCreateWallet wallet1("main\\tst\\WalletBalance",amountt);
-	wallet1.AddLineInWalletFile(amountt, choise, category1, wallet5);
+	std::string wallet5 = "main\\tst\\WalletB";
+	
+	wallet.AddLineInWalletFile(amountt, choise, category1, wallet5);
 	
 	//add income
-	amountt = "+700";
-	choise = "income";
-	category1 = "bonus";
-	DoCreateWallet wallet2("main\\tst\\WalletBalance",amountt);
-	wallet2.AddLineInWalletFile(amountt, choise, category1, wallet5);
+	std::string amounttt = "+700";
+	std::string choisee = "income";
+	std::string category2 = "bonus";
+	
+	wallet.AddLineInWalletFile(amounttt, choisee, category2, wallet5);
 	
 	//convert file content to string
-	std::string walletFile = ReturnWalletString(wallet);
-	//std :: cout<<walletFile;
+	std::string walletFile = ReturnWalletString("main\\tst\\WalletB");
 	
 	EXPECT_EQ("+1000.55",balance.PrintBalance(walletFile,""));
-} */
+} 
 //=============================================================================
 
-/* TEST(TestGetBalance, SpendAmountBalance)
+ TEST(TestGetBalance, SpendAmountBalance)
 {
 	GetBalance balance;
 	
-	// Create Wallet just with initial amount
-	DoCreateWallet wallet("main\\tst\\WalletBalance","+200.55");
-	wallet.CreateWalletFile();
+	vector<string> params;
+	params.push_back("main\\tst\\WalletB1");
+	params.push_back("+200.55");
+   // Wallet *wallet = new Wallet(params);
+	//wallet->Create(); 
 	
-	//add income
-	std::string amountt = "100";
+	Wallet wallet(params);
+	wallet.Create();
+	
+	std::string amountt = "+100";
 	std::string choise = "spend";
 	std::string category1 = "donation";
-	std::string wallet6 = "";
-	DoCreateWallet wallet1("main\\tst\\WalletBalance",amountt);
-	wallet1.AddLineInWalletFile(amountt, choise, category1, wallet6);
+	std::string wallet5 = "main\\tst\\WalletB1";
+	
+	wallet.AddLineInWalletFile(amountt, choise, category1, wallet5);
 	
 	//add income
-	amountt = "700";
-	choise = "spend";
-	category1 = "food";
-	DoCreateWallet wallet2("main\\tst\\WalletBalance",amountt);
-	wallet2.AddLineInWalletFile(amountt, choise, category1, wallet6);
+	std::string amounttt = "+700";
+	std::string choisee = "spend";
+	std::string category2 = "food";
+	
+	wallet.AddLineInWalletFile(amounttt, choisee, category2, wallet5);
+	
 	
 	//convert file content to string
-	std::string walletFile = ReturnWalletString(wallet);
+	std::string walletFile = ReturnWalletString("main\\tst\\WalletB1");
 	//std :: cout<<walletFile;
 	
 	EXPECT_EQ("-599.45",balance.PrintBalance(walletFile,""));
-} */
+} 
 //============================================================================= */

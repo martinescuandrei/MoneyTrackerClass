@@ -249,4 +249,7 @@ clean:
 	$(RM) WalletBalancee
 	$(RM) WalletBalanceee
 	$(RM) test.exe
+	$(RM) WalletB
+	$(RM) WalletB1
+	$(RM) WalletTest.txt
 	

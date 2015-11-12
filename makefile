@@ -61,3 +61,4 @@ clean:
 	$(RM) my.wallet1
 	$(RM) newWallet
 	$(RM) yetother
+	$(RM) mywallet

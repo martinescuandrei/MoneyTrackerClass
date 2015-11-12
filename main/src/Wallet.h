@@ -21,6 +21,10 @@ class Wallet
 				   string transaction, 
 				   string category,
 				   string wallet);
+		void AddLineInWalletFile(string &amount, 
+						 string &transaction, 
+						 string &category, 
+						 string &wallet);
 		Wallet(){};
 		~Wallet(){};
 };

@@ -10,7 +10,7 @@ Wallet::Wallet(vector<string> params):params_m(params)
 {}
 
 
-void AddLineInWalletFile(string &amount, 
+void Wallet::AddLineInWalletFile(string &amount, 
 						 string &transaction, 
 						 string &category, 
 						 string &wallet)
@@ -376,7 +376,7 @@ void Wallet::Write(string amount,
 			if (flag == true )
 			{	
 				//if valid path then add new line in wallet	
-				AddLineInWalletFile(amount, transaction, category ,wallet);
+				Wallet::AddLineInWalletFile(amount, transaction, category ,wallet);
 			}
 			
 			// if wallet doesn't exist
@@ -415,7 +415,7 @@ void Wallet::Write(string amount,
 		if (flag == true )
 		{	
 			//if valid path then add new line in wallet	
-			AddLineInWalletFile(amount, transaction, category, originalPath);
+			Wallet::AddLineInWalletFile(amount, transaction, category, originalPath);
 		}
 		
 		// if wallet doesn't exist
