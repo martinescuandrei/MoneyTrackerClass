@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
+#include <stdio.h>
 
 // function to return wallet as string
  std::string ReturnWalletString(const std::string &filename)
@@ -38,6 +39,7 @@
 	std::string balancce = balance.PrintBalance(walletFile,"");
 	
  	EXPECT_EQ("+0",balancce); 
+	remove("main\\tst\\WalletBalance");
 }
 //=============================================================================
 
@@ -55,7 +57,7 @@
 	std::string walletFile = ReturnWalletString("main\\tst\\WalletBalancee");
 	
 	EXPECT_EQ("-200.55",balance.PrintBalance(walletFile,""));
-
+	remove("main\\tst\\WalletBalancee");
 }
 //=============================================================================
 
@@ -73,6 +75,7 @@ TEST(TestGetBalance, PosAmountBalance)
 	std::string walletFile = ReturnWalletString("main\\tst\\WalletBalanceee");
 	
 	EXPECT_EQ("+200.55",balance.PrintBalance(walletFile,""));
+	remove("main\\tst\\WalletBalanceee");
 }
 //=============================================================================
 
@@ -107,6 +110,7 @@ TEST(TestGetBalance, PosAmountBalance)
 	std::string walletFile = ReturnWalletString("main\\tst\\WalletB");
 	
 	EXPECT_EQ("+1000.55",balance.PrintBalance(walletFile,""));
+	remove("main\\tst\\WalletB");
 } 
 //=============================================================================
 
@@ -143,5 +147,6 @@ TEST(TestGetBalance, PosAmountBalance)
 	//std :: cout<<walletFile;
 	
 	EXPECT_EQ("-599.45",balance.PrintBalance(walletFile,""));
+	remove("main\\tst\\WalletB1");
 } 
 //============================================================================= */
