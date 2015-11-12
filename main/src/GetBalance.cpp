@@ -1,6 +1,5 @@
 //this function should get the string from file as a parameter 
 //and return balance
-#include <string>
 #include "GetBalance.h"
 using namespace std;
 

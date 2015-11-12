@@ -3,10 +3,7 @@
 
 #ifndef WALLET_H
 #define WALLET_H
-#include "HelperFunc.h"
-#include "MessageTypes_E.h"
-#include "MessageHandler.h"
-#include <vector>
+#include "Command.h"
 
 class Wallet
 {
@@ -24,6 +21,8 @@ class Wallet
 				   string transaction, 
 				   string category,
 				   string wallet);
+		Wallet(){};
+		~Wallet(){};
 };
 
 

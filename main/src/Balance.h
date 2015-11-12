@@ -1,14 +1,6 @@
 #ifndef BALANCE_H
 #define BALANCE_H
 #include "Command.h"
-#include <vector>
-#include <string>
-#include "HelperFunc.h"
-#include "Help.h"
-#include "MessageHandler.h"
-#include "MessageTypes_E.h"
-#include "Wallet.h"
-#include "GetBalance.h"
 
 class Balance : public Command
 {

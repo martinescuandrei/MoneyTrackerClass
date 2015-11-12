@@ -2,9 +2,8 @@
 // author Tudor Chibulcutean
 
 #include "Wallet.h"
-#include <iostream>
-#include <ctime>
-#include <string>
+
+
 
 // constructor of wallet
 Wallet::Wallet(vector<string> params):params_m(params)

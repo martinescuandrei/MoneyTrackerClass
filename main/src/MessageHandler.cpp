@@ -1,8 +1,7 @@
 //Author: Andreea
 
 #include "MessageHandler.h"
-#include "MessageTypes_E.h"
-#include <iostream>
+
 
 MessageHandler::MessageHandler() : errorType(NO_MESSAGE)
 {};

@@ -3,9 +3,13 @@
 #define CONFIG_H
 
 #include <vector>
-#include <string>
 #include "MessageHandler.h"
 #include "MessageTypes_E.h"
+#include <fstream>
+#include <string>
+#include <iostream> 
+#include <algorithm>
+#include <cstdio>
 
 class Config
 {
@@ -22,7 +26,8 @@ private:
 	Config(std::string &content, std::string &default_change, std::string &change);
 	std::string ChangeConfigFile();
 	bool ReWriteConfigFile();
-	//std::string ReturnDefaultNoUnderLine(std::string &change);
+	
+	~Config(){};
 	
 };
 std::string ReturnDefaultNoUnderLine(std::string &change);

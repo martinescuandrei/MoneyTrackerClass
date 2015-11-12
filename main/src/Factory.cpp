@@ -34,4 +34,11 @@ Command* Factory::makeCommand (const string& command)
 				ptrCmd = new ChangeConfig();
 			}  
 		return ptrCmd;
+		
 	}
+
+Factory::~Factory()
+	{
+	delete ptrCmd;
+	ptrCmd = 0;
+    }

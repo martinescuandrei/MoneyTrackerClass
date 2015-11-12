@@ -1,20 +1,8 @@
-#include <iostream>
-#include <vector>
-#include <fstream>
-#include <string>
+
 using namespace std;
-#include "HelperFunc.h"
-#include "Help.h"
-#include "MessageHandler.h"
-#include "MessageTypes_E.h"
-#include "Wallet.h"
-#include "GetBalance.h"
-#include "Config.h"
-#include "CreateWallet.h"
+
 #include "Command.h"
-#include "ChangeConfig.h"
-#include "Balance.h"
-#include "Transaction.h"
+
 #include "Factory.h"
 
 
@@ -22,45 +10,50 @@ int main(int argc, char* argv[])
 {
 	Factory factory;
 	
+	// case we have more than moneytracker
 	if (argc >1) 
 	{
+		// create object pointer of Command type
 		Command* command;
-		command = factory.makeCommand(argv[1]);
-
-		command->SetCommand(argv[1]);
 		
-		if (command == 0)
+		//create vector for seting/printing errors/confirmation message
+		vector<string> parameters;
+		MessageHandler message;
+		
+		//set type of command
+		command = factory.makeCommand(argv[1]);
+		
+		// if not valid command set error and print menu
+		if ( command == 0 ) 
 		{
-			cout<<"BIG ERROR, nu recunoaste comanda"<<endl;
+			message.SetMessage(INVALID_COMMAND);
+			Help::Commands();
+        }
+		
+		// print error in case invalid command
+		if (message.IsSet()== false) 
+		{
+			message.Print(parameters);
 			return 0;
 		}
 		
-		//daca avem mai mult de 2 argumente salvez in vector ce este dupa comanda.
-		if (argc >= 2)
-		{
-			//vector cu tot ce este dupa comanda
-			vector<string> params (&argv[2], &argv[2] +argc -2);
-			
-			command->parseParams(params);
-			
-			/* //printez vectorul
-			cout<<"Parametri comenzii sunt: "<<endl;
-			command->Vect(params); */
-			
-			command->execute();
-			//cout<<"the comand from main is:"<<factory.GetCommand()<<endl;
-			//integrare errori
-			//command -> some errors;
-			
-			//citire config file
-			//command -> readConfig;
-		}
+		//create vector
+		vector<string> params (&argv[2], &argv[2] +argc -2);
+		
+		//parse Parameters
+		command->parseParams(params);
+		
+		// set type of command
+		command->SetCommand(argv[1]);
+		
+		// execute
+		command->execute();
+	
 	}
 	else
 	{
 		//print error
-		cout <<"error: mai putin de 1 parametru";
+		 Help::Commands();
 	}
 	return 0;
 }
-
