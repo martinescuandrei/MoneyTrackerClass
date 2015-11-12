@@ -4,6 +4,7 @@
 	This file contains automation test for function ReturnFileasString.
 		
 */
+// Reinterpret Andrei Martinescu MoneytrackerClass v0.1
 
 #include "gtest/gtest.h"
 #include "HelperFunc.h"

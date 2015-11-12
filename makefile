@@ -32,7 +32,7 @@ moneytracker:
 # call make in 'main\src' subdir
 	$(MAKE) -C main\src
 	
-	$(MAKE) -C main\tst
+	#$(MAKE) -C main\tst
 # call make with target 'moneytracker.exe'
 	$(MAKE) moneytracker.exe
 	
@@ -55,6 +55,7 @@ test.exe: main\tst\test.exe
 	
 clean:
 	$(MAKE) -C main\src clean
+	$(MAKE) -C main\tst clean
 	$(RM) moneytracker.exe
 	$(RM) main\main.o
 	$(RM) my.wallet
@@ -62,3 +63,4 @@ clean:
 	$(RM) newWallet
 	$(RM) yetother
 	$(RM) mywallet
+	$(RM) mywallet123

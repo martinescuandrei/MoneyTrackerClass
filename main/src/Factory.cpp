@@ -1,5 +1,4 @@
 #include "Factory.h"
-//#include <iostream>
 	Factory::Factory() : ptrCmd(0) {
 	}   
 					   
@@ -12,7 +11,6 @@ Command* Factory::makeCommand (const string& command)
 			}
 		if (command == "income")
 			{
-				//cout << " asdfghjjlk";
 				ptrCmd = new Transaction();
 				Factory::command = "income";
 	

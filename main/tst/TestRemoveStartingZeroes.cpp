@@ -1,3 +1,5 @@
+// Reinterpret Andrei Martinescu MoneytrackerClass v0.1
+
 #include "gtest/gtest.h" 
 #include "HelperFunc.h"
 #include "MessageTypes_E.h"

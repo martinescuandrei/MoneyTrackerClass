@@ -47,7 +47,9 @@ TST_OBJECTS=\
 	TestGetBalance.o \
 	TestGetBalanceCategory.o \
 	TestSpecifyCategory.o \
+	TestChangeDefWallet.o \
 	TestValidateCreate.o
+	
 
 SRC_OBJECTS=\
 	$(SRC_DIR)\Wallet.o\
@@ -103,7 +105,6 @@ TestValidateCreate:  TestValidateCreate.o ..\src\Wallet.o
 	$(CPP) -o TestValidateCreate.exe TestValidateCreate.o \
 	..\src\HelperFunc.o ..\src\Wallet.o $(GTEST_LIB)
 
-
 TestCreateWallet: TestCreateWallet.o ..\src\Wallet.o $(GTEST_LIB)
 	$(CPP) -o TestCreateWallet.exe TestCreateWallet.o ..\src\Wallet.o $(GTEST_LIB)
 	
@@ -143,10 +144,10 @@ TestGetBalanceCategory: TestGetBalanceCategory.o ..\src\Wallet.o
 	$(CPP) -o TestGetBalanceCategory.exe TestGetBalanceCategory.o 
 	..\src\Wallet.o ..\src\GetBalance.o $(GTEST_LIB)
 
-#TestChangeDefWallet: TestChangeDefWallet.o ..\src\MainFunctions.o 
-#	..\src\ReadConfig.o $(GTEST_LIB)
-#	$(CPP) -o TestChangeDefWallet.exe TestChangeDefWallet.o 
-#	..\src\MainFunctions.o ..\src\ReadConfig.o $(GTEST_LIB)
+TestChangeDefWallet: TestChangeDefWallet.o ..\src\ChangeConfig.o 
+	..\src\Config.o $(GTEST_LIB)
+	$(CPP) -o TestChangeDefWallet.exe TestChangeDefWallet.o 
+	..\src\ChangeConfig.o ..\src\Config.o $(GTEST_LIB)
 	
 #Test.o 
 TestRemoveStartingZeroes.o: TestRemoveStartingZeroes.cpp $(HEADERS)
@@ -195,6 +196,10 @@ TestGetBalanceCategory.o: TestGetBalanceCategory.cpp $(HEADERS)
 #	$(CPP) $(GTEST_INC) -o TestChangeDefWallet.o -c TestChangeDefWallet.cpp
 #..\main.o:
 #	..\$(MAKE) -c ..\main.o	
+
+TestChangeDefWallet.o: TestChangeDefWallet.cpp $(HEADERS)
+	$(CPP) $(GTEST_INC) -o TestChangeDefWallet.o -c TestChangeDefWallet.cpp
+
 
 
 ..\src\CreateWallet.o:

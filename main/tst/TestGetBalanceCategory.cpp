@@ -1,4 +1,4 @@
-// author Andrei, v0.3
+// Reinterpret Andrei Martinescu MoneytrackerClass v0.1
 
 #include "gtest/gtest.h"
 #include "Wallet.h"

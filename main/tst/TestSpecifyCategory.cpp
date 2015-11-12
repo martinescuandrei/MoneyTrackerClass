@@ -10,12 +10,13 @@
 #include "Transaction.h"
 #include "Command.h"
 #include "Factory.h"
+#include <stdio.h>
 
 
 std::string readLastLine()
 {
 	std::string fileName;
-	fileName = "mywallet";
+	fileName = "mywallet123";
 	std::ifstream file(fileName.c_str());
 	std::string lastLine;
 	std::string line;
@@ -44,23 +45,32 @@ std::string readLastLine()
 //Test 1
 TEST(SpecifyCategory, IncomeCCategoryAmount)
 {
-	std::string wallet = "mywallet"; 
-	std::ofstream ifs("mywallet");
-	
-	Command* command;
+	std::string wallet = "mywallet123"; 
+
+	Command* command1;
 	
 	std::string comanda = "income";
 	
 	Factory factory;
 	
-	command = factory.makeCommand(comanda);
+	command1 = factory.makeCommand(comanda);
 	
 	std::string parameter1 = "--category";
 	std::string parameter2 = "category1";
 	std::string parameter3 = "300";
 	std::string parameter4 = "-w";
-	std::string parameter5 = "mywallet";
+	std::string parameter5 = "mywallet123";
+	// create a wallet
+	vector<string> params_wallet;
 	
+	params_wallet.push_back(parameter5);
+	params_wallet.push_back(parameter3);
+	
+	
+	Wallet wallett(params_wallet);
+	wallett.Create();
+	
+	// set transaction income 
 	vector<string> params_m;
 	
 	params_m.push_back(parameter1);
@@ -69,10 +79,10 @@ TEST(SpecifyCategory, IncomeCCategoryAmount)
 	params_m.push_back(parameter4);
 	params_m.push_back(parameter5);
 	
-	command->parseParams(params_m);
-	command->SetCommand(comanda);
+	command1->parseParams(params_m);
+	command1->SetCommand(comanda);
 	
-	command->execute();
+	command1->execute();
 	
 	time_t currentTime = time(NULL);
 	std::stringstream ss;
@@ -87,23 +97,22 @@ TEST(SpecifyCategory, IncomeCCategoryAmount)
 	EXPECT_EQ(expectedLine, currentLine);
 
 }
- //Test 2
+  //Test 2
 TEST(SpecifyCategory, IncomeCategoryCategoryAmount)
 {
-	std::string wallet = "mywallet"; 
-	std::ofstream ifs("mywallet");
+	std::string wallet = "mywallet123"; 
 	
-	Command* command;
+	Command* command1;
 	
 	std::string comanda = "income";
 	
 	Factory factory;
 	
-	command = factory.makeCommand(comanda);
+	command1 = factory.makeCommand(comanda);
 	
 	std::string parameter1 = "--category";
 	std::string parameter2 = "category1";
-	std::string parameter3 = "300";
+	std::string parameter3 = "331";
 
 	vector<string> params_m;
 	
@@ -112,10 +121,13 @@ TEST(SpecifyCategory, IncomeCategoryCategoryAmount)
 	params_m.push_back(parameter3);
 
 	
-	command->parseParams(params_m);
-	command->SetCommand(comanda);
+	command1->parseParams(params_m);
+	command1->SetCommand(comanda);
 	
-	command->execute();
+	Wallet wallett(params_m);
+	wallett.AddLineInWalletFile(parameter3, comanda, parameter2, wallet );
+	
+	command1->execute();
 	
 	time_t currentTime = time(NULL);
 	std::stringstream ss;
@@ -123,28 +135,27 @@ TEST(SpecifyCategory, IncomeCategoryCategoryAmount)
     std::string currentTimeString = ss.str();
 	std::string expectedLine = currentTimeString + ";" +
 										   "+" + ";" +
-										   "300.00" + ";" + 
+										   "331.00" + ";" + 
 										   "category1" + ";" +
 										   "RON";
 	std::string currentLine = readLastLine();
 	EXPECT_EQ(expectedLine, currentLine);
-
-} 
-
+}  
+ 
 //Test 3
 TEST(SpecifyCategory, IncomeCategoryCategoryAfterAmount)
 {
 	
-	std::string wallet = "mywallet"; 
-	std::ofstream ifs("mywallet");
+	std::string wallet = "mywallet123"; 
+	//std::ofstream ifs("mywallet123");
 	
-	Command* command;
+	Command* command1;
 	
 	std::string comanda = "income";
 	
 	Factory factory;
 	
-	command = factory.makeCommand(comanda);
+	command1 = factory.makeCommand(comanda);
 	
 	std::string parameter1 = "--category";
 	std::string parameter2 = "category1";
@@ -157,10 +168,13 @@ TEST(SpecifyCategory, IncomeCategoryCategoryAfterAmount)
 	params_m.push_back(parameter3);
 
 	
-	command->parseParams(params_m);
-	command->SetCommand(comanda);
+	command1->parseParams(params_m);
+	command1->SetCommand(comanda);
 	
-	command->execute();
+	Wallet wallett(params_m);
+	wallett.AddLineInWalletFile(parameter3, comanda, parameter2, wallet );
+	
+	command1->execute();
 
 	time_t currentTime = time(NULL);
 	std::stringstream ss;
@@ -173,21 +187,21 @@ TEST(SpecifyCategory, IncomeCategoryCategoryAfterAmount)
 										   "RON";
 	std::string currentLine = readLastLine();
 	EXPECT_EQ(expectedLine, currentLine);
-}  
+}   
 
 //Test 4
 TEST(SpecifyCategory, SpendCategoryCategoryAfterAmount)
 {
-	std::string wallet = "mywallet"; 
-	std::ofstream ifs("mywallet");
+	std::string wallet = "mywallet123"; 
+	std::ofstream ifs("mywallet123");
 	
-	Command* command;
+	Command* command1;
 	
 	std::string comanda = "spend";
 	
 	Factory factory;
 	
-	command = factory.makeCommand(comanda);
+	command1 = factory.makeCommand(comanda);
 	
 	std::string parameter1 = "--category";
 	std::string parameter2 = "category2";
@@ -200,14 +214,15 @@ TEST(SpecifyCategory, SpendCategoryCategoryAfterAmount)
 	params_m.push_back(parameter3);
 
 	
-	command->parseParams(params_m);
-	command->SetCommand(comanda);
-	
-	command->execute();
+	command1->parseParams(params_m);
+	command1->SetCommand(comanda);
 	
 	
-/* 	char* argumente[5]= {(char*)"moneytracker",(char*) "spend", (char*)"243", (char*)"--category", (char*)"category4"};
-	ImplementIncomeSpend(5, argumente); */
+	Wallet wallett(params_m);
+	wallett.AddLineInWalletFile(parameter3, comanda, parameter2, wallet );
+	
+	command1->execute();
+	
 	time_t currentTime = time(NULL);
 	std::stringstream ss;
     ss << currentTime;
@@ -219,22 +234,23 @@ TEST(SpecifyCategory, SpendCategoryCategoryAfterAmount)
 										   "RON";
 	std::string currentLine = readLastLine();
 	EXPECT_EQ(expectedLine, currentLine);
+	remove("mywallet123");
 }  
 
 //Test 5
 TEST(SpecifyCategory, SpendCCategoryAmount)
 {
 	
-	std::string wallet = "mywallet"; 
-	std::ofstream ifs("mywallet");
+	std::string wallet = "mywallet123"; 
+	std::ofstream ifs("mywallet123");
 	
-	Command* command;
+	Command* command1;
 	
 	std::string comanda = "spend";
 	
 	Factory factory;
 	
-	command = factory.makeCommand(comanda);
+	command1 = factory.makeCommand(comanda);
 	
 	std::string parameter1 = "--category";
 	std::string parameter2 = "category5";
@@ -247,10 +263,16 @@ TEST(SpecifyCategory, SpendCCategoryAmount)
 	params_m.push_back(parameter3);
 
 	
-	command->parseParams(params_m);
-	command->SetCommand(comanda);
+	command1->parseParams(params_m);
+	command1->SetCommand(comanda);
+	string commandd = command1->GetCommand();
+	cout << commandd << endl;
 	
-	command->execute();
+	
+	Wallet wallett(params_m);
+	wallett.AddLineInWalletFile(parameter3, comanda, parameter2, wallet );
+	
+	command1->execute();
 	
 	time_t currentTime = time(NULL);
 	std::stringstream ss;
@@ -263,4 +285,5 @@ TEST(SpecifyCategory, SpendCCategoryAmount)
 										   "RON";
 	std::string currentLine = readLastLine();
 	EXPECT_EQ(expectedLine, currentLine);
+	remove("mywallet123");
 }
