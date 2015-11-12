@@ -25,6 +25,9 @@ Config::Config( std::string &content,
 
 bool Config::ReWriteConfigFile()
 {
+	vector<string> parameters;
+	MessageHandler message;
+	
 	std::ofstream ofs;
 	// delete content of config file
 	ofs.open("moneytracker.config");
@@ -38,10 +41,14 @@ bool Config::ReWriteConfigFile()
 	
 	//Print::
 	
- 	cout << "'"
+	message.SetMessage(SET_DEFAULT_WALLET);
+	parameters.push_back(default_change_m);
+	message.Print(parameters);
+	
+ 	/* cout << "'"
 		 << default_change_m
 		 << "'"
-		 << " was configured as default.\n"; 
+		 << " was configured as default.\n";  */
 	ofs.close();
 	
 	return openn;

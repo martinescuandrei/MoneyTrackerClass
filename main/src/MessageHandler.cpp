@@ -166,7 +166,7 @@ void MessageHandler::Print(vector<string> parameters)
 			std::cout   << "'" 
 						<< parameters.at(0)
 						<< "'"
-						<< " is not a valid configuration value.\n"
+						<< " is not a valid configuration value."
 						<< endl;
 		break;
 		case INCOME_REGISTERED:

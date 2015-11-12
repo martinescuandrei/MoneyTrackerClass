@@ -11,6 +11,9 @@ void ChangeConfig::parseParams(vector<string> params)
 
 void ChangeConfig::execute()
 {
+	vector<string> parameters;
+	MessageHandler message;
+	
 	// creating string with name of config
 	std::string configString = "moneytracker.config";
 	// obtain the content of config
@@ -41,7 +44,10 @@ void ChangeConfig::execute()
 			if (params_m[i] == "==")
 			{
 				//cout << params_m[i] << endl;
-				cout << "error: invalid parameters for 'config'."<<endl;
+				message.SetMessage(INVALID_PARAMETER);
+				parameters.push_back("config");
+				message.Print(parameters);
+				//cout << "error: invalid parameters for 'config'."<<endl;
 				flag1 = false;
 				break;
 			}
@@ -52,8 +58,11 @@ void ChangeConfig::execute()
 		if ((stringCheck[stringCheck.length()-1]== '=')&&(params_m.size() != 2))
 		{
 			//cout << stringCheck;
-				cout << "error: invalid parameters for 'config'."<<endl;
-				flag2 = false;
+			message.SetMessage(INVALID_PARAMETER);
+			parameters.push_back("config");
+			message.Print(parameters);
+			//cout << "error: invalid parameters for 'config'."<<endl;
+			flag2 = false;
 			
 		}
 		//check if one parameter has == at the end 
@@ -62,8 +71,11 @@ void ChangeConfig::execute()
 			&&(stringCheck[stringCheck.length()-2]== '='))
 		{
 			//cout << stringCheckk;
-				cout << "error: invalid parameters for 'config'."<<endl;
-				flag3 = false;
+			message.SetMessage(INVALID_PARAMETER);
+			parameters.push_back("config");
+			message.Print(parameters);
+			//cout << "error: invalid parameters for 'config'."<<endl;
+			flag3 = false;
 			
 		}
 
@@ -98,7 +110,10 @@ void ChangeConfig::execute()
 			if ((l == content.length())&&(flag1==true)&&
 			(flag2==true)&&(flag3==true))
 			{
-				cout << "error: invalid parameters for 'config'."<<endl;
+				message.SetMessage(INVALID_PARAMETER);
+				parameters.push_back("config");
+				message.Print(parameters);
+				//cout << "error: invalid parameters for 'config'."<<endl;
 				flag4 = false;
 			}
 			// obtain first parameter and second
@@ -109,7 +124,10 @@ void ChangeConfig::execute()
 		// print error if we don't have enough arguments
 		else if ((flag1==true)&&(flag2==true)&&(flag3==true)&&(flag4==true))
 		{
-			std::cout <<"error: invalid parameters for 'config'." <<endl;
+			message.SetMessage(INVALID_PARAMETER);
+			parameters.push_back("config");
+			message.Print(parameters);
+			//std::cout <<"error: invalid parameters for 'config'." <<endl;
 			flag5 = false;
 		}
 		// check for validating the arguments
@@ -145,8 +163,11 @@ void ChangeConfig::execute()
 								&&(flag2==true)&&(flag3==true)&&
 							(flag4==true)&&(flag5==true))
 							{
-								cout << "error: invalid parameters for 'config'."
-								<< endl;
+								message.SetMessage(INVALID_PARAMETER);
+								parameters.push_back("config");
+								message.Print(parameters);
+								//cout << "error: invalid parameters for 'config'."
+								//<< endl;
 								break;
 							}
 							// else change config
@@ -170,10 +191,13 @@ void ChangeConfig::execute()
 						if ((flag1==true)&&(flag2==true)&&(flag3==true)
 							&&(flag4==true)&&(flag5==true))
 						{
-						cout << "'" 
+							message.SetMessage(NOT_A_VALID_CONFIG_VALUE);
+							parameters.push_back(checkIfCorect);
+							message.Print(parameters);
+						/* cout << "'" 
 							 << checkIfCorect
 							 << "'"
-							 << " is not a valid configuration value.\n";
+							 << " is not a valid configuration value.\n"; */
 							 break;
 						}
 					}   
@@ -183,10 +207,13 @@ void ChangeConfig::execute()
 				else if ((flag1==true)&&(flag2==true)&&(flag3==true)
 					&&(flag4==true)&&(flag5==true))
 				{
-					cout << "'" 
+					message.SetMessage(NOT_A_VALID_CONFIG_VALUE);
+					parameters.push_back(checkIfCorect);
+					message.Print(parameters);
+					/* cout << "'" 
 						 << checkIfCorect
 						 << "'"
-						 << " is not a valid configuration value.\n";
+						 << " is not a valid configuration value.\n"; */
 					break;
 				}
 		}

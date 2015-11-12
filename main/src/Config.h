@@ -2,7 +2,10 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <string> 
+#include <vector>
+#include <string>
+#include "MessageHandler.h"
+#include "MessageTypes_E.h"
 
 class Config
 {
