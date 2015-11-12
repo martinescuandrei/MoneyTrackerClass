@@ -46,7 +46,8 @@ TST_OBJECTS=\
 	TestReturnFileasString.o \
 	TestGetBalance.o \
 	TestGetBalanceCategory.o \
-	TestChangeDefWallet.o
+	TestSpecifyCategory.o \
+	TestValidateCreate.o
 
 SRC_OBJECTS=\
 	$(SRC_DIR)\Wallet.o\
@@ -97,10 +98,11 @@ TestConvertPathToOriginal: TestConvertPathToOriginal.o
 	$(CPP) -o TestConvertPathToOriginal.exe TestConvertPathToOriginal.o \
 	..\src\HelperFunc.o $(GTEST_LIB)
 
-#TestValidateCreate:  TestValidateCreate.o ..\src\ValidateCreate.o 
-#	..\src\PrintError.o $(GTEST_LIB)
-#	$(CPP) -o TestValidateCreate.exe TestValidateCreate.o \
-#	..\src\ValidateCreate.o ..\src\PrintError.o $(GTEST_LIB)
+TestValidateCreate:  TestValidateCreate.o ..\src\Wallet.o
+	..\src\HelperFunc.o $(GTEST_LIB)
+	$(CPP) -o TestValidateCreate.exe TestValidateCreate.o \
+	..\src\HelperFunc.o ..\src\Wallet.o $(GTEST_LIB)
+
 
 TestCreateWallet: TestCreateWallet.o ..\src\Wallet.o $(GTEST_LIB)
 	$(CPP) -o TestCreateWallet.exe TestCreateWallet.o ..\src\Wallet.o $(GTEST_LIB)
@@ -126,10 +128,10 @@ TestReturnFileasString: TestReturnFileasString.o ..\src\HelperFunc.o $(GTEST_LIB
 TestGetBalance: TestGetBalance.o ..\src\Wallet.o ..\src\GetBalance.o $(GTEST_LIB)
 	$(CPP) -o TestGetBalance.exe TestGetBalance.o ..\src\Wallet.o ..\src\GetBalance.o$(GTEST_LIB)
 	
-#TestSpecifyCategory: TestSpecifyCategory.o ..\src\MainFunctions.o 
-#	..\src\ReadConfig.o ..\src\PrintError.o $(GTEST_LIB)
-#	$(CPP) -o TestSpecifyCategory.exe TestSpecifyCategory.o 
-#	..\src\MainFunctions.o ..\src\ReadConfig.o ..\src\PrintError.o $(GTEST_LIB)
+TestSpecifyCategory: TestSpecifyCategory.o ..\src\Wallet.o 
+	..\src\Transaction.o ..\src\Command.o ..\src\Factory.o $(GTEST_LIB)
+	$(CPP) -o TestSpecifyCategory.exe TestSpecifyCategory.o 
+	..\src\Wallet.o ..\src\Transaction.o ..\src\Command.o ..\src\Factory.o $(GTEST_LIB)
 
 #TestValidateIncomeSpendCommands: ValidateIncomeSpendCommands.o 
 #	..\src\MainFunctions.o ..\src\ReadConfig.o ..\src\PrintError.o $(GTEST_LIB)
@@ -141,10 +143,10 @@ TestGetBalanceCategory: TestGetBalanceCategory.o ..\src\Wallet.o
 	$(CPP) -o TestGetBalanceCategory.exe TestGetBalanceCategory.o 
 	..\src\Wallet.o ..\src\GetBalance.o $(GTEST_LIB)
 
-TestChangeDefWallet: TestChangeDefWallet.o ..\src\MainFunctions.o 
-	..\src\ReadConfig.o $(GTEST_LIB)
-	$(CPP) -o TestChangeDefWallet.exe TestChangeDefWallet.o 
-	..\src\MainFunctions.o ..\src\ReadConfig.o $(GTEST_LIB)
+#TestChangeDefWallet: TestChangeDefWallet.o ..\src\MainFunctions.o 
+#	..\src\ReadConfig.o $(GTEST_LIB)
+#	$(CPP) -o TestChangeDefWallet.exe TestChangeDefWallet.o 
+#	..\src\MainFunctions.o ..\src\ReadConfig.o $(GTEST_LIB)
 	
 #Test.o 
 TestRemoveStartingZeroes.o: TestRemoveStartingZeroes.cpp $(HEADERS)
@@ -159,8 +161,8 @@ TestConvertPath.o: TestConvertPath.cpp $(HEADERS)
 TestConvertPathToOriginal.o: TestConvertPathToOriginal.cpp $(HEADERS)
 	$(CPP) $(GTEST_INC) -o TestConvertPathToOriginal.o -c TestConvertPathToOriginal.cpp
 
-#TestValidateCreate.o: TestValidateCreate.cpp $(HEADERS)
-#	$(CPP) $(GTEST_INC) -o TestValidateCreate.o -c TestValidateCreate.cpp
+TestValidateCreate.o: TestValidateCreate.cpp $(HEADERS)
+	$(CPP) $(GTEST_INC) -o TestValidateCreate.o -c TestValidateCreate.cpp
 
 TestCreateWallet.o: TestCreateWallet.cpp $(HEADERS)
 	$(CPP) $(GTEST_INC) -o TestCreateWallet.o -c TestCreateWallet.cpp
@@ -180,8 +182,8 @@ TestReturnFileasString.o: TestReturnFileasString.cpp $(HEADERS)
 TestGetBalance.o: TestGetBalance.cpp $(HEADERS)
 	$(CPP) $(GTEST_INC) -o TestGetBalance.o -c TestGetBalance.cpp
 	
-#TestSpecifyCategory.o: TestSpecifyCategory.cpp $(HEADERS)
-#	$(CPP) $(GTEST_INC) -o TestSpecifyCategory.o -c TestSpecifyCategory.cpp
+TestSpecifyCategory.o: TestSpecifyCategory.cpp $(HEADERS)
+	$(CPP) $(GTEST_INC) -o TestSpecifyCategory.o -c TestSpecifyCategory.cpp
 	
 #TestValidateIncomeSpendCommands.o: TestValidateIncomeSpendCommands.cpp $(HEADERS)
 #	$(CPP) $(GTEST_INC) -o TestValidateIncomeSpendCommands.o -c TestValidateIncomeSpendCommands.cpp
@@ -189,8 +191,8 @@ TestGetBalance.o: TestGetBalance.cpp $(HEADERS)
 TestGetBalanceCategory.o: TestGetBalanceCategory.cpp $(HEADERS)
 	$(CPP) $(GTEST_INC) -o TestGetBalanceCategory.o -c TestGetBalanceCategory.cpp
 
-TestChangeDefWallet.o: TestChangeDefWallet.cpp $(HEADERS)
-	$(CPP) $(GTEST_INC) -o TestChangeDefWallet.o -c TestChangeDefWallet.cpp
+#TestChangeDefWallet.o: TestChangeDefWallet.cpp $(HEADERS)
+#	$(CPP) $(GTEST_INC) -o TestChangeDefWallet.o -c TestChangeDefWallet.cpp
 #..\main.o:
 #	..\$(MAKE) -c ..\main.o	
 
