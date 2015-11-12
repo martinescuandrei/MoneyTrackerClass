@@ -48,7 +48,11 @@ TST_OBJECTS=\
 	TestGetBalanceCategory.o \
 	TestSpecifyCategory.o \
 	TestChangeDefWallet.o \
-	TestValidateCreate.o
+	TestValidateCreate.o \
+	TestWalletName.o \
+	TestAddLineinWallet.o \
+	TestValidateIncomeSpendCommands.o
+#	TestWalletExists.o
 	
 
 SRC_OBJECTS=\
@@ -114,13 +118,17 @@ TestAddDecimalsToDefaultAmount: TestAddDecimalsToDefaultAmount.o
 	$(CPP) -o TestAddDecimalsToDefaultAmount.exe TestAddDecimalsToDefaultAmount.o \
 	..\src\HelperFunc.o ..\src\MessageHandler.o ..\inc\MessageTypes_E.h $(GTEST_LIB)
 	
-#TestAddLineinWallet: TestAddLineinWallet.o ..\src\DoCreateWallet.o  
-#	..\src\PrintError.o $(GTEST_LIB)
-#	$(CPP) -o TestAddLineinWallet.exe TestAddLineinWallet.o \
+TestAddLineinWallet: TestAddLineinWallet.o ..\src\HelperFunc.o $(GTEST_LIB)
+	$(CPP) -o TestAddLineinWallet.exe TestAddLineinWallet.o
+	..\src\HelperFunc.o $(GTEST_LIB)
 
-#TestWalletName: TestWalletName.o ..\src\DoCreateWallet.o ..\src\PrintError.o $(GTEST_LIB)
-#	$(CPP) -o TestWalletName.exe TestWalletName.o
-#	..\src\DoCreateWallet.o ..\src\PrintError.o $(GTEST_LIB)
+TestWalletName: TestWalletName.o ..\src\HelperFunc.o $(GTEST_LIB)
+	$(CPP) -o TestWalletName.exe TestWalletName.o
+	..\src\HelperFunc.o $(GTEST_LIB)
+	
+#TestWalletExists: TestWalletExists.o ..\src\HelperFunc.o $(GTEST_LIB)
+#	$(CPP) -o TestWalletExists.exe TestWalletExists.o
+#	..\src\HelperFunc.o $(GTEST_LIB)
 
 TestReturnFileasString: TestReturnFileasString.o ..\src\HelperFunc.o $(GTEST_LIB)
 	$(CPP) -o TestReturnFileasString.exe TestReturnFileasString.o \
@@ -134,10 +142,10 @@ TestSpecifyCategory: TestSpecifyCategory.o ..\src\Wallet.o
 	$(CPP) -o TestSpecifyCategory.exe TestSpecifyCategory.o 
 	..\src\Wallet.o ..\src\Transaction.o ..\src\Command.o ..\src\Factory.o $(GTEST_LIB)
 
-#TestValidateIncomeSpendCommands: ValidateIncomeSpendCommands.o 
-#	..\src\MainFunctions.o ..\src\ReadConfig.o ..\src\PrintError.o $(GTEST_LIB)
-#	$(CPP) -o ValidateIncomeSpendCommands.exe ValidateIncomeSpendCommands.o 
-#	..\src\MainFunctions.o ..\src\ReadConfig.o ..\src\PrintError.o $(GTEST_LIB)
+TestValidateIncomeSpendCommands: ValidateIncomeSpendCommands.o 
+	..\src\Transaction.o $(GTEST_LIB)
+	$(CPP) -o ValidateIncomeSpendCommands.exe ValidateIncomeSpendCommands.o 
+	..\src\Transaction.o $(GTEST_LIB)
 
 TestGetBalanceCategory: TestGetBalanceCategory.o ..\src\Wallet.o 
 	..\src\GetBalance.o $(GTEST_LIB)
@@ -171,11 +179,14 @@ TestCreateWallet.o: TestCreateWallet.cpp $(HEADERS)
 TestAddDecimalsToDefaultAmount.o: TestAddDecimalsToDefaultAmount.cpp $(HEADERS)
 	$(CPP) $(GTEST_INC) -o TestAddDecimalsToDefaultAmount.o -c TestAddDecimalsToDefaultAmount.cpp
 	
-#TestWalletName.o: TestWalletName.cpp $(HEADERS)
-#	$(CPP) $(GTEST_INC) -o TestWalletName.o -c TestWalletName.cpp
+TestWalletName.o: TestWalletName.cpp $(HEADERS)
+	$(CPP) $(GTEST_INC) -o TestWalletName.o -c TestWalletName.cpp
 	
-#TestAddLineinWallet.o: TestAddLineinWallet.cpp $(HEADERS)
-#	$(CPP) $(GTEST_INC) -o TestAddLineinWallet.o -c TestAddLineinWallet.cpp
+#TestWalletExists.o: TestWalletExists.cpp $(HEADERS)
+#	$(CPP) $(GTEST_INC) -o TestWalletExists.o -c TestWalletExists.cpp
+	
+TestAddLineinWallet.o: TestAddLineinWallet.cpp $(HEADERS)
+	$(CPP) $(GTEST_INC) -o TestAddLineinWallet.o -c TestAddLineinWallet.cpp
 
 TestReturnFileasString.o: TestReturnFileasString.cpp $(HEADERS)
 	$(CPP) $(GTEST_INC) -o TestReturnFileasString.o -c TestReturnFileasString.cpp
@@ -186,21 +197,17 @@ TestGetBalance.o: TestGetBalance.cpp $(HEADERS)
 TestSpecifyCategory.o: TestSpecifyCategory.cpp $(HEADERS)
 	$(CPP) $(GTEST_INC) -o TestSpecifyCategory.o -c TestSpecifyCategory.cpp
 	
-#TestValidateIncomeSpendCommands.o: TestValidateIncomeSpendCommands.cpp $(HEADERS)
-#	$(CPP) $(GTEST_INC) -o TestValidateIncomeSpendCommands.o -c TestValidateIncomeSpendCommands.cpp
+TestValidateIncomeSpendCommands.o: TestValidateIncomeSpendCommands.cpp $(HEADERS)
+	$(CPP) $(GTEST_INC) -o TestValidateIncomeSpendCommands.o -c TestValidateIncomeSpendCommands.cpp
 	
 TestGetBalanceCategory.o: TestGetBalanceCategory.cpp $(HEADERS)
 	$(CPP) $(GTEST_INC) -o TestGetBalanceCategory.o -c TestGetBalanceCategory.cpp
 
-#TestChangeDefWallet.o: TestChangeDefWallet.cpp $(HEADERS)
-#	$(CPP) $(GTEST_INC) -o TestChangeDefWallet.o -c TestChangeDefWallet.cpp
-#..\main.o:
-#	..\$(MAKE) -c ..\main.o	
-
 TestChangeDefWallet.o: TestChangeDefWallet.cpp $(HEADERS)
 	$(CPP) $(GTEST_INC) -o TestChangeDefWallet.o -c TestChangeDefWallet.cpp
-
-
+	
+#..\main.o:
+#	..\$(MAKE) -c ..\main.o	
 
 ..\src\CreateWallet.o:
 	$(MAKE) -C ..\src\CreateWallet.o
@@ -237,7 +244,7 @@ TestChangeDefWallet.o: TestChangeDefWallet.cpp $(HEADERS)
 
 ..\src\Factory.o:
 	$(MAKE) -c ..\src\Factory.o
-	
+
 clean:
 	$(RM) test.a
 	$(RM) $(TST_OBJECTS)
@@ -251,6 +258,13 @@ clean:
 	$(RM) TestReturnFileasString.exe
 	$(RM) TestGetBalance.exe
 	$(RM) TestGetBalanceCategory.exe
+	$(RM) TestSpecifyCategory.exe
+	$(RM) TestChangeDefWallet.exe
+	$(RM) TestValidateCreate.exe
+	$(RM) TestWalletName.exe
+	$(RM) TestWalletExists.exe
+	$(RM) TestAddLineinWallet.exe
+	$(RM) TestValidateIncomeSpendCommands.exe
 	$(RM) my.wallet
 	$(RM) my.wallet1
 	$(RM) newWallet

@@ -1,4 +1,5 @@
 //Author ANdreeaIoanaStan,Tudor Chibulcutean v0.2
+// Reinterpret Andrei Martinescu MoneytrackerClass v0.1
 
 #include "gtest/gtest.h"
 //#include "ReadConfig.h"
