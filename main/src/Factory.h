@@ -19,9 +19,7 @@ class Factory
 	string command;              
 	Command* ptrCmd;
 	public:
-	Factory();  
-	void SetCommand(const string& receivedCommand);
-	string GetCommand();                       
+	Factory();                       
 	Command* makeCommand (const string& command);
 };
 

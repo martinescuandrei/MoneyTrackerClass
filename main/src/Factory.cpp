@@ -2,15 +2,6 @@
 
 	Factory::Factory() : ptrCmd(0) {
 	}   
-  void Factory::SetCommand(const string& receivedCommand)
-  {
-				 command = receivedCommand;
-  }
-
-  string Factory::GetCommand()
-  {
-				 return command;
-  }
 					   
 Command* Factory::makeCommand (const string& command)
 	{

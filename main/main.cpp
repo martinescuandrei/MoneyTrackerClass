@@ -26,11 +26,9 @@ int main(int argc, char* argv[])
 	{
 		Command* command;
 		command = factory.makeCommand(argv[1]);
-		//factory.SetCommand(argv[1]);
-		Command obj;
-		obj.SetCommand(argv[1]);
-		//Command::initialCommand = argv[1];
-		//cout << "command "<<obj.SetCommand(argv[1]); <<" asdsad\n";
+
+		command->SetCommand(argv[1]);
+		
 		if (command == 0)
 		{
 			cout<<"BIG ERROR, nu recunoaste comanda"<<endl;

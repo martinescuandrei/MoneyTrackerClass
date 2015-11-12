@@ -196,15 +196,9 @@ bool Transaction::ValidateIncomeSpendCommands()
 	}
 	MessageHandler message;
 	vector<string> parameters;
-	Factory fact;
 	
-	string command ="abc";
-	//fact.SetCommand("incomeeee");
+	string command = Command::GetCommand();
 	
-	command	= fact.GetCommand();
-	cout<<"command is:"<<command<<":"<<endl;
-	
-	//string command = "spend";
 	if (flag ==  true) 
 	{
 		//std::cout << "print something" << endl;
@@ -259,11 +253,7 @@ void Transaction::execute()
 	string walletName;
 	string amount;
 	//Factory fact;
-	Command obj;
-	string command = obj.GetCommand();
-	cout << "command "<< command << endl; 
-	cout << "command "<< initialCommand_m << endl; 
-	//string command = initialCommand_m;
+	string command = Command::GetCommand();
 	
 	//initialize the walletName with default wallet
 	HelperFunc defWall;
