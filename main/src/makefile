@@ -16,7 +16,6 @@ HEADERS = \
 	Help.h\
 	HelperFunc.h \
 	MessageHandler.h \
-	CommandFactory.h \
 	MessageTypes_E.h \
 	GetBalance.h \
 	Config.h \
@@ -32,7 +31,6 @@ SRC_OBJECTS=\
 	Help.o\
 	HelperFunc.o\
 	MessageHandler.o\
-	CommandFactory.o\
 	GetBalance.o \
 	Config.o \
 	CreateWallet.o \
@@ -47,7 +45,6 @@ SRC_CPP=\
 	Help.cpp\
 	HelperFunc.cpp\
 	MessageHandler.cpp\
-	CommandFactory.cpp\
 	GetBalance.cpp\
 	Config.cpp \
 	CreateWallet.cpp \
@@ -78,8 +75,8 @@ MessageHandler.o: MessageHandler.cpp $(HEADERS)
 Command.o: Command.cpp $(HEADERS)
 	$(CPP) -o Command.o -c Command.cpp
 	
-CommandFactory.o: CommandFactory.cpp $(HEADERS)
-	$(CPP) -o CommandFactory.o -c CommandFactory.cpp
+#CommandFactory.o: CommandFactory.cpp $(HEADERS)
+#	$(CPP) -o CommandFactory.o -c CommandFactory.cpp
 
 GetBalance.o: GetBalance.cpp $(HEADERS)
 	$(CPP) -o GetBalance.o -c GetBalance.cpp

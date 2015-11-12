@@ -16,7 +16,6 @@ HEADERS = \
 	main\src\HelperFunc.h \
 	main\src\MessageHandler.h \
 	main\src\Command.h \
-	main\src\CommandFactory.h \
 	main\src\MessageTypes_E.h \
 	main\src\GetBalance.h \
 	main\src\Config.h \

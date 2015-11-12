@@ -25,7 +25,6 @@ HEADERS = \
 	$(SRC_DIR)\Help.h\
 	$(SRC_DIR)\HelperFunc.h \
 	$(SRC_DIR)\MessageHandler.h \
-	$(SRC_DIR)\CommandFactory.h \
 	$(SRC_DIR)\MessageTypes_E.h \
 	$(SRC_DIR)\CreateWallet.h \
 	$(SRC_DIR)\Command.h \
@@ -52,7 +51,6 @@ SRC_OBJECTS=\
 	$(SRC_DIR)\Help.o\
 	$(SRC_DIR)\HelperFunc.o\
 	$(SRC_DIR)\MessageHandler.o\
-	$(SRC_DIR)\CommandFactory.o\
 	$(SRC_DIR)\GetBalance.o\
 	$(SRC_DIR)\Config.o\
 	$(SRC_DIR)\ChangeConfig.o \
@@ -209,9 +207,6 @@ TestGetBalance.o: TestGetBalance.cpp $(HEADERS)
 
 ..\src\MessageHandler.o:
 	$(MAKE) -c ..\src\MessageHandler.o
-
-..\src\CommandFactory.o:
-	$(MAKE) -c ..\src\CommandFactory.o
 
 ..\src\GetBalance.o:
 	$(MAKE) -c ..\src\GetBalance.o
