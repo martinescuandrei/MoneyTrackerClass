@@ -43,13 +43,13 @@ void AddLineInWalletFile(string &amount,
 	if (defaultAmount_m[0] == '+')
 	{
 		defaultAmount_m = defaultAmount_m.substr(1,defaultAmount_m.length()-1);
-		//cout << "originalul def amount   " << defaultAmount_m <<endl;
+
 	}
 		
 	else 
 	{
 		defaultAmount_m = defaultAmount_m.substr(0,defaultAmount_m.length());
-	//cout << " de pe else def amount   " << defaultAmount_m <<endl;
+
 	}
 	
 	// if transaction is income 
@@ -62,7 +62,7 @@ void AddLineInWalletFile(string &amount,
 			string str = "moneytracker.config";
 			string contentConfigFile = helper.ReturnFileasString(str);
 			
-			// read config file
+
 			// get the wallet from config
 			string defaultWallet = "default_wallet";
 			walletName = helper.GetDefaultWallet(contentConfigFile, 
@@ -72,17 +72,14 @@ void AddLineInWalletFile(string &amount,
 			message.SetMessage(INCOME_REGISTERED);
 			
 			// put the parameters in vector
+
 			parameters.push_back(category);
 			parameters.push_back(defaultAmount_m);
 			parameters.push_back(walletName);
 		
 			// call print function		
 			message.Print(parameters);
-			
-			/* cout << "Income '" << category 
-				 << "' in an amount of " << defaultAmount_m 
-				 << " RON was registered to " << "'"<< walletName<< "'."
-				 <<endl; */
+
 				 
 			cout << buffer << " GMT" << endl;
 		}
@@ -94,17 +91,14 @@ void AddLineInWalletFile(string &amount,
 			message.SetMessage(INCOME_REGISTERED);
 			
 			// put the parameters in vector
+
 			parameters.push_back(category);
 			parameters.push_back(defaultAmount_m);
 			parameters.push_back(walletName);
 		
 			// call print function		
 			message.Print(parameters);
-			
-			/* cout << "Income '" << category 
-				 << "' in an amount of " << defaultAmount_m 
-				 << " RON was registered to " << "'"<< wallet << "'."
-				 << endl; */
+
 				 
 			cout << buffer << " GMT" << endl;
 		}
@@ -124,7 +118,7 @@ void AddLineInWalletFile(string &amount,
 			string str = "moneytracker.config";
 			string contentConfigFile = helper.ReturnFileasString(str);
 			
-			// read config file
+
 			// get the wallet from config
 			string defaultWallet = "default_wallet";
 			walletName = helper.GetDefaultWallet(contentConfigFile, 
@@ -134,18 +128,15 @@ void AddLineInWalletFile(string &amount,
 			message.SetMessage(SPENDING_REGISTERED);
 			
 			// put the parameters in vector
+
 			parameters.push_back(category);
 			parameters.push_back(defaultAmount_m);
+
 			parameters.push_back(walletName);
 		
 			// call print function		
 			message.Print(parameters);
-			
-			/* cout << "Spending '" << category 
-				 << "' in an amount of " << defaultAmount_m 
-				 << " RON was registered to " << "'"<< walletName << "'."
-				 <<endl; */
-				 
+
 			cout << buffer << " GMT" << endl;
 		}
 		else 
@@ -154,17 +145,15 @@ void AddLineInWalletFile(string &amount,
 			message.SetMessage(SPENDING_REGISTERED);
 			
 			// put the parameters in vector
+
 			parameters.push_back(category);
 			parameters.push_back(defaultAmount_m);
+
 			parameters.push_back(walletName);
 		
 			// call print function		
 			message.Print(parameters);
-			
-			/* cout << "Spending '" << category 
-				 << "' in an amount of " << defaultAmount_m 
-				 << " RON was registered to " << "'"<< walletName << "'."
-				 <<endl; */
+
 					 
 			cout << buffer << " GMT" << endl;
 		}
@@ -330,7 +319,7 @@ void Wallet::Write(string amount,
 {
 	vector<string> parameters;
 	MessageHandler message;
-	
+
 	if(wallet == "")
 	{
 		// declare configuration file name in a string
@@ -354,13 +343,9 @@ void Wallet::Write(string amount,
 		{	
 			// set error message
 			message.SetMessage(NO_DEFAULT_WALLET);
-			
-			// put the parameters in vector
-			//parameters.push_back(walletName_m);
 		
 			// call print function		
 			message.Print(parameters);
-			//PrintError::Print(NO_DEFAULT_WALLET,"default wallet", amount);							
 		}
 		
 		// if the config file is not open
@@ -369,12 +354,8 @@ void Wallet::Write(string amount,
 			// set error message
 			message.SetMessage(COULD_NOT_OPEN_CONFIG);
 			
-			// put the parameters in vector
-			//parameters.push_back(walletName_m);
-		
 			// call print function		
 			message.Print(parameters);
-			//PrintError::Print(COULD_NOT_OPEN_CONFIG,"default_wallet", "+00.00");
 		}
 		
 		// if no error is found
@@ -403,16 +384,13 @@ void Wallet::Write(string amount,
 			else 
 			{
 				// set error message
-				message.SetMessage(COULD_NOT_OPEN_CONFIG);
+				message.SetMessage(COULD_NOT_OPEN_PATH);
 				
 				// put the parameters in vector
-				//parameters.push_back(originalPath);
+				parameters.push_back(originalPath);
 			
 				// call print function		
 				message.Print(parameters);
-				
-				//if path is not valid print error
-				//PrintError::Print(COULD_NOT_OPEN_PATH, originalPath, amount);
 			}
 		}
 	}
@@ -452,9 +430,7 @@ void Wallet::Write(string amount,
 		
 			// call print function		
 			message.Print(parameters);
-			
-			//if path is not valid print error
-			//PrintError::Print(COULD_NOT_OPEN_PATH, originalPath, amount);
+
 		}
 	}	
 }

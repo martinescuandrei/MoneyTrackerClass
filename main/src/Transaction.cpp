@@ -1,5 +1,5 @@
 #include "Transaction.h"
-
+#include "Factory.h"
 
 Transaction::Transaction()
 {}; 
@@ -9,6 +9,7 @@ void Transaction::parseParams(vector<string>params)
 	{
 		params_m = params;
 	};
+	
 bool Transaction::ValidateIncomeSpendCommands()
 	{
 	int k = 0;
@@ -61,7 +62,7 @@ bool Transaction::ValidateIncomeSpendCommands()
 				}
 			}
 			//check if the 3 'th argument is a valid number
-			else 
+			else
 			{
 				 HelperFunc validateNumber("default",params_m[2]);
 				bool flag2 = validateNumber.IsValidNumber(); 
@@ -196,7 +197,13 @@ bool Transaction::ValidateIncomeSpendCommands()
 	MessageHandler message;
 	vector<string> parameters;
 	Factory fact;
-	string command = fact.GetCommand();
+	
+	string command ="abc";
+	//fact.SetCommand("incomeeee");
+	
+	command	= fact.GetCommand();
+	cout<<"command is:"<<command<<":"<<endl;
+	
 	//string command = "spend";
 	if (flag ==  true) 
 	{
@@ -251,10 +258,12 @@ void Transaction::execute()
 	string category;
 	string walletName;
 	string amount;
-	Factory fact;
-	string command = fact.GetCommand();
-	cout << command << endl;
-	//string command = "spend";
+	//Factory fact;
+	Command obj;
+	string command = obj.GetCommand();
+	cout << "command "<< command << endl; 
+	cout << "command "<< initialCommand_m << endl; 
+	//string command = initialCommand_m;
 	
 	//initialize the walletName with default wallet
 	HelperFunc defWall;

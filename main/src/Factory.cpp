@@ -19,9 +19,17 @@ Command* Factory::makeCommand (const string& command)
 				ptrCmd = new CreateWallet();
 	
 			}
-		if ((command == "income") || (command == "spend"))
+		if (command == "income")
 			{
 				ptrCmd = new Transaction();
+				Factory::command = "income";
+	
+			}
+			
+		if (command == "spend")
+			{
+				ptrCmd = new Transaction();
+				Factory::command = "spend";
 	
 			}
 			
