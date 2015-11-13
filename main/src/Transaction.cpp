@@ -9,7 +9,12 @@ void Transaction::parseParams(vector<string>params)
 	{
 		params_m = params;
 	};
-	
+
+vector<string> Transaction::GetParams()
+{
+	return params_m;
+}
+
 bool Transaction::ValidateIncomeSpendCommands()
 	{
 	int k = 0;

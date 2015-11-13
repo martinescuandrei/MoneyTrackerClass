@@ -15,7 +15,7 @@ TEST(ValidateIncomeSpendCommands, TestCase1_IncomeOneParameter)
 	Transaction transaction(params);
 	
 	EXPECT_TRUE(transaction.ValidateIncomeSpendCommands());
-	//EXPECT_EQ(paramstest,transaction.GetParams());
+	EXPECT_EQ(paramstest,transaction.GetParams());
 }
 
 // Testing case income/spend with 2 parameters
@@ -35,7 +35,7 @@ TEST(ValidateIncomeSpendCommands, TestCase2_IncomeTwoParameters)
 	Transaction transaction(params);
 	
 	EXPECT_TRUE(transaction.ValidateIncomeSpendCommands());
-	//EXPECT_EQ(paramstest,transaction.GetParams());
+	EXPECT_EQ(paramstest,transaction.GetParams());
 }
 
 TEST(ValidateIncomeSpendCommands, TestCase3_IncomeTwoParameters)
@@ -54,7 +54,7 @@ TEST(ValidateIncomeSpendCommands, TestCase3_IncomeTwoParameters)
 	Transaction transaction(params);
 	
 	EXPECT_TRUE(transaction.ValidateIncomeSpendCommands());
-	//EXPECT_EQ(paramstest,transaction.GetParams());
+	EXPECT_EQ(paramstest,transaction.GetParams());
 }
 
 TEST(ValidateIncomeSpendCommands, TestCase4_IncomeTwoParameters)
@@ -73,7 +73,7 @@ TEST(ValidateIncomeSpendCommands, TestCase4_IncomeTwoParameters)
 	Transaction transaction(params);
 	
 	EXPECT_TRUE(transaction.ValidateIncomeSpendCommands());
-	//EXPECT_EQ(paramstest,transaction.GetParams());
+	EXPECT_EQ(paramstest,transaction.GetParams());
 }
 
 TEST(ValidateIncomeSpendCommands, TestCase5_Income4Parameters)
@@ -96,7 +96,7 @@ TEST(ValidateIncomeSpendCommands, TestCase5_Income4Parameters)
 	Transaction transaction(params);
 	
 	EXPECT_TRUE(transaction.ValidateIncomeSpendCommands());
-	//EXPECT_EQ(paramstest,transaction.GetParams());
+	EXPECT_EQ(paramstest,transaction.GetParams());
 }
 
 TEST(ValidateIncomeSpendCommands, TestCase6_Income4Parameters)
@@ -119,7 +119,7 @@ TEST(ValidateIncomeSpendCommands, TestCase6_Income4Parameters)
 	Transaction transaction(params);
 	
 	EXPECT_TRUE(transaction.ValidateIncomeSpendCommands());
-	//EXPECT_EQ(paramstest,transaction.GetParams());
+	EXPECT_EQ(paramstest,transaction.GetParams());
 }
 
 TEST(ValidateIncomeSpendCommands, TestCase7_Income4Parameters)
@@ -143,7 +143,7 @@ TEST(ValidateIncomeSpendCommands, TestCase7_Income4Parameters)
 	Transaction transaction(params);
 	
 	ASSERT_FALSE(transaction.ValidateIncomeSpendCommands());
-	//EXPECT_NE(paramstest,transaction.GetParams());
+	EXPECT_NE(paramstest,transaction.GetParams());
 }
 
 TEST(ValidateIncomeSpendCommands, TestCase8_Income4Parameters)
@@ -168,7 +168,7 @@ TEST(ValidateIncomeSpendCommands, TestCase8_Income4Parameters)
 	Transaction transaction(params);
 	
 	ASSERT_FALSE(transaction.ValidateIncomeSpendCommands());
-	//EXPECT_NE(paramstest,transaction.GetParams());
+	EXPECT_NE(paramstest,transaction.GetParams());
 }
 
 
@@ -191,7 +191,7 @@ TEST(ValidateIncomeSpendCommands, TestCase9_Income4Parameters)
 	Transaction transaction(params);
 	
 	ASSERT_FALSE(transaction.ValidateIncomeSpendCommands());
-	//EXPECT_NE(paramstest,transaction.GetParams());
+	EXPECT_NE(paramstest,transaction.GetParams());
 }
 
 
