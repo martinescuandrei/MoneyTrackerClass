@@ -2,7 +2,6 @@
 // Reinterpret Andrei Martinescu MoneytrackerClass v0.1
 
 #include "gtest/gtest.h"
-//#include "ReadConfig.h"
 #include "string"
 #include <fstream>
 #include "Wallet.h"
@@ -12,7 +11,7 @@
 #include "Command.h"
 #include "Factory.h"
 #include <stdio.h>
-
+using namespace std;
 
 std::string readLastLine()
 {
@@ -81,7 +80,7 @@ TEST(SpecifyCategory, IncomeCCategoryAmount)
 	params_m.push_back(parameter5);
 	
 	command1->parseParams(params_m);
-	command1->SetCommand(comanda);
+	//command1->SetCommand(comanda);
 	
 	command1->execute();
 	
@@ -123,7 +122,6 @@ TEST(SpecifyCategory, IncomeCategoryCategoryAmount)
 
 	
 	command1->parseParams(params_m);
-	command1->SetCommand(comanda);
 	
 	Wallet wallett(params_m);
 	wallett.AddLineInWalletFile(parameter3, comanda, parameter2, wallet );
@@ -148,7 +146,6 @@ TEST(SpecifyCategory, IncomeCategoryCategoryAfterAmount)
 {
 	
 	std::string wallet = "mywallet123"; 
-	//std::ofstream ifs("mywallet123");
 	
 	Command* command1;
 	
@@ -170,7 +167,6 @@ TEST(SpecifyCategory, IncomeCategoryCategoryAfterAmount)
 
 	
 	command1->parseParams(params_m);
-	command1->SetCommand(comanda);
 	
 	Wallet wallett(params_m);
 	wallett.AddLineInWalletFile(parameter3, comanda, parameter2, wallet );
@@ -216,7 +212,6 @@ TEST(SpecifyCategory, SpendCategoryCategoryAfterAmount)
 
 	
 	command1->parseParams(params_m);
-	command1->SetCommand(comanda);
 	
 	
 	Wallet wallett(params_m);
@@ -265,9 +260,6 @@ TEST(SpecifyCategory, SpendCCategoryAmount)
 
 	
 	command1->parseParams(params_m);
-	command1->SetCommand(comanda);
-	string commandd = command1->GetCommand();
-	cout << commandd << endl;
 	
 	
 	Wallet wallett(params_m);

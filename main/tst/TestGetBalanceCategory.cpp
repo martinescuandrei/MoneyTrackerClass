@@ -3,12 +3,12 @@
 #include "gtest/gtest.h"
 #include "Wallet.h"
 #include "GetBalance.h"
-
 #include <string>
 #include <fstream>
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
+using namespace std;
 
 // function to return wallet as string
  std::string ReturnWalletString1(const std::string &filename)

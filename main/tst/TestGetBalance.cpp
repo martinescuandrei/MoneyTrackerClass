@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <stdio.h>
+#include <vector>
 
 // function to return wallet as string
  std::string ReturnWalletString(const std::string &filename)
@@ -26,7 +27,7 @@
  TEST(TestGetBalance, ZeroAmountBalance)
 {
 	
-	vector<string> params;
+	std::vector<std::string> params;
 	params.push_back("main\\tst\\WalletBalance");
 	params.push_back("+00.00");
 	Wallet wallet(params);
@@ -47,7 +48,7 @@
 {
 	GetBalance balance;
 	
-	vector<string> params;
+	std::vector<std::string> params;
 	params.push_back("main\\tst\\WalletBalancee");
 	params.push_back("-200.55");
 	Wallet wallet(params);
@@ -65,7 +66,7 @@ TEST(TestGetBalance, PosAmountBalance)
 {
 	GetBalance balance;
 
-	vector<string> params;
+	std::vector<std::string> params;
 	params.push_back("main\\tst\\WalletBalanceee");
 	params.push_back("+200.55");
 	Wallet wallet(params);
@@ -83,7 +84,7 @@ TEST(TestGetBalance, PosAmountBalance)
 {
 	GetBalance balance;
 	
-	vector<string> params;
+	std::vector<std::string> params;
 	params.push_back("main\\tst\\WalletB");
 	params.push_back("+200.55");
 	/* Wallet *wallet = new Wallet(params);
@@ -118,7 +119,7 @@ TEST(TestGetBalance, PosAmountBalance)
 {
 	GetBalance balance;
 	
-	vector<string> params;
+	std::vector<std::string> params;
 	params.push_back("main\\tst\\WalletB1");
 	params.push_back("+200.55");
    // Wallet *wallet = new Wallet(params);

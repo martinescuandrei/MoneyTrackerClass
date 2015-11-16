@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <vector>
 #include <cstdio>
+using namespace std;
 
 // function to return wallet as string
 std::string ReturnWalletasString(std::string &wallet)

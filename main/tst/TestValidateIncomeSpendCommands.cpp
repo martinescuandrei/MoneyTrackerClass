@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "Transaction.h"
+using namespace std;
 
 // Testing case income/spend with one parameter
 

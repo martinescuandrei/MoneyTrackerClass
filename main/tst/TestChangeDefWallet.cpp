@@ -5,6 +5,7 @@
 #include "string"
 #include <fstream>
 #include "ChangeConfig.h"
+using namespace std; 
 
 std::string ReturnWalletNameLine()
 {

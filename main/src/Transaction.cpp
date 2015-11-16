@@ -6,6 +6,16 @@ Transaction::Transaction()
 {
 }; 
 
+vector<string> Transaction::GetParams()
+{
+	return params_m;
+}
+
+Transaction::Transaction(std::vector<std::string> params)
+{
+	params_m = params;
+}
+
 Transaction::Transaction(TransactionType_E type):type_m(type)
 	{
 		 if (type_m == INCOME)
@@ -36,8 +46,8 @@ bool Transaction::ValidateIncomeSpendCommands()
 		//case we have 3 arguments EX: moneytracker income 200
 		if (params_m.size() == 1)
 		{
-			 HelperFunc validateNumber("default",params_m[0]);
-			bool flag2 = validateNumber.IsValidNumber(); 
+			 HelperFunc number("default",params_m[0]);
+			bool flag2 = number.IsValidNumber(); 
 			// if valid command
 			if (flag2 == true)
 			{	
@@ -55,8 +65,8 @@ bool Transaction::ValidateIncomeSpendCommands()
 		else if (params_m.size() == 3)
 		{
 			 //check if first argument is a valid number
-			HelperFunc validateNumber("deault",params_m[0]);
-			bool flag2 = validateNumber.IsValidNumber(); 
+			HelperFunc number("deault",params_m[0]);
+			bool flag2 = number.IsValidNumber(); 
 			// if true
 			if (flag2 == true)
 			{
@@ -79,8 +89,8 @@ bool Transaction::ValidateIncomeSpendCommands()
 			//check if the 3 'th argument is a valid number
 			else
 			{
-				 HelperFunc validateNumber("default",params_m[2]);
-				bool flag2 = validateNumber.IsValidNumber(); 
+				 HelperFunc number("default",params_m[2]);
+				bool flag2 = number.IsValidNumber(); 
 				k = 2;
 				if (flag2 == true)
 				{
@@ -112,8 +122,8 @@ bool Transaction::ValidateIncomeSpendCommands()
 		//category -w wallet 200
 		else if (params_m.size() == 5)
 		{
-			 HelperFunc validateNumber("default",params_m[0]);
-				bool flag2 = validateNumber.IsValidNumber(); 
+			 HelperFunc number("default",params_m[0]);
+				bool flag2 = number.IsValidNumber(); 
 			// check if first argument is valid
 			if (flag2 == true)
 			{	
@@ -140,8 +150,8 @@ bool Transaction::ValidateIncomeSpendCommands()
 			//else if 3'th argument is valid number
 			else 
 			{
-				HelperFunc validateNumber("deafult",params_m[2]);
-				bool flag2 = validateNumber.IsValidNumber(); 
+				HelperFunc number("deafult",params_m[2]);
+				bool flag2 = number.IsValidNumber(); 
 				k = 2;
 				//check if first argument and last ar valid commands
 				if (flag2 == true)
@@ -169,8 +179,8 @@ bool Transaction::ValidateIncomeSpendCommands()
 				//else check if last argument is a valid number
 				else 
 				{
-					HelperFunc validateNumber("deafuld",params_m[4]);
-					bool flag2 = validateNumber.IsValidNumber(); 
+					HelperFunc number("deafuld",params_m[4]);
+					bool flag2 = number.IsValidNumber(); 
 					k = 4;
 					//check if argument on first and 3'th position ar valid
 					if (flag2 == true)

@@ -8,7 +8,6 @@
 #include "Wallet.h"
 #include "Config.h"
 #include "TransactionType.h"
-
 #include <vector>
 #include <string>
 #include <iostream>
@@ -17,16 +16,11 @@
 #include <algorithm>
 
 class Command
-{	private:
-	std::string initialCommand_m;
+{	
 	public:
 		 virtual void parseParams(std::vector<std::string> params)=0;
 		 virtual void execute()=0;
-		 void SetCommand(const std::string& initialCommand);
-		 std::string GetCommand();
 		 virtual ~Command(){};
 };
-
-
 
 #endif

@@ -2,6 +2,7 @@
 #include "HelperFunc.h"
 #include "gtest/gtest.h"
 #include "Wallet.h"
+using namespace std;
 // tests if the a file exists with relative path
 
 TEST(FileExists, FileAbsolutePath)
