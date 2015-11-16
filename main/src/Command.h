@@ -7,6 +7,7 @@
 #include "GetBalance.h"
 #include "Wallet.h"
 #include "Config.h"
+#include "TransactionType.h"
 
 #include <vector>
 #include <string>

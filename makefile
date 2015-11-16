@@ -24,7 +24,8 @@ HEADERS = \
 	main\src\ChangeConfig.h \
 	main\src\Balance.h \
 	main\src\Transaction.h \
-	main\src\Factory.h
+	main\src\Factory.h \
+	main\src\TransactionType.h
 	
 
 #first target, reached when calling make without a target

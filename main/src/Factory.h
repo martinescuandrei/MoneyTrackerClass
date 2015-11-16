@@ -6,7 +6,7 @@
 #include "ChangeConfig.h"
 #include "Balance.h"
 #include "Transaction.h"
-
+#include "TransactionType.h"
 
 class Factory
 {

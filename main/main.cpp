@@ -43,9 +43,6 @@ int main(int argc, char* argv[])
 		//parse Parameters
 		command->parseParams(params);
 		
-		// set type of command
-		command->SetCommand(argv[1]);
-		
 		// execute
 		command->execute();
 	

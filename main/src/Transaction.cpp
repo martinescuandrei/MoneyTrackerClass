@@ -5,6 +5,21 @@ using namespace std;
 Transaction::Transaction()
 {
 }; 
+
+Transaction::Transaction(TransactionType_E type):type_m(type)
+	{
+		 if (type_m == INCOME)
+		{
+			category = "salary";
+			command = "income";
+		}
+		else if (type_m == SPEND)
+		{
+			category = "other";
+			command = "spend";
+		}
+	};
+
 Transaction::Transaction(vector<string> params):params_m(params)
 	{
 	};
@@ -205,7 +220,7 @@ bool Transaction::ValidateIncomeSpendCommands()
 	MessageHandler message;
 	vector<string> parameters;
 	
-	string command = Command::GetCommand();
+	//string command = Command::GetCommand();
 	
 	if (flag ==  true) 
 	{
@@ -254,10 +269,8 @@ void Transaction::execute()
 {
 	vector<string> parameters;
 	MessageHandler message;
-	string category;
 	string walletName;
 	string amount;
-	string command = Command::GetCommand();
 	
 	//initialize the walletName with default wallet
 	HelperFunc defWall;
@@ -272,15 +285,7 @@ void Transaction::execute()
 			{
 			walletName = "";
 			}
-	//initialize the category with the default values
-	 if (command == "income")
-		{
-			category = "salary";
-		}
-		else if (command == "spend")
-		{
-			category = "other";
-		}
+
 	//check the parameters 
 	bool flag = ValidateIncomeSpendCommands();
 	//cout << flag << endl;
