@@ -9,8 +9,7 @@
 #include "TransactionType.h"
 
 class Factory
-{
-	std::string command;              
+{          
 	Command* ptrCmd;
 	public:
 	Factory();                       

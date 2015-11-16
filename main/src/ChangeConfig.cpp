@@ -45,11 +45,9 @@ void ChangeConfig::execute()
 			
 			if (params_m[i] == "==")
 			{
-				//cout << params_m[i] << endl;
 				message.SetMessage(INVALID_PARAMETER);
 				parameters.push_back("config");
 				message.Print(parameters);
-				//cout << "error: invalid parameters for 'config'."<<endl;
 				flag1 = false;
 				break;
 			}
@@ -59,11 +57,9 @@ void ChangeConfig::execute()
 		std::string stringCheck = params_m[0];
 		if ((stringCheck[stringCheck.length()-1]== '=')&&(params_m.size() != 2))
 		{
-			//cout << stringCheck;
 			message.SetMessage(INVALID_PARAMETER);
 			parameters.push_back("config");
 			message.Print(parameters);
-			//cout << "error: invalid parameters for 'config'."<<endl;
 			flag2 = false;
 			
 		}
@@ -72,11 +68,9 @@ void ChangeConfig::execute()
 		if ((stringCheck[stringCheck.length()-1]== '=')
 			&&(stringCheck[stringCheck.length()-2]== '='))
 		{
-			//cout << stringCheckk;
 			message.SetMessage(INVALID_PARAMETER);
 			parameters.push_back("config");
 			message.Print(parameters);
-			//cout << "error: invalid parameters for 'config'."<<endl;
 			flag3 = false;
 			
 		}
@@ -90,7 +84,6 @@ void ChangeConfig::execute()
 			{
 				content = content + params_m[i];
 			}
-			//cout << content <<endl;
 			//check for = sign
 			for (size_t i=0; i<content.length(); i++)
 			{
@@ -129,7 +122,6 @@ void ChangeConfig::execute()
 			message.SetMessage(INVALID_PARAMETER);
 			parameters.push_back("config");
 			message.Print(parameters);
-			//std::cout <<"error: invalid parameters for 'config'." <<endl;
 			flag5 = false;
 		}
 		// check for validating the arguments
@@ -168,20 +160,14 @@ void ChangeConfig::execute()
 								message.SetMessage(INVALID_PARAMETER);
 								parameters.push_back("config");
 								message.Print(parameters);
-								//cout << "error: invalid parameters for 'config'."
-								//<< endl;
 								break;
 							}
 							// else change config
 							else
 							{
-								/* cout << printConfig << endl;
-								cout << changeValue << endl;
-								cout << checkIfCorect << endl; */
 							Config changeConfig(printConfig, changeValue, 
 							checkIfCorect);
 							std::string newConfig = changeConfig.ChangeConfigFile();
-							//cout << newConfig << endl;
 							Config reWrite(newConfig,changeValue,checkIfCorect);
 							reWrite.ReWriteConfigFile(); 
 							break;
@@ -196,10 +182,6 @@ void ChangeConfig::execute()
 							message.SetMessage(NOT_A_VALID_CONFIG_VALUE);
 							parameters.push_back(checkIfCorect);
 							message.Print(parameters);
-						/* cout << "'" 
-							 << checkIfCorect
-							 << "'"
-							 << " is not a valid configuration value.\n"; */
 							 break;
 						}
 					}   
@@ -212,10 +194,6 @@ void ChangeConfig::execute()
 					message.SetMessage(NOT_A_VALID_CONFIG_VALUE);
 					parameters.push_back(checkIfCorect);
 					message.Print(parameters);
-					/* cout << "'" 
-						 << checkIfCorect
-						 << "'"
-						 << " is not a valid configuration value.\n"; */
 					break;
 				}
 		}

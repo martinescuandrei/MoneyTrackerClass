@@ -20,18 +20,10 @@ Transaction::Transaction(TransactionType_E type):type_m(type)
 		}
 	};
 
-Transaction::Transaction(vector<string> params):params_m(params)
-	{
-	};
 void Transaction::parseParams(vector<string>params)
 	{
 		params_m = params;
 	};
-
-vector<string> Transaction::GetParams()
-{
-	return params_m;
-}
 
 bool Transaction::ValidateIncomeSpendCommands()
 	{
@@ -220,8 +212,6 @@ bool Transaction::ValidateIncomeSpendCommands()
 	MessageHandler message;
 	vector<string> parameters;
 	
-	//string command = Command::GetCommand();
-	
 	if (flag ==  true) 
 	{
 	  string amountt =  params_m[pozition];
@@ -288,7 +278,6 @@ void Transaction::execute()
 
 	//check the parameters 
 	bool flag = ValidateIncomeSpendCommands();
-	//cout << flag << endl;
 	
 	//if the parameters for income/spending are correct
 	if (flag == true)

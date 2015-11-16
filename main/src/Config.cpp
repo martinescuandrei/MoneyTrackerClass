@@ -34,17 +34,10 @@ bool Config::ReWriteConfigFile()
 	// add new content to config file
 	ofs.open("moneytracker.config");
 	ofs << content_m;
-	
-	//Print::
-	
+
 	message.SetMessage(SET_DEFAULT_WALLET);
 	parameters.push_back(default_change_m);
 	message.Print(parameters);
-	
- 	/* cout << "'"
-		 << default_change_m
-		 << "'"
-		 << " was configured as default.\n";  */
 	ofs.close();
 	
 	return openn;
@@ -86,16 +79,18 @@ std::string ReturnDefaultNoUnderLine(std::string &change)
 // change content from config
 std::string Config::ChangeConfigFile()
 {
+	vector<string> parameters;
+	MessageHandler message;
+	
 	// check if we found in config file the string 
 	if (content_m.find(change_m) == std::string::npos)
 	{ 	
 		// if not found
 		//Config print;
 		std::string output = ReturnDefaultNoUnderLine(change_m);
-		/* std::cout << "error: no " 
-		          << output 
-				  << " configured in 'moneytracker.config'." 
-				  << endl; */
+		message.SetMessage(INVALID_PARAMETER);
+		parameters.push_back(output);
+		message.Print(parameters);
 	}
 	else 
 	{	
@@ -187,10 +182,9 @@ std::string Config::ChangeConfigFile()
 			// print message for no parameter found 
 			//Config print;
 			std::string output = ReturnDefaultNoUnderLine(change_m);
-			/* std::cout << "error: no " 
-			          << output 
-					  << " configured in 'moneytracker.config'." 
-					  << endl; */
+			message.SetMessage(INVALID_PARAMETER);
+			parameters.push_back(output);
+			message.Print(parameters);
 		
 		}
 	}
