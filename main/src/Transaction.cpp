@@ -1,5 +1,6 @@
 #include "Transaction.h"
 
+using namespace std;
 
 Transaction::Transaction()
 {}; 

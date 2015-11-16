@@ -1,4 +1,8 @@
 #include "Factory.h"
+
+using namespace std;
+
+
 	Factory::Factory() : ptrCmd(0) {
 	}   
 					   
@@ -12,15 +16,15 @@ Command* Factory::makeCommand (const string& command)
 		if (command == "income")
 			{
 				ptrCmd = new Transaction();
-				Factory::command = "income";
+				//Factory::command = "income";
 	
 			}
 			
 		if (command == "spend")
 			{
 				ptrCmd = new Transaction();
-				Factory::command = "spend";
-	
+				//Factory::command = "spend";
+
 			}
 			
 		if (command == "balance")

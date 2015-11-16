@@ -7,10 +7,10 @@
 class CreateWallet : public Command
 {
 	public:
-	vector<string> params_m;
+	std::vector<std::string> params_m;
 	CreateWallet();
-	CreateWallet(vector<string> params);
-	void parseParams(vector<string> params);
+	CreateWallet(std::vector<std::string> params);
+	void parseParams(std::vector<std::string> params);
 	void execute();
 	~CreateWallet(){};
 };

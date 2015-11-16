@@ -6,11 +6,11 @@
 class Transaction : public Command
 {
 public:
-	vector<string> params_m;
+	std::vector<std::string> params_m;
 	Transaction();
-	Transaction(vector<string> params);
-	vector<string> GetParams();
-	void parseParams(vector<string>params);
+	Transaction(std::vector<std::string> params);
+	std::vector<std::string> GetParams();
+	void parseParams(std::vector<std::string>params);
 	bool ValidateIncomeSpendCommands();
 	void execute();
 	~Transaction(){};

@@ -6,10 +6,10 @@
 
 class ChangeConfig : public Command 
 {	public:
-	vector<string> params_m;
+	std::vector<std::string> params_m;
 	ChangeConfig();
-	ChangeConfig(vector<string> params);
-	void parseParams(vector<string> params);
+	ChangeConfig(std::vector<std::string> params);
+	void parseParams(std::vector<std::string> params);
 	void execute();
 	~ChangeConfig(){};
 };

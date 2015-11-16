@@ -7,7 +7,7 @@
 #include "MessageTypes_E.h"
 #include <iostream>
 #include <vector>
-using namespace std;
+
 class MessageHandler
 {
 	private:
@@ -18,7 +18,7 @@ class MessageHandler
 	MessageHandler();
 	bool IsSet();
 	MessageTypes_E SetMessage(MessageTypes_E message);
-	void Print(vector<string> parameters);
+	void Print(std::vector<std::string> parameters);
 };
 
 #endif

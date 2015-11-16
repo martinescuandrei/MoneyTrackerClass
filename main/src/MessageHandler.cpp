@@ -2,7 +2,7 @@
 
 #include "MessageHandler.h"
 
-
+using namespace std;
 MessageHandler::MessageHandler() : errorType(NO_MESSAGE)
 {};
 

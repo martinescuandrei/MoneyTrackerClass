@@ -1,5 +1,7 @@
 #include "ChangeConfig.h"
 
+using namespace std;
+
 ChangeConfig::ChangeConfig()
 {}; 
 ChangeConfig::ChangeConfig(vector<string> params):params_m(params)

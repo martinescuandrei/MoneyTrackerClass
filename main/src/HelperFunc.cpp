@@ -1,5 +1,7 @@
 #include "HelperFunc.h"
 
+using namespace std;
+
 HelperFunc::HelperFunc(string walletName, string defaultAmount):	
 	walletName_m(walletName),
 	defaultAmount_m(defaultAmount)

@@ -1,5 +1,7 @@
 #include "CreateWallet.h"
 
+using namespace std;
+
 CreateWallet::CreateWallet()
 {};
 CreateWallet::CreateWallet(vector<string> params):params_m(params)

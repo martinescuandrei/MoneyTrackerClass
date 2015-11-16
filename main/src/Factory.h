@@ -10,11 +10,11 @@
 
 class Factory
 {
-	string command;              
+	std::string command;              
 	Command* ptrCmd;
 	public:
 	Factory();                       
-	Command* makeCommand (const string& command);
+	Command* makeCommand (const std::string& command);
 	~Factory();
 };
 

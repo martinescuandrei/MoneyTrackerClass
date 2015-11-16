@@ -1,5 +1,6 @@
 #include "Balance.h"
 
+using namespace std;
 
 Balance::Balance()
 	{}

@@ -9,22 +9,22 @@ class Wallet
 {
 	private:
 		// the name of the wallet
-		string walletName_m;
+		std::string walletName_m;
 		
 		// the default amount to be added to the wallet
-		string defaultAmount_m;
-		vector<string> params_m;
+		std::string defaultAmount_m;
+		std::vector<std::string> params_m;
 	public: 
 		void Create();
-		Wallet(vector<string> params);
-		void Write(string amount, 
-				   string transaction, 
-				   string category,
-				   string wallet);
-		void AddLineInWalletFile(string &amount, 
-						 string &transaction, 
-						 string &category, 
-						 string &wallet);
+		Wallet(std::vector<std::string> params);
+		void Write(std::string amount, 
+				   std::string transaction, 
+				   std::string category,
+				   std::string wallet);
+		void AddLineInWalletFile(std::string &amount, 
+						std:: string &transaction, 
+						 std::string &category, 
+						 std::string &wallet);
 		Wallet(){};
 		~Wallet(){};
 };

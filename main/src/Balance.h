@@ -5,15 +5,15 @@
 class Balance : public Command
 {
 	private:
-		vector<string> params_m;
+		std::vector<std::string> params_m;
 	public:
 		//constructors
 		Balance();
 
-		Balance(vector<string> params);
+		Balance(std::vector<std::string> params);
 	
 			
-		void parseParams(vector<string>params);
+		void parseParams(std::vector<std::string>params);
 
 		//execute GetBalance
 		void execute();

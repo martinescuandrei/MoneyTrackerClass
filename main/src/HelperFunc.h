@@ -5,47 +5,47 @@
 #include <iostream>
 #include <cstdio>
 #include <algorithm>
-using namespace std;
+
 
 class HelperFunc
 {
 	private:
 		// the name of the wallet
-		string walletName_m;
+		std::string walletName_m;
 		
 		// the default amount to be added to the wallet
-		string defaultAmount_m;
+		std::string defaultAmount_m;
 	public:
 		//constructors	
 		HelperFunc()
 		{};
-		HelperFunc(string walletName, string defaultAmount);
+		HelperFunc(std::string walletName, std::string defaultAmount);
 		
 		//function for converting path  Ex: C:\learn in C:/learn for validating
-		string ConvertPath(string &givenPath);
+		std::string ConvertPath(std::string &givenPath);
 		
 		//function for converting path to original
-		string ConvertPathToOriginal(string &givenPath);
+		std::string ConvertPathToOriginal(std::string &givenPath);
 		
 		//function used to return the content of a file as a string
-		string ReturnFileasString(const string &filename);
+		std::string ReturnFileasString(const std::string &filename);
 		
 		//function used to add decimals to an ammount
-		string AddDecimalsToDefaultAmount();
+		std::string AddDecimalsToDefaultAmount();
 		
 		//function used to remove the 0's from the begining
-		string RemoveStartingZeroes();
+		std::string RemoveStartingZeroes();
 		
 		//appeal both  AddDecimalsToDefaultAmount() and RemoveStartingZeroes()
-		string ValidateAmount();
+		std::string ValidateAmount();
 		
 		//function used to validate amount
 		bool IsValidNumber();
 		
 		//function used to check if a file exists
-		bool WalletExists(string &filename);
+		bool WalletExists(std::string &filename);
 		
 		//function used to read from configuration file
-		string GetDefaultWallet(string &contentConfigFile, string &checkVariable);
+		std::string GetDefaultWallet(std::string &contentConfigFile, std::string &checkVariable);
 };
 #endif

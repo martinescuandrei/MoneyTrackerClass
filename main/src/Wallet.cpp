@@ -3,7 +3,7 @@
 
 #include "Wallet.h"
 
-
+using namespace std;
 
 // constructor of wallet
 Wallet::Wallet(vector<string> params):params_m(params)
