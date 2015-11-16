@@ -19,8 +19,8 @@ class Command
 {	private:
 	std::string initialCommand_m;
 	public:
-		 virtual void parseParams(std::vector<std::string> params);
-		 virtual void execute();
+		 virtual void parseParams(std::vector<std::string> params)=0;
+		 virtual void execute()=0;
 		 void SetCommand(const std::string& initialCommand);
 		 std::string GetCommand();
 		 virtual ~Command(){};

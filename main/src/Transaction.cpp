@@ -3,9 +3,11 @@
 using namespace std;
 
 Transaction::Transaction()
-{}; 
+{
+}; 
 Transaction::Transaction(vector<string> params):params_m(params)
-	{};
+	{
+	};
 void Transaction::parseParams(vector<string>params)
 	{
 		params_m = params;
@@ -207,14 +209,12 @@ bool Transaction::ValidateIncomeSpendCommands()
 	
 	if (flag ==  true) 
 	{
-		//std::cout << "print something" << endl;
 	  string amountt =  params_m[pozition];
 	  if (amountt == "")
 	  {
 		  message.SetMessage(NO_AMOUNT_SPECIFIED);
 		  parameters.push_back(command);
 		  message.Print(parameters);
-		// cout << "error: no amount specified for 'spend'.\n";
 		 flag = false;
 	  }
 	  else if (amountt[0] == '-' || amountt == "0" || amountt == "0.0") 
@@ -233,7 +233,6 @@ bool Transaction::ValidateIncomeSpendCommands()
 	  } 
 	  else
 	  {
-		//std::cout << "print something" << endl;
 		string amountt =  params_m[pozition];
 		HelperFunc validAmountZeroes("aaa", amountt);
 		string correctAmount = validAmountZeroes.ValidateAmount();
@@ -258,7 +257,6 @@ void Transaction::execute()
 	string category;
 	string walletName;
 	string amount;
-	//Factory fact;
 	string command = Command::GetCommand();
 	
 	//initialize the walletName with default wallet
@@ -275,7 +273,7 @@ void Transaction::execute()
 			walletName = "";
 			}
 	//initialize the category with the default values
-	if (command == "income")
+	 if (command == "income")
 		{
 			category = "salary";
 		}
@@ -283,7 +281,6 @@ void Transaction::execute()
 		{
 			category = "other";
 		}
-	
 	//check the parameters 
 	bool flag = ValidateIncomeSpendCommands();
 	//cout << flag << endl;

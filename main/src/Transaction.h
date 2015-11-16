@@ -7,6 +7,8 @@ class Transaction : public Command
 {
 public:
 	std::vector<std::string> params_m;
+	std::string category;
+	std::string command;
 	Transaction();
 	Transaction(std::vector<std::string> params);
 	std::vector<std::string> GetParams();
