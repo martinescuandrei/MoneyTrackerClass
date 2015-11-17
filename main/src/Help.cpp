@@ -37,11 +37,3 @@ void Help::Commands()
 		 << "\t"         << setw(5)  << "|" << " specified in moneytracker.config \n"
 		 << "\t"         << setw(5)  << "|" << " EX: moneytracker config default_wallet=new.wallet \n\n";
 }
-
-/* int main ()
-{
-	
-	Help helppp;
-	helppp.Commands();
-	return 0;
-} */

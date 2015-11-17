@@ -97,8 +97,7 @@ void Wallet::AddLineInWalletFile(string &amount,
 		
 			// call print function		
 			message.Print(parameters);
-
-				 
+	 
 			cout << buffer << " GMT" << endl;
 		}
 		printline += printline + ";" + 
@@ -152,7 +151,6 @@ void Wallet::AddLineInWalletFile(string &amount,
 		
 			// call print function		
 			message.Print(parameters);
-
 					 
 			cout << buffer << " GMT" << endl;
 		}

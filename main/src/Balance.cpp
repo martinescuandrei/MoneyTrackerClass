@@ -4,8 +4,6 @@ using namespace std;
 
 Balance::Balance()
 	{}
-Balance::Balance(vector<string> params):params_m(params)
-	{}	
 	
 void Balance::parseParams(vector<string>params)
 {

@@ -8,10 +8,7 @@ class Balance : public Command
 		std::vector<std::string> params_m;
 	public:
 		//constructors
-		Balance();
-
-		Balance(std::vector<std::string> params);
-	
+		Balance();	
 			
 		void parseParams(std::vector<std::string>params);
 
