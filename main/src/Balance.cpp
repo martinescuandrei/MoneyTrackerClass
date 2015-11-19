@@ -10,126 +10,144 @@ void Balance::parseParams(vector<string>params)
 	params_m = params;
 }
 
-//execute GetBalance
 void Balance::execute()
 {
 	GetBalance balance;
 	HelperFunc help;
-	string category = "";
-	vector<string> parameters;
 	MessageHandler message;
 	
-	if ((params_m.size() == 1) || (params_m.size() > 2))
+	vector<string> parameters;
+	bool walletdeclared = false;
+	string category = "";
+	string walletname = "";
+	string result = "";
+	
+	string configname= "moneytracker.config";
+	string default_wallet = "default_wallet";
+	
+	// check if we have 2 parameters after balance and assign values
+	if ((params_m.size() == 2) && ((params_m[0] == "-c") || 
+		(params_m[0] == "--category")))
 	{
-		//set error invalid parameters (parameters = 1 or >2)
+		category = params_m[1];
+	}
+	else if ((params_m.size() == 2) && ((params_m[0] == "-w") || 
+			(params_m[0] == "--wallet")))
+	{
+		walletname = params_m[1];
+		walletdeclared = true;
+	}	
+	// check if we have 4 parameters after balance and assign values
+	else if ((params_m.size() == 4) && (((params_m[0] == "-c") || 
+			(params_m[0] == "--category")) && ((params_m[2] == "-w") || 
+			(params_m[2] == "--wallet"))))
+	{
+		category = params_m[1];
+		walletname = params_m[3];
+	}
+	else if ((params_m.size() == 4) && (((params_m[0] == "-w") || 
+			(params_m[0] == "--wallet")) && ((params_m[2] == "-c") || 
+			(params_m[2] == "--category"))))
+	{
+		walletname = params_m[1];
+		category = params_m[3];
+	}
+	// if there is no parameter after balance will remain default values for 
+	// walletname and category
+	else if (params_m.size() == 0) {}
+	
+	else
+	{
+		//set error invalid parameters
 		message.SetMessage(INVALID_PARAMETER);
 		parameters.push_back("balance");
 		message.Print(parameters);
+		return;
 	}
-	else
-	{	
-		 //check if the parameter "-c" or "--category" is valid or no parameters
-		if ((params_m.size()==0) || ((params_m[0] == "-c") || (params_m[0] == "--category")))
-		{ 
-			//if there are parameters then place the category in a variable
-			if (params_m.size() != 0)
-			{
-				category = params_m[1];
-			}
-			
-			//set default values 
-			string configname= "moneytracker.config";
-			string default_wallet = "default_wallet";
-			
-			//check if moneytracker.config exists
-			if (help.WalletExists(configname))
-			{
-				//get the content of moneytracker.config
-				string configContent = help.ReturnFileasString(configname);
+
+	//in case we don;t have wallet defined in cmd, take the wallet from config
+	if (walletname == "")
+	{
+		//check if moneytracker.config exists
+		if (help.WalletExists(configname))
+		{
+			//get the content of moneytracker.config
+			string configContent = help.ReturnFileasString(configname);
 				
-				//get the default wallet from moneytracker.config
-				string filename= help.GetDefaultWallet(configContent, default_wallet);
+			//get the default wallet from moneytracker.config
+			walletname = help.GetDefaultWallet(configContent, default_wallet);
 			
-				//check if wallet name is configured in moneytracker.config
-				if ((filename != "NoDefaultWalletFound") && 
-					(filename != "NoWalletNameFound") && 
-					(filename != "EmptyConfig"))
-				{
-					//check if the file is open, else error
-					if (help.WalletExists(filename))
-					{
-						//return file as string
-						string content = help.ReturnFileasString(filename);
-						
-						//result_aux will be calculated balance returned as string
-						string result_aux = balance.PrintBalance(content,category);
-						
-						//create an object 'help2' to be able to use ValidateAmount
-						HelperFunc help2(filename,result_aux);
-						string result = help2.ValidateAmount();
-				
-						//check if category exists
-						bool isCategory = balance.CategoryExists();
-				
-						//print balance	
-						if ((isCategory) || (params_m.size() == 0))
-						{
-							if (isCategory)
-							{
-								//set message balance succesfuly with category
-								message.SetMessage(BALANCE_CATEGORY);
-								parameters.push_back(category);
-								parameters.push_back(filename);
-								parameters.push_back(result);
-								message.Print(parameters);
-							}
-							else
-							{
-								////set message balance succesfuly without category
-								message.SetMessage(BALANCE_ALL_WALLET);
-								parameters.push_back(filename);
-								parameters.push_back(result);
-								message.Print(parameters);
-							}
-						}
-						else
-						{
-							//set message no category found in my.wallet
-							message.SetMessage(NO_TRANSACTION_WITH_CATEGORY);
-							parameters.push_back(category);
-							parameters.push_back(filename);
-							message.Print(parameters);
-						}
-					}				
-					else
-					{
-						//set error could not find my.wallet
-						message.SetMessage(COULD_NOT_OPEN_PATH_BALANCE);
-						parameters.push_back(filename);
-						message.Print(parameters);
-					}
-				}
-				else
-				{
-					//set error could not find my.wallet in config file
-					message.SetMessage(NO_DEFAULT_WALLET);
-					message.Print(parameters);
-				}
-			}
-			else
+			//check if wallet name is configured in moneytracker.config
+			if ((walletname == "NoDefaultWalletFound") ||
+				(walletname == "NoWalletNameFound") ||
+				(walletname == "EmptyConfig"))
 			{
-				//set error could not find config file
-				message.SetMessage(COULD_NOT_OPEN_CONFIG);
-				message.Print(parameters);
-			}
-			
+				//set error could not find my.wallet in config file
+				message.SetMessage(NO_DEFAULT_WALLET);
+				message.Print(parameters);	
+				return;
+			}						
 		}
 		else
 		{
-			//set error invalid parameters (parameters != -c or --category)
-			message.SetMessage(INVALID_PARAMETER);
-			parameters.push_back("balance");
+			//set error could not find config file
+			message.SetMessage(COULD_NOT_OPEN_CONFIG);
 			message.Print(parameters);
+			return;
 		}
-	}			
+	}
+	
+	//check if the wallet can be opened, else error
+	if (help.WalletExists(walletname))
+	{
+		//return file as string
+		string content = help.ReturnFileasString(walletname);
+		
+		//result_aux will be calculated balance returned as string
+		string result_aux = balance.PrintBalance(content,category);
+		
+		//create an object 'help2' to be able to use ValidateAmount
+		HelperFunc help2(walletname,result_aux);
+		string result = help2.ValidateAmount();
+
+		//check if category exists
+		bool isCategory = balance.CategoryExists();
+		
+		//print balance	
+		if ((isCategory) || (params_m.size() == 0) || walletdeclared)
+		{
+			if (isCategory)
+			{
+				//set message balance succesfuly with category
+				message.SetMessage(BALANCE_CATEGORY);
+				parameters.push_back(category);
+				parameters.push_back(walletname);
+				parameters.push_back(result);
+				message.Print(parameters);
+			}
+			else
+			{
+				////set message balance succesfuly without category
+				message.SetMessage(BALANCE_ALL_WALLET);
+				parameters.push_back(walletname);
+				parameters.push_back(result);
+				message.Print(parameters);
+			}
+		}
+		else
+		{
+			//set message no category found in my.wallet
+			message.SetMessage(NO_TRANSACTION_WITH_CATEGORY);
+			parameters.push_back(category);
+			parameters.push_back(walletname);
+			message.Print(parameters);
+		}	
+	}
+	else
+	{
+		//set error could not find my.wallet
+		message.SetMessage(COULD_NOT_OPEN_PATH_BALANCE);
+		parameters.push_back(walletname);
+		message.Print(parameters);
+	}	
 }
