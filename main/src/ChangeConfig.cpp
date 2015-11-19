@@ -36,6 +36,7 @@ void ChangeConfig::execute()
 	{
 		cout << printConfig;
 	}
+	//cout << params_m.size() << 
 	// else validate the commands
 	else if (params_m.size() > 0)
 	{
@@ -55,13 +56,13 @@ void ChangeConfig::execute()
 		
 		//check if we don't have 4 arguments and one has = at the end
 		std::string stringCheck = params_m[0];
-		if ((stringCheck[stringCheck.length()-1]== '=')&&(params_m.size() != 2))
+		if ((stringCheck[stringCheck.length()-1]== '=')&&(params_m.size() != 2)&&(params_m[0].find("default_wallet") != std::string::npos))
 		{
+			
 			message.SetMessage(INVALID_PARAMETER);
 			parameters.push_back("config");
 			message.Print(parameters);
-			flag2 = false;
-			
+			flag2 = false;	
 		}
 		//check if one parameter has == at the end 
 		std::string stringCheckk = params_m[0];
@@ -108,13 +109,40 @@ void ChangeConfig::execute()
 				message.SetMessage(INVALID_PARAMETER);
 				parameters.push_back("config");
 				message.Print(parameters);
-				//cout << "error: invalid parameters for 'config'."<<endl;
 				flag4 = false;
 			}
 			// obtain first parameter and second
 			arguments[0] = content.substr(0,pozition);
-			arguments[1] = content.substr(pozition+1,
+			std::string argument2 = content.substr(pozition+1,
 			content.length()-pozition-1);
+			size_t beginPozition=0;
+			size_t endPozition=0;
+			//size_t j = argument2.length();
+			for (size_t i=0; i<argument2.length(); i++)
+			{
+				if ((argument2[i] == ' ')||(argument2[i] == '\t'))
+				{
+					++beginPozition;
+				}
+				else if ((argument2[i] != ' ')||(argument2[i] != '\t'))
+				{
+					break;
+				}
+			}
+			for (size_t i=argument2.length()-1; i>=0; i--)
+			{
+				if ((argument2[i] == ' ')||(argument2[i] == '\t'))
+				{
+					++endPozition;
+				}
+				else if ((argument2[i] != ' ')||(argument2[i] != '\t'))
+				{
+					break;
+				}
+			}
+
+			arguments[1] = argument2.substr(beginPozition,argument2.length()-beginPozition-endPozition);
+	
 		}
 		// print error if we don't have enough arguments
 		else if ((flag1==true)&&(flag2==true)&&(flag3==true)&&(flag4==true))
@@ -138,7 +166,7 @@ void ChangeConfig::execute()
 			(arguments[i].find("rate_RON_EUR") != std::string::npos)||
 			(arguments[i].find("rate_USD_RON") != std::string::npos)||
 			(arguments[i].find("rate_EUR_USD") != std::string::npos))
-				{
+				{	
 					// check if first parameter is correct
 					if ((checkIfCorect == "default_wallet")||
 						(checkIfCorect == "default_currency")||
@@ -150,13 +178,14 @@ void ChangeConfig::execute()
 						(checkIfCorect == "rate_USD_RON")||
 						(checkIfCorect == "rate_EUR_USD"))
 						{
-
+						
 							std:: string changeValue = arguments[1];
 							//check if second parameter is null
 							if ((changeValue == "")&&(flag1==true)
 								&&(flag2==true)&&(flag3==true)&&
-							(flag4==true)&&(flag5==true))
+							(flag4==true)&&(flag5==true)&&(checkIfCorect=="default_wallet"))
 							{
+							
 								message.SetMessage(INVALID_PARAMETER);
 								parameters.push_back("config");
 								message.Print(parameters);
@@ -165,6 +194,7 @@ void ChangeConfig::execute()
 							// else change config
 							else
 							{
+							
 							Config changeConfig(printConfig, changeValue, 
 							checkIfCorect);
 							std::string newConfig = changeConfig.ChangeConfigFile();

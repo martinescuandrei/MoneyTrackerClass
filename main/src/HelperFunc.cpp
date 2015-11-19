@@ -379,10 +379,10 @@ string HelperFunc::GetDefaultWallet(string &contentConfigFile,
 			// if we found the exact string in config
 			if (flag == true)
 			{
-				workContent.erase(std::remove(workContent.begin(),
+			   /*  workContent.erase(std::remove(workContent.begin(),
 				workContent.end(),' '),workContent.end());
 				workContent.erase(std::remove(workContent.begin(),
-				workContent.end(),'\t'),workContent.end());
+				workContent.end(),'\t'),workContent.end()); */
 				size_t pozitionAfterSignEqual = 0;
 				size_t pozitionSignNextLine = 0;
 				size_t countLineNumbers = 0;
@@ -405,8 +405,8 @@ string HelperFunc::GetDefaultWallet(string &contentConfigFile,
 						break;
 					}
 				}
-				std::string walletName = workContent.substr(pozitionAfterSignEqual
-				,pozitionSignNextLine-pozitionAfterSignEqual);
+				std::string walletName = workContent.substr(pozitionAfterSignEqual+1
+				,pozitionSignNextLine-pozitionAfterSignEqual-1);
 				if (walletName.length() == 0)
 				{
 					return "NoWalletNameFound";

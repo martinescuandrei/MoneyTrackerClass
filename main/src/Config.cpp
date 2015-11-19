@@ -120,13 +120,13 @@ std::string Config::ChangeConfigFile()
 				else 
 				{
 					// erase space and tabs ;
-					workLine.erase(std::remove(workLine.begin(),
+					/* workLine.erase(std::remove(workLine.begin(),
 					workLine.end(),' '),workLine.end());
 					workLine.erase(std::remove(workLine.begin(),
-					workLine.end(),'\t'),workLine.end());
+					workLine.end(),'\t'),workLine.end()); */
 					
 					// obtain the string for comparing
-					defaultCheck = workLine.substr(0,workLine.find('=')); 
+					defaultCheck = workLine.substr(0,workLine.find('=')-1); 
 					if (defaultCheck == change_m)
 					{
 						flag =true;
