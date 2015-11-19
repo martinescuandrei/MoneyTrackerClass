@@ -31,7 +31,7 @@ TEST(GetWalletName, NoDefaultWallet)
 	EXPECT_EQ(actual, configHelp.GetDefaultWallet(content,defaultWalletCheck));
 }
 
-//Test 2 
+/* //Test 2 
 TEST(GetWalletName, SpacesBeforeDefWallet)
 {
 	std::ifstream configFile("main\\tst\\ConfigFiles\\spaces_before_def_wallet.config");
@@ -57,7 +57,7 @@ TEST(GetWalletName, SpacesAfterDefWallet)
 	std::string actual = "mywallet";
 	
 	EXPECT_EQ(actual, configHelp.GetDefaultWallet(content, defaultWalletCheck));
-}
+} */
 
 //Test 4
 TEST(GetWalletName, EmptyAfterDefWallet)

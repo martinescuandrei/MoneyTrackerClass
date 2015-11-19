@@ -2,6 +2,7 @@
 #define TRANSACTION_H
 #include "TransactionType.h"
 #include "Command.h"
+#include "HelperFunc.h"
 #include <vector>
 
 class Transaction : public Command

@@ -18,14 +18,44 @@ Transaction::Transaction(std::vector<std::string> params)
 
 Transaction::Transaction(TransactionType_E type):type_m(type)
 	{
+		std::string amount = "+00.00";
+		HelperFunc categoryIncomeSpending("moneytracker.config",amount);
+		std::string configFile = 
+		categoryIncomeSpending.ReturnFileasString("moneytracker.config");
 		 if (type_m == INCOME)
 		{
-			category = "salary";
+			std::string defaultIncome = "default_income_category";
+			std::string configCategory = 
+			categoryIncomeSpending.GetDefaultWallet(configFile,defaultIncome);
+			if ((configCategory == "NotOpen")
+			   || (configCategory == "EmptyConfig")
+     		   || (configCategory == "NoDefaultWalletFound")
+			   || (configCategory == "NoWalletNameFound"))
+		    {
+			    category = "salary";
+		    }
+			else 
+			{
+				category = configCategory;
+			}
 			command = "income";
 		}
 		else if (type_m == SPEND)
 		{
-			category = "other";
+			std::string defaultSpending = "default_spending_category";
+			std::string configCategory = 
+			categoryIncomeSpending.GetDefaultWallet(configFile,defaultSpending);
+			if ((configCategory == "NotOpen")
+			   || (configCategory == "EmptyConfig")
+     		   || (configCategory == "NoDefaultWalletFound")
+			   || (configCategory == "NoWalletNameFound"))
+		    {
+			    category = "other";
+		    }
+			else 
+			{
+				category = configCategory;
+			}
 			command = "spend";
 		}
 	};
