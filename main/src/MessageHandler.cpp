@@ -200,6 +200,10 @@ void MessageHandler::Print(vector<string> parameters)
 						<< " configured in 'moneytracker.config'." 
 						<< endl;
 		break;
+		case INVALID_TIME:
+			std::cout   << "error: transaction time is not valid." 
+						<< endl;
+		break;
 		case ALL_GOOD:
 			std::cout	<< "";		
 		break;
