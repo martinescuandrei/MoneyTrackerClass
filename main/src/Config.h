@@ -15,10 +15,14 @@ class Config
 {
 
 private:
-	
+	// content_m = the content of moneytracker.config
 	std::string content_m;
+	//change_m = value for searching the field in config 
 	std::string change_m;
+	// default_change_m the new value to write in content
 	std::string default_change_m;
+	// flag for validating the new value
+	bool flag_m;
 	
 	public:
 	Config();

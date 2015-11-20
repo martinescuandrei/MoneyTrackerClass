@@ -14,31 +14,50 @@ Config::Config( std::string &content,
 							std::string &default_change,
 							std::string &change )
 {
+	flag_m = true;
+	// content the entire file content
 	content_m = content;
+	// default_change_m the new value to write in content
 	default_change_m = default_change;
+	//change_m value for searching the right field to change
 	change_m = change;
+	for (size_t i=0; i<default_change_m.size(); i++)
+	{
+		if (default_change_m[i] == ';')
+		{
+			flag_m = false;
+		}
+	}
 }
 
 bool Config::ReWriteConfigFile()
 {
 	vector<string> parameters;
 	MessageHandler message;
+	bool openn = true;
 	
-	std::ofstream ofs;
-	// delete content of config file
-	ofs.open("moneytracker.config");
-	bool openn = ofs.is_open();
-	ofs.open("moneytracker.config", std::ofstream::out | std::ofstream::trunc);
-	ofs.close();
-	//cout << content_m <<endl;
-	// add new content to config file
-	ofs.open("moneytracker.config");
-	ofs << content_m;
+	if (flag_m == false) 
+	{
+		cout << "error: ';' is not a valid character.\n";
+	}
+	else 
+	{
+		std::ofstream ofs;
+		// delete content of config file
+		ofs.open("moneytracker.config");
+		openn = ofs.is_open();
+		ofs.open("moneytracker.config", std::ofstream::out | std::ofstream::trunc);
+		ofs.close();
+		//cout << content_m <<endl;
+		// add new content to config file
+		ofs.open("moneytracker.config");
+		ofs << content_m;
 
-	message.SetMessage(SET_DEFAULT_WALLET);
-	parameters.push_back(default_change_m);
-	message.Print(parameters);
-	ofs.close();
+		message.SetMessage(SET_DEFAULT_WALLET);
+		parameters.push_back(default_change_m);
+		message.Print(parameters);
+		ofs.close();
+	}
 	
 	return openn;
 }
@@ -168,14 +187,15 @@ std::string Config::ChangeConfigFile()
 				}
 			}
 			// create string variable for adding changes in config
-			std::string add = "= " + default_change_m;
 			
-			//erase from default_walet to /n;
-			content_m.erase(pozitionSignEqual,
-			pozitionSignNextLine-pozitionSignEqual);
-			
-			// insert new default wallet
-			content_m.insert(pozitionSignEqual,add);
+				std::string add = "= " + default_change_m;
+				
+				//erase from default_walet to /n;
+				content_m.erase(pozitionSignEqual,
+				pozitionSignNextLine-pozitionSignEqual);
+				
+				// insert new default wallet
+				content_m.insert(pozitionSignEqual,add);
 		}
 		else 
 		{
