@@ -66,7 +66,7 @@ void Transaction::parseParams(vector<string>params)
 	};
 
 bool Transaction::ValidateIncomeSpendCommands()
-	{
+{
 	int k = 0;
 	int pozition = 0;
 	bool flag = false;
@@ -95,7 +95,7 @@ bool Transaction::ValidateIncomeSpendCommands()
 		else if (params_m.size() == 3)
 		{
 			 //check if first argument is a valid number
-			HelperFunc number("deault",params_m[0]);
+			HelperFunc number("default",params_m[0]);
 			bool flag2 = number.IsValidNumber(); 
 			// if true
 			if (flag2 == true)
@@ -104,6 +104,8 @@ bool Transaction::ValidateIncomeSpendCommands()
 				if ((params_m[k+1]=="-c")
 					||(params_m[k+1]=="--category")
 					||(params_m[k+1]=="-w")
+					||(params_m[k+1]=="-t")
+					||(params_m[k+1]=="--time")
 					||(params_m[k+1]=="--wallet"))
 				{
 					pozition = k;
@@ -128,6 +130,8 @@ bool Transaction::ValidateIncomeSpendCommands()
 					if ((params_m[k-2]=="-c")
 						||(params_m[k-2]=="--category")
 						||(params_m[k-2]=="-w")
+						||(params_m[k-2]=="-t")
+						||(params_m[k-2]=="--time")
 						||(params_m[k-2]=="--wallet"))
 					{
 						pozition = k;
@@ -161,10 +165,14 @@ bool Transaction::ValidateIncomeSpendCommands()
 					&&((params_m[k+1]=="-c")
 					||(params_m[k+1]=="--category")
 					||(params_m[k+1]=="-w")
+					||(params_m[k+1]=="-t")
+					||(params_m[k+1]=="--time")
 					||(params_m[k+1]=="--wallet"))
 					&&((params_m[k+3]=="-c")
 				    ||(params_m[k+3]=="--category")
 				    ||(params_m[k+3]=="-w")
+				    ||(params_m[k+3]=="-t")
+				    ||(params_m[k+3]=="--time")
 				    ||(params_m[k+3]=="--wallet")))
 				{	
 					pozition = k;
@@ -190,10 +198,14 @@ bool Transaction::ValidateIncomeSpendCommands()
 					((params_m[k-2]=="-c")
 					||(params_m[k-2]=="--category")
 					||(params_m[k-2]=="-w")
+					||(params_m[k-2]=="-t")
+					||(params_m[k-2]=="--time")
 					||(params_m[k-2]=="--wallet"))
 					&&((params_m[k+1]=="-c")
 					||(params_m[k+1]=="--category")
 					||(params_m[k+1]=="-w")
+					||(params_m[k+1]=="-t")
+					||(params_m[k+1]=="--time")
 					||(params_m[k+1]=="--wallet")))
 					{
 						pozition = k;
@@ -219,10 +231,14 @@ bool Transaction::ValidateIncomeSpendCommands()
 						&&((params_m[k-2]=="-c")
 						||(params_m[k-2]=="--category")
 						||(params_m[k-2]=="-w")
+						||(params_m[k-2]=="-t")
+						||(params_m[k-2]=="--time")
 						||(params_m[k-2]=="--wallet"))
 						&&((params_m[k-4]=="-c")
 						||(params_m[k-4]=="--category")
 						||(params_m[k-4]=="-w")
+						||(params_m[k-4]=="-t")
+						||(params_m[k-4]=="--time")
 						||(params_m[k-4]=="--wallet")))
 						{
 							pozition = k;
@@ -242,6 +258,171 @@ bool Transaction::ValidateIncomeSpendCommands()
 					}
 				}
 			}		
+		}
+		// case 9 arguments 
+		// Example moneytracker income 200 -c category -w mywallet -t time
+		else if (params_m.size() == 7)
+		{
+		    HelperFunc number("default",params_m[0]);
+			bool flag2 = number.IsValidNumber(); 
+			// check if first argument is valid
+			if (flag2 == true)
+			{	
+				if (((params_m[k+1] != params_m[k+3])
+					&&(params_m[k+1] != params_m[k+5]) 
+				    &&(params_m[k+3] != params_m[k+5]))
+					&&((params_m[k+1]=="-c")
+					||(params_m[k+1]=="--category")
+					||(params_m[k+1]=="-w")
+					||(params_m[k+1]=="-t")
+					||(params_m[k+1]=="--time")
+					||(params_m[k+1]=="--wallet"))
+					&&((params_m[k+3]=="-c")
+				    ||(params_m[k+3]=="--category")
+				    ||(params_m[k+3]=="-w")
+				    ||(params_m[k+3]=="-t")
+				    ||(params_m[k+3]=="--time")
+				    ||(params_m[k+3]=="--wallet"))
+					&&((params_m[k+5]=="-c")
+				    ||(params_m[k+5]=="--category")
+				    ||(params_m[k+5]=="-w")
+				    ||(params_m[k+5]=="-t")
+				    ||(params_m[k+5]=="--time")
+				    ||(params_m[k+5]=="--wallet")))
+				{	
+					pozition = k;
+					k = params_m.size()+1;
+					flag = true;
+				}
+				else 
+				{
+					k = params_m.size()+1;
+				}
+			}
+			else 
+			{
+				HelperFunc number("default",params_m[2]);
+				bool flag2 = number.IsValidNumber(); 
+				k = 2;
+				// check if first argument is valid
+				if (flag2 == true)
+				{	
+					if (((params_m[k+1] != params_m[k+3])
+					    &&(params_m[k+1] != params_m[k-2]) 
+				        &&(params_m[k+3] != params_m[k-2]))
+						&&((params_m[k+1]=="-c")
+						||(params_m[k+1]=="--category")
+						||(params_m[k+1]=="-w")
+						||(params_m[k+1]=="-t")
+						||(params_m[k+1]=="--time")
+						||(params_m[k+1]=="--wallet"))
+						&&((params_m[k+3]=="-c")
+						||(params_m[k+3]=="--category")
+						||(params_m[k+3]=="-w")
+						||(params_m[k+3]=="-t")
+						||(params_m[k+3]=="--time")
+						||(params_m[k+3]=="--wallet"))
+						&&((params_m[k-2]=="-c")
+						||(params_m[k-2]=="--category")
+						||(params_m[k-2]=="-w")
+						||(params_m[k-2]=="-t")
+						||(params_m[k-2]=="--time")
+						||(params_m[k-2]=="--wallet")))
+					{	
+						pozition = k;
+						k = params_m.size()+1;
+						flag = true;
+					}
+					else 
+					{
+						k = params_m.size()+1;
+					}
+				}
+				else 
+				{
+					HelperFunc number("deafuld",params_m[4]);
+					bool flag2 = number.IsValidNumber(); 
+					k = 4;
+					if (flag2 == true)
+					{	
+						if (((params_m[k+1] != params_m[k-2])
+							&&(params_m[k+1] != params_m[k-4]) 
+							&&(params_m[k-2] != params_m[k-4]))
+							&&((params_m[k+1]=="-c")
+							||(params_m[k+1]=="--category")
+							||(params_m[k+1]=="-w")
+							||(params_m[k+1]=="-t")
+							||(params_m[k+1]=="--time")
+							||(params_m[k+1]=="--wallet"))
+							&&((params_m[k-4]=="-c")
+							||(params_m[k-4]=="--category")
+							||(params_m[k-4]=="-w")
+							||(params_m[k-4]=="-t")
+							||(params_m[k-4]=="--time")
+							||(params_m[k-4]=="--wallet"))
+							&&((params_m[k-2]=="-c")
+							||(params_m[k-2]=="--category")
+							||(params_m[k-2]=="-w")
+							||(params_m[k-2]=="-t")
+							||(params_m[k-2]=="--time")
+							||(params_m[k-2]=="--wallet")))
+						{	
+							pozition = k;
+							k = params_m.size()+1;
+							flag = true;
+						}
+						else 
+						{
+							k = params_m.size()+1;
+						}
+					}
+					else 
+					{
+						HelperFunc number("deafuld",params_m[6]);
+						bool flag2 = number.IsValidNumber(); 
+						k = 6;
+						if (flag2 == true)
+						{	
+							if (((params_m[k-6] != params_m[k-2])
+								&&(params_m[k-6] != params_m[k-4]) 
+								&&(params_m[k-2] != params_m[k-4]))
+								&&((params_m[k-6]=="-c")
+								||(params_m[k-6]=="--category")
+								||(params_m[k-6]=="-w")
+								||(params_m[k-6]=="-t")
+								||(params_m[k-6]=="--time")
+								||(params_m[k-6]=="--wallet"))
+								&&((params_m[k-4]=="-c")
+								||(params_m[k-4]=="--category")
+								||(params_m[k-4]=="-w")
+								||(params_m[k-4]=="-t")
+								||(params_m[k-4]=="--time")
+								||(params_m[k-4]=="--wallet"))
+								&&((params_m[k-2]=="-c")
+								||(params_m[k-2]=="--category")
+								||(params_m[k-2]=="-w")
+								||(params_m[k-2]=="-t")
+								||(params_m[k-2]=="--time")
+								||(params_m[k-2]=="--wallet")))
+							{	
+								pozition = k;
+								k = params_m.size()+1;
+								flag = true;
+							}
+							else 
+							{
+								k = params_m.size()+1;
+							}
+						}
+						else 
+						{
+							
+						}
+							
+					}
+					
+				}
+			}
 		}
 		//else not a valid command
 		else 
@@ -301,6 +482,7 @@ void Transaction::execute()
 	MessageHandler message;
 	string walletName;
 	string amount;
+	string time;
 	
 	//initialize the walletName with default wallet
 	HelperFunc defWall;
@@ -329,9 +511,13 @@ void Transaction::execute()
 			{
 				category = params_m[2];
 			}
-			else 
+			else if ((params_m[1] == "-w") || (params_m[1] == "--wallet"))
 			{
 				walletName = params_m[2];
+			}
+			else 
+			{
+				time = params_m[2];
 			}
 		}
 		else if (params_m.size() == 5)
@@ -339,13 +525,84 @@ void Transaction::execute()
 			if ((params_m[1] == "-c") || (params_m[1] == "--category"))
 			{
 				category = params_m[2];
-				walletName = params_m[4];
+				if ((params_m[3] == "-w") || (params_m[3] == "--wallet"))
+				{
+					walletName = params_m[4];
+				}
+				else 
+				{
+					time = params_m[4];
+				}
 			}
-			else 
+			else if ((params_m[1] == "-w") || (params_m[1] == "--wallet"))
 			{
 				walletName = params_m[2];
-				category = params_m[4];
+				if ((params_m[3] == "-c") || (params_m[3] == "--category"))
+				{
+					category = params_m[4];
+				}
+				else 
+				{
+					time = params_m[4];
+				}
 			}
+			else if ((params_m[1] == "-t") || (params_m[1] == "--time"))
+			{
+				time = params_m[2];
+				if ((params_m[3] == "-c") || (params_m[3] == "--category"))
+				{
+					category = params_m[4];
+				}
+				else 
+				{
+					walletName = params_m[4];
+				}
+			}
+		}
+		else if (params_m.size() == 7)
+		{
+			if ((params_m[1] == "-c") || (params_m[1] == "--category"))
+			{
+				category = params_m[2];
+				if ((params_m[3] == "-w") || (params_m[3] == "--wallet"))
+				{
+					walletName = params_m[4];
+					time = params_m[6];
+				}
+				else 
+				{
+					time = params_m[4];
+					walletName = params_m[6];
+				}
+			}
+			if ((params_m[1] == "-w") || (params_m[1] == "--wallet"))
+			{
+				walletName = params_m[2];
+				if ((params_m[3] == "-c") || (params_m[3] == "--category"))
+				{
+					category = params_m[4];
+					time = params_m[6];
+				}
+				else 
+				{
+					time = params_m[4];
+					category = params_m[6];
+				}
+			}
+			if ((params_m[1] == "-t") || (params_m[1] == "--time"))
+			{
+				time = params_m[2];
+				if ((params_m[3] == "-c") || (params_m[3] == "--category"))
+				{
+					category = params_m[4];
+					walletName = params_m[6];
+				}
+				else 
+				{
+					walletName = params_m[4];
+					category = params_m[6];
+				}
+			}			
 		}
 			
 		Wallet walletVerified(params_m);
