@@ -19,7 +19,7 @@ void Balance::execute()
 	vector<string> parameters;
 	bool walletdeclared = false;
 	string category = "";
-	string walletname = "";
+	string walletname = "*";
 	string result = "";
 	
 	string configname= "moneytracker.config";
@@ -66,7 +66,7 @@ void Balance::execute()
 	}
 
 	//in case we don;t have wallet defined in cmd, take the wallet from config
-	if (walletname == "")
+	if (walletname == "*")
 	{
 		//check if moneytracker.config exists
 		if (help.WalletExists(configname))
@@ -86,7 +86,14 @@ void Balance::execute()
 				message.SetMessage(NO_DEFAULT_WALLET);
 				message.Print(parameters);	
 				return;
-			}						
+			}
+			else if (walletname == "NotOpen") 
+			{
+				message.SetMessage(INVALID_PARAMETER);
+				parameters.push_back("balance");
+				message.Print(parameters);	
+				return;
+			}			
 		}
 		else
 		{

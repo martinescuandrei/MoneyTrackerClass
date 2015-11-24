@@ -194,6 +194,12 @@ void MessageHandler::Print(vector<string> parameters)
 						<< "'"
 						<< " was configured as default.\n";
 		break;
+		case SET_NO_DEFAULT:
+			std::cout   << "No '"
+						<< parameters.at(0)
+						<< "'"
+						<< " is configured as default.\n";
+		break;
 		case NO_OUTPUT_CONFIGURED:
 			std::cout   << "error: no " 
 						<< parameters.at(0) 

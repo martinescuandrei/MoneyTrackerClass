@@ -2,6 +2,8 @@
 // author Tudor Chibulcutean
 
 #include "Wallet.h"
+#include <ctime>
+#include <cstdio>
 
 using namespace std;
 
@@ -17,6 +19,66 @@ void Wallet::AddLineInWalletFile(string &amount,
 {	
 	vector<string> parameters;
 	MessageHandler message;
+	
+	string stringTime;
+	bool flag1 = false;
+	
+	for (size_t i=0; i<params_m.size(); i++)
+	{
+		if ((params_m[i] == "-t")||(params_m[i] == "--time"))
+		{
+			stringTime = params_m[i+1];
+			flag1 = true;
+		}
+	}
+	
+	time_t timeSinceEpoch;
+	bool flag2 = false;
+	if ((stringTime.length()>0)&&(flag1==true)) 
+	{
+		struct tm t = {0};
+		int day, mon, year, hour, min;
+		const char * stringg= stringTime.c_str();
+		// put string in time variables
+		sscanf(stringg, "%d-%d-%d %d:%d", &day, &mon, &year, &hour, &min);
+		// put content of variables in time structure
+		t.tm_mday = day;
+		t.tm_mon = mon - 1;
+		t.tm_year = year - 1900;
+		t.tm_hour = hour;
+		t.tm_min = min;
+		// get epoch time from time structure
+		timeSinceEpoch = mktime(&t);
+		
+		// verifiy if structure variables are the same as time variables
+		// and if the epoch time is valid				  
+		if(t.tm_mday == day &&
+		   t.tm_mon == mon - 1 && 
+		   t.tm_year == year - 1900 &&
+		   t.tm_hour == hour  &&
+		   t.tm_min == min && 
+		   timeSinceEpoch != -1)
+ 	   {
+			 flag2 = true;
+	   }
+	   
+	   else 
+	   {
+		   // set error message
+			message.SetMessage(INVALID_TIME);
+			// call print function		
+			message.Print(parameters);
+			return;
+	   }
+	}
+	
+	char bufferT [80];
+	struct tm *tmp1;
+	timeSinceEpoch += 7200;
+	tmp1 = gmtime(&timeSinceEpoch);
+	strftime (bufferT,80,"Transaction time: %a, %d %b %Y %X",tmp1);
+/*  	cout << timeSinceEpoch <<endl;
+	cout << bufferT <<endl;  */
 
 	HelperFunc helper(wallet, amount);
 	
@@ -35,6 +97,8 @@ void Wallet::AddLineInWalletFile(string &amount,
 	struct tm *tmp;
 	tmp = gmtime(&result);
 	strftime (buffer,80,"Transaction time: %a, %d %b %Y %X",tmp);
+/* 	cout << result <<endl;
+	cout << buffer <<endl; */
 	
 	string printline = "";
 	
@@ -79,8 +143,15 @@ void Wallet::AddLineInWalletFile(string &amount,
 			// call print function		
 			message.Print(parameters);
 
-				 
-			cout << buffer << " GMT" << endl;
+			if (flag2 == true )
+			{
+				cout << bufferT << " GMT" << endl;
+			}	
+			else 
+			{
+				cout << buffer << " GMT" << endl;
+			}
+			
 		}
 		
 		// if there is a wallet specified
@@ -98,7 +169,14 @@ void Wallet::AddLineInWalletFile(string &amount,
 			// call print function		
 			message.Print(parameters);
 	 
-			cout << buffer << " GMT" << endl;
+			if (flag2 == true )
+			{
+				cout << bufferT << " GMT" << endl;
+			}	
+			else 
+			{
+				cout << buffer << " GMT" << endl;
+			}
 		}
 		printline += printline + ";" + 
 					 "+" + ";" + 
@@ -135,7 +213,14 @@ void Wallet::AddLineInWalletFile(string &amount,
 			// call print function		
 			message.Print(parameters);
 
-			cout << buffer << " GMT" << endl;
+			if (flag2 == true )
+			{
+				cout << bufferT << " GMT" << endl;
+			}	
+			else 
+			{
+				cout << buffer << " GMT" << endl;
+			}
 		}
 		else 
 		{
@@ -152,7 +237,14 @@ void Wallet::AddLineInWalletFile(string &amount,
 			// call print function		
 			message.Print(parameters);
 					 
-			cout << buffer << " GMT" << endl;
+			if (flag2 == true )
+			{
+				cout << bufferT << " GMT" << endl;
+			}	
+			else 
+			{
+				cout << buffer << " GMT" << endl;
+			}
 		}
 		
 		printline += printline+";" + 
@@ -162,17 +254,32 @@ void Wallet::AddLineInWalletFile(string &amount,
 					 "RON";
 	}
 	
+	
 	// open wallet
 	ofstream myfile (walletName.c_str(),ios::app);
 	
-	// write in wallet
-	if (myfile.is_open())
+	if (flag2==true) 
 	{
-		myfile << result;
-		myfile << printline;
-		myfile << endl;
-		myfile.close();
+		if (myfile.is_open())
+		{
+			myfile << timeSinceEpoch;
+			myfile << printline;
+			myfile << endl;
+			myfile.close();
+		}
 	}
+	else 
+	{
+		// write in wallet
+		if (myfile.is_open())
+		{
+			myfile << result;
+			myfile << printline;
+			myfile << endl;
+			myfile.close();
+		}		
+	}
+	
 }
 
 // create method

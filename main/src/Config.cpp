@@ -15,6 +15,7 @@ Config::Config( std::string &content,
 							std::string &change )
 {
 	flag_m = true;
+	flag2 = false;
 	// content the entire file content
 	content_m = content;
 	// default_change_m the new value to write in content
@@ -28,6 +29,23 @@ Config::Config( std::string &content,
 			flag_m = false;
 		}
 	}
+    size_t j=0;
+	for (size_t i=0; i<default_change_m.size(); i++)
+	{
+		if (default_change_m[i] == ' ')
+		{
+			++j;
+		}
+	}
+	
+/* 	cout << default_change_m.size() << endl;
+	cout << j << endl; */
+	if ((j == default_change_m.size())&&(change_m != "default_wallet")) 
+	{
+		flag2=true;
+	}
+	
+	
 }
 
 bool Config::ReWriteConfigFile()
@@ -52,11 +70,24 @@ bool Config::ReWriteConfigFile()
 		// add new content to config file
 		ofs.open("moneytracker.config");
 		ofs << content_m;
-
-		message.SetMessage(SET_DEFAULT_WALLET);
-		parameters.push_back(default_change_m);
-		message.Print(parameters);
-		ofs.close();
+		/* message.SetMessage(SET_DEFAULT_WALLET);
+			parameters.push_back(default_change_m);
+			message.Print(parameters);
+			ofs.close(); */
+	 	if (flag2 == false) 
+		{
+			message.SetMessage(SET_DEFAULT_WALLET);
+			parameters.push_back(default_change_m);
+			message.Print(parameters);
+			ofs.close();
+		}
+		else 
+		{
+			message.SetMessage(SET_NO_DEFAULT);
+			parameters.push_back(change_m);
+			message.Print(parameters);
+			ofs.close();			
+		}
 	}
 	
 	return openn;

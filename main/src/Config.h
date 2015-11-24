@@ -23,6 +23,7 @@ private:
 	std::string default_change_m;
 	// flag for validating the new value
 	bool flag_m;
+	bool flag2;
 	
 	public:
 	Config();

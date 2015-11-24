@@ -32,5 +32,6 @@ enum MessageTypes_E
 	SET_DEFAULT_WALLET , 
 	NO_OUTPUT_CONFIGURED , 
 	INVALID_TIME ,
+	SET_NO_DEFAULT ,
 };
 #endif
