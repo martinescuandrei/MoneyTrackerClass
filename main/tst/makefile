@@ -38,6 +38,7 @@ HEADERS = \
 
 TST_OBJECTS=\
 	TestRemoveStartingZeroes.o \
+	TestChangeDefault.o \
 	TestIsValidNumber.o \
 	TestConvertPath.o \
 	TestConvertPathToOriginal.o \
@@ -78,14 +79,19 @@ test.a: $(TST_OBJECTS)
 test.exe: $(TST_OBJECTS) $(SRC_OBJECTS) $(GTEST_LIB)
 	g++ -o test.exe $(TST_OBJECTS) $(SRC_OBJECTS) $(GTEST_LIB)
 
-#test: test.exe
-#	test.exe --gtest_filter=ChangeDefWallet.CorectDefaultWallet
+# test: test.exe
+	# test.exe --gtest_filter=ChangeDefault.CorectDefaultWallet
 
 # run tests
 test: test.exe
 	test.exe
 	
 #Test.exe	
+TestChangeDefault: TestChangeDefault.o ..\src\ChangeConfig.o 
+	..\src\Config.o $(GTEST_LIB)
+	$(CPP) -o TestChangeDefault.exe TestChangeDefault.o 
+	..\src\ChangeConfig.o ..\src\Config.o $(GTEST_LIB)
+	
 TestRemoveStartingZeroes: TestRemoveStartingZeroes.o ..\src\HelperFunc.o 
 	..\src\MessageHandler.o ..\inc\MessageTypes_E.h $(GTEST_LIB)
 	$(CPP) -o TestRemoveStartingZeroes.exe TestRemoveStartingZeroes.o \
@@ -163,6 +169,7 @@ TestChangeDefWallet: TestChangeDefWallet.o ..\src\ChangeConfig.o
 	$(CPP) -o TestChangeDefWallet.exe TestChangeDefWallet.o 
 	..\src\ChangeConfig.o ..\src\Config.o $(GTEST_LIB)
 	
+
 #Test.o 
 TestRemoveStartingZeroes.o: TestRemoveStartingZeroes.cpp $(HEADERS)
 	$(CPP) $(GTEST_INC) -o TestRemoveStartingZeroes.o -c TestRemoveStartingZeroes.cpp
@@ -214,6 +221,9 @@ TestGetBalanceWallet.o: TestGetBalanceWallet.cpp $(HEADERS)
 	
 TestChangeDefWallet.o: TestChangeDefWallet.cpp $(HEADERS)
 	$(CPP) $(GTEST_INC) -o TestChangeDefWallet.o -c TestChangeDefWallet.cpp
+	
+TestChangeDefault.o: TestChangeDefault.cpp $(HEADERS)
+	$(CPP) $(GTEST_INC) -o TestChangeDefault.o -c TestChangeDefault.cpp
 	
 #..\main.o:
 #	..\$(MAKE) -c ..\main.o	
@@ -287,4 +297,5 @@ clean:
 	$(RM) WalletB1
 	$(RM) WalletBalanceCategory
 	$(RM) WalletTest.txt
+	$(RM) IncomeSpendDifferentCategoryBalanceZeroWallet
 	
